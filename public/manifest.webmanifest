@@ -1,0 +1,24 @@
+{
+  "name": "LifeTools - Complete Digital Utility Platform",
+  "short_name": "LifeTools",
+  "description": "Free, privacy-first digital utility tools for daily productivity, personal finance, date & time, student & education, privacy & security, file utilities, everyday life, calculators, converters, developer workflows, image tools, and QR generators.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B132B",
+  "theme_color": "#10B981",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity", "finance", "education", "developer tools"]
+}
