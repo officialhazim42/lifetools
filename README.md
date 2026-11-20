@@ -84,9 +84,9 @@ Located at `#/backup`, the Universal Backup & Restore System provides full, self
 | **A. Calculators** | 24 | Age, Date Difference, Days Between Dates, Percentage, Discount, GST, EMI, Loan, Simple Interest, Compound Interest, Salary, Profit & Loss, Electricity Bill, Fuel Cost, Tip, Split Bill, Time Duration, Working Days, Average, Ratio, Fraction, BMI, Calorie, Speed |
 | **B. Converters** | 15 | Length, Weight, Temperature, Area, Volume, Speed, Time, Data Storage, Energy, Pressure, Power, Angle, Number Systems (Binary/Hex/Dec/Oct), Roman Numerals, Cooking Measurements |
 | **C. Text Tools** | 22 | Word Counter, Character Counter, Sentence Counter, Case Converter, Uppercase, Lowercase, Title Case, Remove Duplicate Lines, Remove Extra Spaces, Text Sorter, Text Reverser, Find & Replace, Text Diff Checker, Line Counter, Slug Generator, Lorem Ipsum, Text Cleaner, Markdown Editor, HTML to Text, Text to HTML, Line Break Remover, Duplicate Word Remover |
-| **D. Developer Tools** | 26 | JSON Formatter, JSON Validator, JSON Minifier, XML Formatter, XML Validator, HTML Formatter, CSS Formatter, JS Formatter, Base64 Encoder/Decoder, URL Encoder/Decoder, JWT Decoder, UUID Generator, Password Generator, Hash Generator (SHA-256/512/MD5), Regex Tester, HTML Entity En/Decoder, Unix Timestamp, Color Code Converter, CSS Gradient, Meta Tag Generator, Robots.txt, Sitemap, QR Generator |
+| **D. Developer Tools** | 26 | JSON Formatter, JSON Validator, JSON Minifier, XML Formatter, XML Validator, HTML Formatter, CSS Formatter, JS Formatter, Base64 Encoder/Decoder, URL Encoder/Decoder, JWT Decoder, UUID Generator, Password Generator, Hash Generator (SHA-256/512/MD5), Regex Tester, HTML Entity En/Decoder, Unix Timestamp, Color Code Converter, CSS Gradient, Meta Tag Generator, Robots.txt, Sitemap, QR Generator (with Advanced UPI Payment QR Mode) |
 | **E. Image Tools** | 15 | Image Resizer, Compressor, Cropper, Format Converter, JPG to PNG, PNG to JPG, WebP Converter, Image Rotator, Flipper, Color Picker, Metadata Viewer, Dimensions Checker, Favicon Generator, Image to Base64, Base64 to Image |
-| **F. QR & Generators** | 15 | URL QR, Wi-Fi QR, Contact QR, Email QR, Phone QR, SMS QR, Location QR, WhatsApp QR, vCard 3.0 QR, QR Scanner (Camera/Upload), Random Number Generator, Random Password Generator, UUID Batch Generator, Username Generator, Color Palette Generator |
+| **F. QR & Generators** | 15 | URL QR (with Center Logo & Branding), Wi-Fi QR, Contact QR, Email QR, Phone QR, SMS QR, Location QR, WhatsApp QR, vCard 3.0 QR, QR Scanner (Camera/Upload), Random Number Generator, Random Password Generator, UUID Batch Generator, Username Generator, Color Palette Generator |
 | **G. Daily Productivity** | 15 | To-Do List, Quick Notes, Sticky Notes, Daily Planner, Weekly Planner, Habit Tracker, Pomodoro Timer, Stopwatch, Countdown Timer, World Clock, Meeting Planner, Goal Tracker, Checklist Maker, Reading Tracker, Study Planner |
 | **H. Personal Finance** | 15 | Daily Expense Tracker, Monthly Budget Planner, Savings Goal Calculator, Savings Tracker, Income Tracker, Expense Splitter, Subscription Tracker, Bill Reminder, Shopping Budget Calculator, Price Comparison, Unit Price Calculator, Currency Denomination Calculator, Cash Counter, Change Calculator, Monthly Expense Summary |
 | **I. Date & Time** | 10 | Calendar Generator, Monthly Calendar, Yearly Calendar, Date to Day Finder, Birthday Countdown, Event Countdown, Timezone Meeting Planner, Working Hours Tracker, Shift Time Calculator, Sleep Schedule Planner |
@@ -117,7 +117,7 @@ Located at `#/backup`, the Universal Backup & Restore System provides full, self
 - **Image Processing:** HTML5 Canvas API + File API + Blob API
 - **QR Code Engine:** `qrcode` + `jsqr`
 - **Text Difference Engine:** `diff`
-- **Testing:** Vitest + Testing Library (274 automated unit and integration tests across 18 test suites)
+- **Testing:** Vitest + Testing Library (295 automated unit and integration tests across 19 test suites)
 
 ---
 

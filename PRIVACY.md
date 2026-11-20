@@ -19,10 +19,11 @@ All 633 digital utility tools run **100% locally on your device**.
 ## 🚫 2. What LifeTools NEVER Does
 
 1. **NO File Uploads:** Uploaded photos, audio recordings, microphone streams, video files, CSV files, PDF documents, vCard archives, and text files are read into browser memory via HTML5 `FileReader` and manipulated via HTML5 `Canvas`, `Web Audio API`, and `pdf-lib`. No bytes are ever transmitted over the network.
-2. **NO Mandatory Accounts:** You will never be asked for an email address, password, phone number, or social login to unlock any tool.
-3. **NO Ad-Tracking Pixels:** There are no Facebook Pixels, Google Tag Manager scripts, marketing trackers, or third-party behavioral scripts.
-4. **NO Server-Side Logging:** Because the platform is distributed as static web assets, there are no backend APIs to record user inputs, financial budgets, notes, calculation queries, contacts, or generated passwords.
-5. **NO Paywalls or Hidden Fees:** All 633 tools are completely free to use.
+2. **NO Financial Credential Collection:** In the **UPI Payment QR Generator**, LifeTools NEVER requests, stores, or processes sensitive banking credentials — including **UPI PINs**, **ATM PINs**, **OTPs**, **CVVs**, debit/credit card numbers, net banking passwords, or bank login tokens. UPI QR generation is strictly used to RECEIVE funds into your bank account.
+3. **NO Mandatory Accounts:** You will never be asked for an email address, password, phone number, or social login to unlock any tool.
+4. **NO Ad-Tracking Pixels:** There are no Facebook Pixels, Google Tag Manager scripts, marketing trackers, or third-party behavioral scripts.
+5. **NO Server-Side Logging:** Because the platform is distributed as static web assets, there are no backend APIs to record user inputs, financial budgets, notes, calculation queries, contacts, or generated passwords.
+6. **NO Paywalls or Hidden Fees:** All 633 tools are completely free to use.
 
 ---
 

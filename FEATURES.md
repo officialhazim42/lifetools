@@ -57,7 +57,36 @@ Designed & Developed by **[@officialhazim42](https://github.com/officialhazim42)
 - **Module 7: My Backups & Data Custody:** Complete offline backup engine supporting selective domain exports to JSON, cryptographic-grade JSON payload validation prior to restore, merge or overwrite restoration modes, and granular data reset controls.
 - **Persistence Architecture:** Built on native browser **IndexedDB** (`lifetools_workspace_db`) with in-memory fallback for restricted private browser contexts, guaranteeing zero server transmission.
 
-### 9. Smart Settings Center (`#/settings`)
+### 10. Advanced UPI Payment QR Generator Mode (`#/tool/qr-code-generator` & Category F)
+Integrated directly into the QR Code Generator, the **UPI Payment QR** mode enables individuals, retailers, freelancers, organizations, and vendors to generate compliant, interoperable, and reusable Indian Unified Payments Interface (UPI) payment QR codes:
+- **Two Distinct Modes:**
+  - **Static UPI QR (Default & Reusable):** Generates a reusable static UPI QR without an application-defined expiration date. Customers scan the standee/poster and enter the amount in their UPI application (BHIM, Google Pay, PhonePe, Paytm, Amazon Pay). It remains valid as long as the recipient's UPI ID and banking accounts remain active.
+  - **Fixed Amount UPI QR:** Embeds a predefined payment amount in INR (`am=XXX.XX`) where supported. Suitable for point-of-sale bills, fixed services, and single invoices.
+- **Strict Parameter Compliance (`upi://pay`):**
+  - Encodes mandatory parameters: Payee Address (`pa`), Payee Name (`pn`), and Currency (`cu=INR`).
+  - Supports optional parameters: Payment Note (`tn`), Transaction Reference (`tr`), and Merchant Category Code (`mc`).
+  - Omits `am` completely in Static QR mode to guarantee payer amount input.
+  - Zero artificial expiration tokens, countdown timers, or third-party redirection URLs.
+- **Informational Bank Transfer Card Separation:**
+  - Provides a dedicated optional card for direct wire transfers (Account Holder Name, Bank Name, Account Number, IFSC Code, Branch Name).
+  - Explicitly kept separate from the UPI URI to prevent interoperability breakage across mobile banking apps.
+- **Advanced Branding & Center Logo Integration:**
+  - Upload custom shop/business logo (PNG, JPG, WebP) with drag-and-drop and transparency support.
+  - Sizing presets (15%, 20%, 25%, Custom), shapes (Square, Rounded, Circle), backgrounds, padding, and borders.
+  - High error correction level (`H` / 30%) enforced for maximum scannability.
+- **5 Professional Layout Presets:**
+  1. *Shop Counter Standee QR* (countertop display with accepted UPI badges).
+  2. *Minimal Personal Payment QR* (clean, compact QR with Payee and UPI ID).
+  3. *Professional Business Payment QR* (formal invoicing style with reference notes).
+  4. *Premium Branded Payment Poster* (A4 printable counter poster).
+  5. *Compact Payment Card* (pocket / tent card layout).
+- **Client-Side Decode Verification (`jsQR`):**
+  - Automatically decodes the rendered canvas QR code using `jsQR`.
+  - Compares decoded payload with the expected UPI URI to verify that Payee Name, UPI ID, Currency INR, and parameters are perfectly preserved.
+- **Multi-Format Export & Printing:**
+  - Standard PNG, 2048px print-ready High-Res PNG, vector SVG, vector-embedded PDF Poster (`pdf-lib`), and native browser print (`@media print`).
+
+---
 - **Centralized Configuration:** Unified settings engine managing appearance, regional formats, data custody, and browser preferences with local persistence (`lifetools-settings-v1`).
 - **Section 1: Appearance:**
   - Light, Dark, and System Default theme modes.

@@ -2,10 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import QRCode from 'qrcode';
 import { copyToClipboard } from '../../../utils/formatters';
 import { useToast } from '../../../context/ToastContext';
-import { Download, Copy, RefreshCw } from 'lucide-react';
+import { Download, Copy, RefreshCw, QrCode as QrCodeIcon, CreditCard } from 'lucide-react';
+import { UpiQrGenerator } from '../generators/UpiQrGenerator';
 
 export const QrCodeGenerator: React.FC = () => {
   const { showToast } = useToast();
+  const [activeMode, setActiveMode] = useState<'standard' | 'upi'>(() => {
+    if (typeof window !== 'undefined' && window.location.hash.toLowerCase().includes('upi')) {
+      return 'upi';
+    }
+    return 'standard';
+  });
   const [data, setData] = useState('https://lifetools.app');
   const [darkColor, setDarkColor] = useState('#0B132B');
   const [lightColor, setLightColor] = useState('#FFFFFF');
@@ -74,7 +81,41 @@ export const QrCodeGenerator: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Mode Switcher */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+        <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-lg">
+          <button
+            type="button"
+            onClick={() => setActiveMode('standard')}
+            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              activeMode === 'standard'
+                ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <QrCodeIcon className="w-3.5 h-3.5" /> Standard Text / URL QR
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveMode('upi')}
+            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              activeMode === 'upi'
+                ? 'bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-400 shadow-sm'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <CreditCard className="w-3.5 h-3.5" /> UPI Payment QR
+          </button>
+        </div>
+        <span className="text-xs text-slate-400 hidden sm:inline">
+          {activeMode === 'upi' ? 'Interoperable static & fixed-amount UPI payment QR' : 'Universal text & link QR generation'}
+        </span>
+      </div>
+
+      {activeMode === 'upi' ? (
+        <UpiQrGenerator />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Controls */}
         <div className="md:col-span-2 space-y-4">
           <div className="space-y-1.5">
@@ -165,6 +206,7 @@ export const QrCodeGenerator: React.FC = () => {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 };

@@ -1427,12 +1427,17 @@ export const TOOLS_REGISTRY: ToolItem[] = [
   {
     id: 'qr-code-generator',
     name: 'QR Code Generator',
-    shortDescription: 'Generate customizable high-resolution QR codes with instant PNG and SVG export.',
+    shortDescription: 'Generate customizable high-resolution QR codes and interoperable static/fixed-amount UPI payment QR codes with logo embedding and instant export.',
     category: 'developer',
     iconName: 'QrCode',
-    keywords: ['qr code generator', 'make qr code', 'free qr', 'qr svg', 'qr png'],
+    keywords: ['qr code generator', 'make qr code', 'free qr', 'qr svg', 'qr png', 'upi qr', 'upi payment qr', 'static upi qr', 'bhim upi qr', 'payment qr', 'gpay qr', 'phonepe qr', 'paytm qr'],
     isPopular: true,
-    instructions: ['Type or paste any URL, text, or data.', 'Customize color and error correction level.', 'Download PNG or SVG.'],
+    instructions: [
+      'Select between Standard Text/URL QR or UPI Payment QR mode.',
+      'For UPI payments: Enter payee name, UPI ID, and choose between reusable Static QR or Fixed Amount QR.',
+      'Optionally upload your logo, customize colors, error correction, and layout presets.',
+      'Download PNG, 2048px print-ready PNG, vector SVG, or PDF poster.'
+    ],
     relatedTools: ['url-qr-generator', 'wifi-qr-generator', 'qr-code-scanner'],
     component: QrCodeGenerator
   },

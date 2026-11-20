@@ -12,16 +12,39 @@
 
 All 633 digital utility tools across 20 distinct categories, client-side state engines, routing mechanics, PWA offline infrastructure, My Workspace private productivity suite, Smart Settings Center, Templates & Document Creator Studio, Web & Internet Utilities, Media Studio, Communication & Social Utilities, Health, Fitness & Wellness Suite, Travel, Navigation & Planning Suite, Home, Household & Property Utilities Suite, Custom Logo QR Code Generator Studio, and cryptographic implementations have been verified through automated unit testing, component integration testing, static type checking, and production bundle compilation.
 
-- **Automated Tests:** 274 Passed, 0 Failed (100% Success Rate across 18 test suites)
+- **Automated Tests:** 295 Passed, 0 Failed (100% Success Rate across 19 test suites)
 - **TypeScript Compilation:** Zero errors (`tsc -b` exits with code 0)
-- **Production Build:** Succeeded with code-split chunks for all 633 tools, Workspace modules, Settings Center, Universal Backup System, Templates Studio, Web Utilities, Media Studio, Communication Suite, Health & Wellness Suite, Travel Suite, and Home Suite
+- **Production Build:** Succeeded with code-split chunks for all 633 tools, Workspace modules, Settings Center, Universal Backup System, Templates Studio, Web Utilities, Media Studio, Communication Suite, Health & Wellness Suite, Travel Suite, Home Suite, and Advanced UPI Payment QR Generator Mode
 - **Total Registered Tools:** 633 fully operational client-side tools
 - **Total Categories:** 20 categories (6 original + 7 everyday utilities + 1 Templates & Documents + 1 Web & Internet Utilities + 1 Media Studio + 1 Communication & Social Utilities + 1 Health, Fitness & Wellness + 1 Travel, Navigation & Planning + 1 Home, Household & Property Utilities)
 - **Dedicated Hubs:** Media Studio (`#/media`), Templates & Document Creator (`#/templates`), My Workspace (`#/workspace`), Smart Settings Center (`#/settings`), and Universal Backup & Restore System (`#/backup`)
 
 ---
 
-## 🧪 Test Suite Results (274 Tests — 100% Passing)
+## 🧪 Test Suite Results (295 Tests — 100% Passing)
+
+### 1. `src/test/upi-payment-qr.test.tsx` (21 Tests — ALL PASSED)
+- `[PASS]` accepts compliant UPI IDs across diverse bank handles (@okhdfcbank, @okaxis, @ybl, @paytm, @upi, @icici, @sbi)
+- `[PASS]` rejects malformed, empty, or spaced UPI IDs with clear diagnostic feedback
+- `[PASS]` validates payee name non-empty and length bounds (max 99 characters)
+- `[PASS]` validates Merchant Category Code (MCC) when provided (4 numeric digits)
+- `[PASS]` validates IFSC code format when bank details are provided (11 alphanumeric characters)
+- `[PASS]` bypasses amount requirement in Static UPI QR mode
+- `[PASS]` enforces valid positive currency values in Fixed Amount mode (positive, max 2 decimals)
+- `[PASS]` provides warning for amounts exceeding typical P2P ₹1,00,000 threshold
+- `[PASS]` generates standard Reusable Static UPI URI without amount and without expiration tokens
+- `[PASS]` generates Fixed Amount UPI URI with formatted amount parameter (`am=450.00`)
+- `[PASS]` properly URL-encodes special characters in payee name and optional payment notes
+- `[PASS]` keeps informational bank details separate from the UPI URI to prevent interoperability breakage
+- `[PASS]` parses compliant UPI query parameters accurately
+- `[PASS]` successfully generates non-empty PDF document bytes using `pdf-lib`
+- `[PASS]` renders with default Static UPI QR mode and reusable notice
+- `[PASS]` toggles to Fixed Amount mode and displays amount input
+- `[PASS]` supports quick UPI handle append buttons
+- `[PASS]` supports switching layout presets seamlessly (Shop Standee, Minimal, Business Pro, A4 Poster, Payment Card)
+- `[PASS]` displays Interoperability Verification badge
+- `[PASS]` renders download and export buttons (PNG, 2048px PNG, SVG, PDF Poster, Print, Copy URI)
+- `[PASS]` renders mode switch tabs inside Developer QrCodeGenerator and switches into UPI Payment QR mode seamlessly
 
 ### 1. `src/test/expansion-registry.test.ts` (6 Tests — ALL PASSED)
 - `[PASS]` should have exactly 633 registered tools across 20 categories
