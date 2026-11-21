@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { QrDisplayCard } from './QrDisplayCard';
 
 export const WhatsappQrGenerator: React.FC = () => {
-  const [phoneNumber, setPhoneNumber] = useState('15551234567');
-  const [prefilledText, setPrefilledText] = useState('Hello! Chatting with you via LifeTools QR.');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [prefilledText, setPrefilledText] = useState('');
 
   const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
-  const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(prefilledText)}`;
+  const waUrl = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(prefilledText)}` : '';
 
   return (
     <div className="space-y-6">
@@ -20,7 +20,7 @@ export const WhatsappQrGenerator: React.FC = () => {
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
             className="input-base text-sm font-mono"
-            placeholder="15551234567"
+            placeholder="Enter WhatsApp phone number (e.g. 15551234567)"
           />
         </div>
         <div>
@@ -31,6 +31,7 @@ export const WhatsappQrGenerator: React.FC = () => {
             rows={3}
             value={prefilledText}
             onChange={(e) => setPrefilledText(e.target.value)}
+            placeholder="Enter greeting message..."
             className="input-base text-sm"
           />
         </div>

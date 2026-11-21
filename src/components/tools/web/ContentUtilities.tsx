@@ -26,7 +26,7 @@ export function extractYoutubeId(input: string): string | null {
 // 1. YouTube Thumbnail Viewer
 // -------------------------------------------------------------
 export const YoutubeThumbnailViewer: React.FC = () => {
-  const [input, setInput] = useState('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+  const [input, setInput] = useState('');
   const videoId = extractYoutubeId(input) || 'dQw4w9WgXcQ';
 
   const resolutions = [
@@ -44,7 +44,7 @@ export const YoutubeThumbnailViewer: React.FC = () => {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Paste YouTube Link or Video ID"
+          placeholder="Enter YouTube video link or 11-character video ID"
           className="w-full px-4 py-2.5 font-mono text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
         />
       </div>
@@ -73,8 +73,8 @@ export const YoutubeThumbnailViewer: React.FC = () => {
 // 2. YouTube Video Information Extractor
 // -------------------------------------------------------------
 export const YoutubeInfoExtractor: React.FC = () => {
-  const [url, setUrl] = useState('https://youtu.be/dQw4w9WgXcQ');
-  const videoId = extractYoutubeId(url) || 'dQw4w9WgXcQ';
+  const [url, setUrl] = useState('');
+  const videoId = extractYoutubeId(url) || '';
 
   return (
     <div className="space-y-6">
@@ -82,21 +82,22 @@ export const YoutubeInfoExtractor: React.FC = () => {
         type="text"
         value={url}
         onChange={(e) => setUrl(e.target.value)}
+        placeholder="Enter YouTube video URL (e.g. https://www.youtube.com/watch?v=...)"
         className="w-full px-4 py-2.5 font-mono text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
       />
 
       <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3 font-mono text-xs">
         <div className="flex justify-between items-center p-2 rounded-lg bg-slate-50 dark:bg-slate-850">
           <span className="text-slate-400">Extracted Video ID:</span>
-          <span className="font-bold text-emerald-500">{videoId}</span>
+          <span className="font-bold text-emerald-500">{videoId || '—'}</span>
         </div>
         <div className="flex justify-between items-center p-2 rounded-lg bg-slate-50 dark:bg-slate-850">
           <span className="text-slate-400">Canonical Watch URL:</span>
-          <span className="text-slate-700 dark:text-slate-300">https://www.youtube.com/watch?v={videoId}</span>
+          <span className="text-slate-700 dark:text-slate-300">{videoId ? `https://www.youtube.com/watch?v=${videoId}` : '—'}</span>
         </div>
         <div className="flex justify-between items-center p-2 rounded-lg bg-slate-50 dark:bg-slate-850">
           <span className="text-slate-400">Short Share URL:</span>
-          <span className="text-slate-700 dark:text-slate-300">https://youtu.be/{videoId}</span>
+          <span className="text-slate-700 dark:text-slate-300">{videoId ? `https://youtu.be/${videoId}` : '—'}</span>
         </div>
       </div>
     </div>
@@ -107,19 +108,19 @@ export const YoutubeInfoExtractor: React.FC = () => {
 // 3. YouTube Timestamp Link Generator
 // -------------------------------------------------------------
 export const YoutubeTimestampGenerator: React.FC = () => {
-  const [videoId, setVideoId] = useState('dQw4w9WgXcQ');
+  const [videoId, setVideoId] = useState('');
   const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(30);
 
   const totalSec = minutes * 60 + seconds;
-  const timestampUrl = `https://youtu.be/${videoId}?t=${totalSec}`;
+  const timestampUrl = videoId ? `https://youtu.be/${videoId}?t=${totalSec}` : '';
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-3 gap-3">
         <div>
           <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Video ID</label>
-          <input type="text" value={videoId} onChange={(e) => setVideoId(e.target.value)} className="w-full px-3 py-2 text-xs font-mono rounded-xl border" />
+          <input type="text" value={videoId} onChange={(e) => setVideoId(e.target.value)} placeholder="11-character ID" className="w-full px-3 py-2 text-xs font-mono rounded-xl border" />
         </div>
         <div>
           <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Minutes</label>
@@ -145,17 +146,18 @@ export const YoutubeTimestampGenerator: React.FC = () => {
 // 4. YouTube Embed Generator
 // -------------------------------------------------------------
 export const YoutubeEmbedGenerator: React.FC = () => {
-  const [videoId, setVideoId] = useState('dQw4w9WgXcQ');
+  const [videoId, setVideoId] = useState('');
   const [autoplay, setAutoplay] = useState(false);
   const [privacy, setPrivacy] = useState(true);
 
+  const effectiveId = videoId.trim() || 'VIDEO_ID';
   const domain = privacy ? 'https://www.youtube-nocookie.com' : 'https://www.youtube.com';
-  const iframeCode = `<iframe width="560" height="315" src="${domain}/embed/${videoId}${autoplay ? '?autoplay=1' : ''}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  const iframeCode = `<iframe width="560" height="315" src="${domain}/embed/${effectiveId}${autoplay ? '?autoplay=1' : ''}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-4 items-center">
-        <input type="text" value={videoId} onChange={(e) => setVideoId(e.target.value)} placeholder="Video ID" className="px-3 py-2 text-xs font-mono rounded-xl border" />
+        <input type="text" value={videoId} onChange={(e) => setVideoId(e.target.value)} placeholder="Enter Video ID" className="px-3 py-2 text-xs font-mono rounded-xl border" />
         <label className="text-xs font-bold flex items-center gap-2 cursor-pointer">
           <input type="checkbox" checked={privacy} onChange={(e) => setPrivacy(e.target.checked)} />
           <span>Privacy Enhanced (youtube-nocookie)</span>
@@ -171,8 +173,8 @@ export const YoutubeEmbedGenerator: React.FC = () => {
 // 5. Social Media Link Generator
 // -------------------------------------------------------------
 export const SocialMediaLinkGenerator: React.FC = () => {
-  const [url, setUrl] = useState('https://lifetools.app');
-  const [text, setText] = useState('Check out LifeTools — 250+ free client-side digital utilities!');
+  const [url, setUrl] = useState('');
+  const [text, setText] = useState('');
 
   const twitter = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
   const linkedin = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
@@ -181,8 +183,8 @@ export const SocialMediaLinkGenerator: React.FC = () => {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Share URL" className="px-3 py-2 text-xs rounded-xl border" />
-        <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Share Message" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Enter link URL to share" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Enter share message / text" className="px-3 py-2 text-xs rounded-xl border" />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -207,18 +209,22 @@ export const SocialMediaLinkGenerator: React.FC = () => {
 // 6. Instagram Profile Link Generator
 // -------------------------------------------------------------
 export const InstagramLinkGenerator: React.FC = () => {
-  const [username, setUsername] = useState('officialhazim42');
+  const [username, setUsername] = useState('');
   const clean = username.replace(/^@/, '').trim();
-  const profileUrl = `https://instagram.com/${clean}`;
+  const profileUrl = clean ? `https://instagram.com/${clean}` : '';
 
   return (
     <div className="space-y-4">
-      <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Instagram @handle" className="px-3.5 py-2 text-xs rounded-xl border font-mono" />
+      <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter Instagram username (e.g. username)" className="px-3.5 py-2 text-xs rounded-xl border font-mono" />
       <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-850 border flex justify-between items-center text-xs font-mono">
         <span className="text-slate-500">Profile URL:</span>
-        <a href={profileUrl} target="_blank" rel="noreferrer" className="font-bold text-pink-600 hover:underline">
-          {profileUrl}
-        </a>
+        {profileUrl ? (
+          <a href={profileUrl} target="_blank" rel="noreferrer" className="font-bold text-pink-600 hover:underline">
+            {profileUrl}
+          </a>
+        ) : (
+          <span className="text-slate-400">Enter a username above</span>
+        )}
       </div>
     </div>
   );
@@ -228,22 +234,27 @@ export const InstagramLinkGenerator: React.FC = () => {
 // 7. WhatsApp Click-to-Chat Link Generator
 // -------------------------------------------------------------
 export const WhatsappLinkGenerator: React.FC = () => {
-  const [phone, setPhone] = useState('919876543210');
-  const [msg, setMsg] = useState('Hello! Inquiring about LifeTools services.');
+  const [phone, setPhone] = useState('');
+  const [msg, setMsg] = useState('');
 
-  const waUrl = `https://wa.me/${phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(msg)}`;
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const waUrl = cleanPhone ? `https://wa.me/${cleanPhone}${msg ? `?text=${encodeURIComponent(msg)}` : ''}` : '';
 
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone with country code (e.g. 91...)" className="px-3 py-2 text-xs rounded-xl border font-mono" />
-        <input type="text" value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="Prefilled message" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter phone with country code (e.g. 15551234567)" className="px-3 py-2 text-xs rounded-xl border font-mono" />
+        <input type="text" value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="Enter optional prefilled message" className="px-3 py-2 text-xs rounded-xl border" />
       </div>
       <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-850 border flex justify-between items-center text-xs font-mono">
         <span className="text-slate-500">Click-to-Chat Link:</span>
-        <a href={waUrl} target="_blank" rel="noreferrer" className="font-bold text-emerald-500 hover:underline break-all">
-          {waUrl}
-        </a>
+        {waUrl ? (
+          <a href={waUrl} target="_blank" rel="noreferrer" className="font-bold text-emerald-500 hover:underline break-all">
+            {waUrl}
+          </a>
+        ) : (
+          <span className="text-slate-400">Enter a phone number above</span>
+        )}
       </div>
     </div>
   );
@@ -253,21 +264,21 @@ export const WhatsappLinkGenerator: React.FC = () => {
 // 8. Email Link Generator (mailto:)
 // -------------------------------------------------------------
 export const EmailLinkGenerator: React.FC = () => {
-  const [email, setEmail] = useState('hazimbashir.dev@gmail.com');
-  const [subject, setSubject] = useState('Collaboration Inquiry');
-  const [body, setBody] = useState('Hi Hazim,\n\nI loved your work on LifeTools.');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [body, setBody] = useState('');
 
-  const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const mailto = email ? `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}` : '';
 
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Recipient Email" className="px-3 py-2 text-xs rounded-xl border font-mono" />
-        <input type="text" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Subject" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter recipient email address" className="px-3 py-2 text-xs rounded-xl border font-mono" />
+        <input type="text" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Enter email subject" className="px-3 py-2 text-xs rounded-xl border" />
       </div>
-      <textarea rows={3} value={body} onChange={(e) => setBody(e.target.value)} placeholder="Email Body" className="w-full text-xs p-3 rounded-xl border" />
+      <textarea rows={3} value={body} onChange={(e) => setBody(e.target.value)} placeholder="Enter email message body..." className="w-full text-xs p-3 rounded-xl border" />
       <div className="p-3 bg-slate-50 dark:bg-slate-850 rounded-xl font-mono text-xs break-all font-bold text-emerald-500">
-        {mailto}
+        {mailto || 'mailto:name@example.com'}
       </div>
     </div>
   );
@@ -277,15 +288,20 @@ export const EmailLinkGenerator: React.FC = () => {
 // 9. Telephone Link Generator
 // -------------------------------------------------------------
 export const TelephoneLinkGenerator: React.FC = () => {
-  const [number, setNumber] = useState('+919876543210');
-  const telUri = `tel:${number.replace(/[^0-9+]/g, '')}`;
+  const [number, setNumber] = useState('');
+  const cleanNumber = number.replace(/[^0-9+]/g, '');
+  const telUri = cleanNumber ? `tel:${cleanNumber}` : '';
 
   return (
     <div className="space-y-4">
-      <input type="text" value={number} onChange={(e) => setNumber(e.target.value)} placeholder="Phone Number" className="w-full px-3.5 py-2 text-xs rounded-xl border font-mono" />
+      <input type="text" value={number} onChange={(e) => setNumber(e.target.value)} placeholder="Enter phone number (e.g. +1 555-0199)" className="w-full px-3.5 py-2 text-xs rounded-xl border font-mono" />
       <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-850 border flex justify-between items-center text-xs font-mono">
         <span className="text-slate-500">RFC 3966 URI:</span>
-        <a href={telUri} className="font-bold text-emerald-500 hover:underline">{telUri}</a>
+        {telUri ? (
+          <a href={telUri} className="font-bold text-emerald-500 hover:underline">{telUri}</a>
+        ) : (
+          <span className="text-slate-400">Enter a phone number above</span>
+        )}
       </div>
     </div>
   );
@@ -295,17 +311,21 @@ export const TelephoneLinkGenerator: React.FC = () => {
 // 10. Google Maps Link Generator
 // -------------------------------------------------------------
 export const GoogleMapsLinkGenerator: React.FC = () => {
-  const [location, setLocation] = useState('Ganderbal, Jammu and Kashmir, India');
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+  const [location, setLocation] = useState('');
+  const mapsUrl = location.trim() ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}` : '';
 
   return (
     <div className="space-y-4">
-      <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Address or Place Name" className="w-full px-3.5 py-2 text-xs rounded-xl border" />
+      <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Enter address, city, place, or coordinates" className="w-full px-3.5 py-2 text-xs rounded-xl border" />
       <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-850 border flex justify-between items-center text-xs font-mono">
         <span className="text-slate-500">Google Maps Search URL:</span>
-        <a href={mapsUrl} target="_blank" rel="noreferrer" className="font-bold text-blue-500 hover:underline truncate max-w-sm">
-          {mapsUrl}
-        </a>
+        {mapsUrl ? (
+          <a href={mapsUrl} target="_blank" rel="noreferrer" className="font-bold text-blue-500 hover:underline truncate max-w-sm">
+            {mapsUrl}
+          </a>
+        ) : (
+          <span className="text-slate-400">Enter a location above</span>
+        )}
       </div>
     </div>
   );

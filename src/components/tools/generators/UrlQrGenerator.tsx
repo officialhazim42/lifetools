@@ -35,7 +35,8 @@ export const UrlQrGenerator: React.FC = () => {
   const { showToast } = useToast();
 
   // 1. URL State
-  const [url, setUrl] = useState('https://lifetools.app');
+  const [url, setUrl] = useState('');
+  const [touched, setTouched] = useState(false);
   const [urlError, setUrlError] = useState<string | null>(null);
 
   // 2. Logo State
@@ -77,13 +78,13 @@ export const UrlQrGenerator: React.FC = () => {
   useEffect(() => {
     const trimmed = url.trim();
     if (!trimmed) {
-      setUrlError('URL cannot be empty.');
+      setUrlError(touched ? 'URL cannot be empty.' : null);
     } else if (!/^https?:\/\//i.test(trimmed)) {
       setUrlError('Tip: URLs starting with https:// are automatically clickable on mobile cameras.');
     } else {
       setUrlError(null);
     }
-  }, [url]);
+  }, [url, touched]);
 
   // Compute actual logo background color
   const effectiveLogoBg =
@@ -287,7 +288,8 @@ export const UrlQrGenerator: React.FC = () => {
 
   // Reset to default
   const handleReset = () => {
-    setUrl('https://lifetools.app');
+    setUrl('');
+    setTouched(false);
     handleRemoveLogo();
     setForegroundColor('#0F172A');
     setBackgroundColor('#FFFFFF');
@@ -351,9 +353,12 @@ export const UrlQrGenerator: React.FC = () => {
             id="target-url-input"
             type="url"
             value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            onChange={(e) => {
+              setTouched(true);
+              setUrl(e.target.value);
+            }}
             className="input-base text-base font-medium pr-10"
-            placeholder="https://example.com/your-page"
+            placeholder="Enter website URL (e.g. https://yourwebsite.com)"
           />
           {url && /^https?:\/\//i.test(url) && (
             <a

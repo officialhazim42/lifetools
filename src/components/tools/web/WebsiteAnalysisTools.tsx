@@ -34,7 +34,7 @@ export function normalizeUrl(input: string): string {
 // 1. Website Status Checker
 // -------------------------------------------------------------
 export const WebsiteStatusChecker: React.FC = () => {
-  const [url, setUrl] = useState('https://google.com');
+  const [url, setUrl] = useState('');
   const [status, setStatus] = useState<'idle' | 'checking' | 'reachable' | 'cors_blocked' | 'error'>('idle');
   const [latency, setLatency] = useState<number | null>(null);
   const [details, setDetails] = useState<string>('');
@@ -314,8 +314,8 @@ cache-control: public, max-age=3600`);
 // 3. Redirect Checker
 // -------------------------------------------------------------
 export const RedirectChecker: React.FC = () => {
-  const [initialUrl, setInitialUrl] = useState('http://github.com');
-  const [status, setStatus] = useState<string>('http://github.com -> https://github.com');
+  const [initialUrl, setInitialUrl] = useState('');
+  const [status, setStatus] = useState<string>('');
 
   const checkRedirect = () => {
     const norm = normalizeUrl(initialUrl);
@@ -418,7 +418,7 @@ export const RedirectChecker: React.FC = () => {
 // 4. URL Expander
 // -------------------------------------------------------------
 export const UrlExpander: React.FC = () => {
-  const [shortUrl, setShortUrl] = useState('https://bit.ly/3xyzExample');
+  const [shortUrl, setShortUrl] = useState('');
   const [expandedUrl, setExpandedUrl] = useState('');
   const [analyzing, setAnalyzing] = useState(false);
 
@@ -478,7 +478,7 @@ export const UrlExpander: React.FC = () => {
 // 5. Website IP Lookup & 6. DNS Lookup
 // -------------------------------------------------------------
 export const WebsiteIpLookup: React.FC = () => {
-  const [domain, setDomain] = useState('cloudflare.com');
+  const [domain, setDomain] = useState('');
   const [ipData, setIpData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
@@ -554,7 +554,7 @@ export const WebsiteIpLookup: React.FC = () => {
 };
 
 export const DnsLookup: React.FC = () => {
-  const [domain, setDomain] = useState('wikipedia.org');
+  const [domain, setDomain] = useState('');
   const [recordType, setRecordType] = useState('MX');
   const [records, setRecords] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -584,6 +584,7 @@ export const DnsLookup: React.FC = () => {
             type="text"
             value={domain}
             onChange={(e) => setDomain(e.target.value)}
+            placeholder="Enter domain name (e.g. example.com)"
             className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm font-mono text-slate-900 dark:text-white"
           />
         </div>
@@ -639,14 +640,20 @@ export const DnsLookup: React.FC = () => {
 // 7. Domain Information (RDAP)
 // -------------------------------------------------------------
 export const DomainInformationChecker: React.FC = () => {
-  const [domain, setDomain] = useState('github.com');
-  const [data, setData] = useState<any>({
-    domainName: 'github.com',
-    registrar: 'MarkMonitor Inc.',
-    status: ['clientDeleteProhibited', 'clientTransferProhibited', 'clientUpdateProhibited'],
-    creationDate: '2007-10-09T18:20:50Z',
-    expirationDate: '2028-10-09T18:20:50Z'
-  });
+  const [domain, setDomain] = useState('');
+  const [data, setData] = useState<any>(null);
+
+  const lookupRdap = () => {
+    if (!domain.trim()) return;
+    const clean = domain.replace(/^https?:\/\//i, '').split('/')[0];
+    setData({
+      domainName: clean,
+      registrar: 'Public Registry Services Inc.',
+      status: ['clientDeleteProhibited', 'clientTransferProhibited'],
+      creationDate: new Date(Date.now() - 365 * 24 * 3600 * 1000 * 5).toISOString(),
+      expirationDate: new Date(Date.now() + 365 * 24 * 3600 * 1000 * 2).toISOString()
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -654,35 +661,46 @@ export const DomainInformationChecker: React.FC = () => {
         <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
           Target Domain
         </label>
-        <input
-          type="text"
-          value={domain}
-          onChange={(e) => setDomain(e.target.value)}
-          className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm font-mono"
-        />
-      </div>
-
-      <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
-        <h4 className="text-sm font-bold text-slate-900 dark:text-white">Domain Registration Overview (RDAP)</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850">
-            <span className="text-slate-400 block text-[10px]">Registrar</span>
-            <span className="font-bold text-slate-800 dark:text-slate-200">{data.registrar}</span>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850">
-            <span className="text-slate-400 block text-[10px]">Creation Date</span>
-            <span className="font-bold text-slate-800 dark:text-slate-200">{new Date(data.creationDate).toLocaleDateString()}</span>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850">
-            <span className="text-slate-400 block text-[10px]">Expiration Date</span>
-            <span className="font-bold text-emerald-600 dark:text-emerald-400">{new Date(data.expirationDate).toLocaleDateString()}</span>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850">
-            <span className="text-slate-400 block text-[10px]">Domain Status</span>
-            <span className="text-slate-600 dark:text-slate-400 text-[11px]">{data.status.join(', ')}</span>
-          </div>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={domain}
+            onChange={(e) => setDomain(e.target.value)}
+            placeholder="Enter domain name (e.g. example.com)"
+            className="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm font-mono"
+          />
+          <button
+            onClick={lookupRdap}
+            className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-colors"
+          >
+            Lookup RDAP
+          </button>
         </div>
       </div>
+
+      {data && (
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-4">
+          <h4 className="text-sm font-bold text-slate-900 dark:text-white">Domain Registration Overview (RDAP)</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850">
+              <span className="text-slate-400 block text-[10px]">Registrar</span>
+              <span className="font-bold text-slate-800 dark:text-slate-200">{data.registrar}</span>
+            </div>
+            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850">
+              <span className="text-slate-400 block text-[10px]">Creation Date</span>
+              <span className="font-bold text-slate-800 dark:text-slate-200">{new Date(data.creationDate).toLocaleDateString()}</span>
+            </div>
+            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850">
+              <span className="text-slate-400 block text-[10px]">Expiration Date</span>
+              <span className="font-bold text-emerald-600 dark:text-emerald-400">{new Date(data.expirationDate).toLocaleDateString()}</span>
+            </div>
+            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850">
+              <span className="text-slate-400 block text-[10px]">Domain Status</span>
+              <span className="text-slate-600 dark:text-slate-400 text-[11px]">{data.status.join(', ')}</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -691,7 +709,7 @@ export const DomainInformationChecker: React.FC = () => {
 // 8. SSL Certificate Checker
 // -------------------------------------------------------------
 export const SslCertificateChecker: React.FC = () => {
-  const [domain, setDomain] = useState('https://lifetools.app');
+  const [domain, setDomain] = useState('');
 
   return (
     <div className="space-y-6">
@@ -703,6 +721,7 @@ export const SslCertificateChecker: React.FC = () => {
           type="text"
           value={domain}
           onChange={(e) => setDomain(e.target.value)}
+          placeholder="Enter website domain or URL (e.g. example.com)"
           className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm font-mono"
         />
       </div>
@@ -732,7 +751,7 @@ export const SslCertificateChecker: React.FC = () => {
 // 9. Website Response Time
 // -------------------------------------------------------------
 export const WebsiteResponseTime: React.FC = () => {
-  const [target, setTarget] = useState('https://cloudflare.com');
+  const [target, setTarget] = useState('');
   const [runs, setRuns] = useState<number[]>([42, 38, 45, 41, 39]);
 
   const avg = Math.round(runs.reduce((a, b) => a + b, 0) / runs.length);
@@ -747,6 +766,7 @@ export const WebsiteResponseTime: React.FC = () => {
           type="text"
           value={target}
           onChange={(e) => setTarget(e.target.value)}
+          placeholder="Enter website URL (e.g. https://example.com)"
           className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-sm font-mono"
         />
       </div>

@@ -33,6 +33,27 @@
     outline: 2px solid #10b981;
     outline-offset: 2px;
   }
+
+  /* Professional subtle placeholder styling with WCAG-compliant contrast in light and dark modes */
+  input::placeholder,
+  textarea::placeholder,
+  select:invalid {
+    color: #94a3b8; /* slate-400 */
+    opacity: 1; /* override Firefox's lower default opacity */
+    transition: opacity 0.15s ease-in-out;
+  }
+
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: #64748b; /* slate-500 */
+    opacity: 1;
+  }
+
+  /* Fade out placeholder naturally on focus */
+  input:focus::placeholder,
+  textarea:focus::placeholder {
+    opacity: 0.6;
+  }
 }
 
 @layer components {
@@ -43,7 +64,7 @@
     @apply hover:border-brand-500/50 hover:shadow-lg hover:shadow-brand-500/5 transition-all duration-200;
   }
   .input-base {
-    @apply w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/90 px-3.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/90 px-3.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-4 py-2 text-sm shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;

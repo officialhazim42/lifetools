@@ -246,7 +246,7 @@ describe('Custom Logo QR Code Generator Suite', () => {
       );
 
       const input = screen.getByLabelText(/Target Website URL/i) as HTMLInputElement;
-      expect(input.value).toBe('https://lifetools.app');
+      expect(input.value).toBe('');
 
       fireEvent.change(input, { target: { value: 'https://github.com/officialhazim42' } });
       expect(input.value).toBe('https://github.com/officialhazim42');
@@ -271,6 +271,7 @@ describe('Custom Logo QR Code Generator Suite', () => {
 
       const input = screen.getByLabelText(/Target Website URL/i);
 
+      fireEvent.change(input, { target: { value: 'https://example.com' } });
       fireEvent.change(input, { target: { value: '' } });
       expect(screen.getByText('URL cannot be empty.')).toBeInTheDocument();
 
@@ -308,7 +309,7 @@ describe('Custom Logo QR Code Generator Suite', () => {
       const resetBtn = screen.getByRole('button', { name: /Reset All Customizations/i });
       fireEvent.click(resetBtn);
 
-      expect(input.value).toBe('https://lifetools.app');
+      expect(input.value).toBe('');
     });
 
     it('renders physical scan verification advisory text', () => {

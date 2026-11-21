@@ -81,7 +81,7 @@ describe('UPI Payment QR Generator Test Suite', () => {
   // 2. Payee Name & Parameter Validation Tests
   describe('2. Payee Name & Parameter Validation', () => {
     it('validates payee name non-empty and length bounds', () => {
-      expect(validatePayeeName('Hazim Bashir').valid).toBe(true);
+      expect(validatePayeeName('Aisha Sharma').valid).toBe(true);
       expect(validatePayeeName('Apex Hardware & General Store').valid).toBe(true);
       expect(validatePayeeName('').valid).toBe(false);
       expect(validatePayeeName('   ').valid).toBe(false);
@@ -231,11 +231,11 @@ describe('UPI Payment QR Generator Test Suite', () => {
       canvas.height = 512;
 
       const params: UpiPaymentParams = {
-        payeeName: 'Hazim Store',
-        upiId: 'hazim@okhdfcbank',
+        payeeName: 'Retail Merchant Store',
+        upiId: 'merchant@okhdfcbank',
         mode: 'static',
         currency: 'INR',
-        businessName: 'Hazim Digital Services',
+        businessName: 'Retail Digital Services',
         paymentInstruction: 'Scan & Pay with Any UPI App'
       };
 

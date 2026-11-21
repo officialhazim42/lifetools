@@ -23,12 +23,12 @@ import {
 // 1. Email Signature Generator
 // ==========================================
 export const EmailSignatureGenerator: React.FC = () => {
-  const [name, setName] = useState('Alex Morgan');
-  const [title, setTitle] = useState('Senior Product Designer');
-  const [company, setCompany] = useState('Acme Technologies');
-  const [email, setEmail] = useState('alex.morgan@example.com');
-  const [phone, setPhone] = useState('+1 (555) 234-5678');
-  const [website, setWebsite] = useState('https://acme.example.com');
+  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
+  const [company, setCompany] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [website, setWebsite] = useState('');
   const [themeColor, setThemeColor] = useState('#2563eb');
   const [layout, setLayout] = useState<'classic' | 'modern' | 'minimal'>('modern');
   const [copied, setCopied] = useState(false);
@@ -98,6 +98,7 @@ export const EmailSignatureGenerator: React.FC = () => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="Enter full name"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -107,6 +108,7 @@ export const EmailSignatureGenerator: React.FC = () => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter job title"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -116,6 +118,7 @@ export const EmailSignatureGenerator: React.FC = () => {
             type="text"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
+            placeholder="Enter company or organization"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -125,6 +128,7 @@ export const EmailSignatureGenerator: React.FC = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email address"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -134,6 +138,7 @@ export const EmailSignatureGenerator: React.FC = () => {
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            placeholder="Enter phone number"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -143,6 +148,7 @@ export const EmailSignatureGenerator: React.FC = () => {
             type="text"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
+            placeholder="Enter website URL"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -205,11 +211,11 @@ export const EmailSignatureGenerator: React.FC = () => {
 // 2. Professional Email Writer
 // ==========================================
 export const ProfessionalEmailWriter: React.FC = () => {
-  const [recipientName, setRecipientName] = useState('Sarah');
+  const [recipientName, setRecipientName] = useState('');
   const [tone, setTone] = useState<'formal' | 'assertive' | 'polite' | 'concise' | 'urgent'>('formal');
-  const [purpose, setPurpose] = useState('Follow up on project proposal sent last Tuesday');
-  const [keyPoints, setKeyPoints] = useState('Ready to proceed with phase 1\nBudget is confirmed\nWould love 15-minute sync on Thursday');
-  const [senderName, setSenderName] = useState('Michael');
+  const [purpose, setPurpose] = useState('');
+  const [keyPoints, setKeyPoints] = useState('');
+  const [senderName, setSenderName] = useState('');
   const [copied, setCopied] = useState(false);
 
   const generateEmail = () => {
@@ -256,6 +262,7 @@ export const ProfessionalEmailWriter: React.FC = () => {
             type="text"
             value={recipientName}
             onChange={(e) => setRecipientName(e.target.value)}
+            placeholder="Enter recipient name"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -279,6 +286,7 @@ export const ProfessionalEmailWriter: React.FC = () => {
             type="text"
             value={senderName}
             onChange={(e) => setSenderName(e.target.value)}
+            placeholder="Enter your name"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -290,6 +298,7 @@ export const ProfessionalEmailWriter: React.FC = () => {
           type="text"
           value={purpose}
           onChange={(e) => setPurpose(e.target.value)}
+          placeholder="Enter email purpose or objective"
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
         />
       </div>
@@ -300,6 +309,7 @@ export const ProfessionalEmailWriter: React.FC = () => {
           rows={3}
           value={keyPoints}
           onChange={(e) => setKeyPoints(e.target.value)}
+          placeholder="Enter key agenda or bullet points (one per line)..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-sans"
         />
       </div>
@@ -331,7 +341,7 @@ export const ProfessionalEmailWriter: React.FC = () => {
 // 3. Email Subject Line Generator
 // ==========================================
 export const EmailSubjectLineGenerator: React.FC = () => {
-  const [topic, setTopic] = useState('Q3 Sales Review Meeting');
+  const [topic, setTopic] = useState('');
   const [category, setCategory] = useState<'business' | 'urgent' | 'curiosity' | 'followup' | 'newsletter'>('business');
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
 
@@ -391,6 +401,7 @@ export const EmailSubjectLineGenerator: React.FC = () => {
             type="text"
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
+            placeholder="Enter core topic or announcement (e.g. Q3 Project Proposal)"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -442,11 +453,11 @@ export const EmailSubjectLineGenerator: React.FC = () => {
 // 4. Email Template Builder
 // ==========================================
 export const EmailTemplateBuilder: React.FC = () => {
-  const [headline, setHeadline] = useState('Exclusive Product Announcement');
-  const [subheading, setSubheading] = useState('We are thrilled to introduce our new release today.');
-  const [bodyText, setBodyText] = useState('Explore high-performance features designed to save you hours every week. Built for seamless workflow integrations and instant results.');
+  const [headline, setHeadline] = useState('');
+  const [subheading, setSubheading] = useState('');
+  const [bodyText, setBodyText] = useState('');
   const [ctaText, setCtaText] = useState('Get Started Free');
-  const [ctaUrl, setCtaUrl] = useState('https://example.com/signup');
+  const [ctaUrl, setCtaUrl] = useState('');
   const [accentColor, setAccentColor] = useState('#2563eb');
   const [copied, setCopied] = useState(false);
 
@@ -497,6 +508,7 @@ export const EmailTemplateBuilder: React.FC = () => {
             type="text"
             value={headline}
             onChange={(e) => setHeadline(e.target.value)}
+            placeholder="Enter header headline"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -520,6 +532,7 @@ export const EmailTemplateBuilder: React.FC = () => {
           type="text"
           value={subheading}
           onChange={(e) => setSubheading(e.target.value)}
+          placeholder="Enter subheading"
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
         />
       </div>
@@ -530,6 +543,7 @@ export const EmailTemplateBuilder: React.FC = () => {
           rows={3}
           value={bodyText}
           onChange={(e) => setBodyText(e.target.value)}
+          placeholder="Enter email body text..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
         />
       </div>
@@ -541,6 +555,7 @@ export const EmailTemplateBuilder: React.FC = () => {
             type="text"
             value={ctaText}
             onChange={(e) => setCtaText(e.target.value)}
+            placeholder="Enter CTA button label"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -550,6 +565,7 @@ export const EmailTemplateBuilder: React.FC = () => {
             type="text"
             value={ctaUrl}
             onChange={(e) => setCtaUrl(e.target.value)}
+            placeholder="Enter destination link URL"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -674,7 +690,7 @@ export const EmailTextFormatter: React.FC = () => {
 // 6. Email Address Syntax Validator
 // ==========================================
 export const EmailAddressSyntaxValidator: React.FC = () => {
-  const [emailInput, setEmailInput] = useState('user.name+tag@example.com');
+  const [emailInput, setEmailInput] = useState('');
   const result = validateEmailSyntax(emailInput);
 
   return (
@@ -686,7 +702,7 @@ export const EmailAddressSyntaxValidator: React.FC = () => {
             type="text"
             value={emailInput}
             onChange={(e) => setEmailInput(e.target.value)}
-            placeholder="e.g. name@domain.com"
+            placeholder="Enter email address (e.g. name@domain.com)"
             className="w-full px-3 py-2.5 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg pr-10 focus:ring-2 focus:ring-blue-500"
           />
           <div className="absolute right-3 top-2.5">
@@ -991,7 +1007,7 @@ export const EmailReadabilityChecker: React.FC = () => {
 // 10. Email Disclaimer Generator
 // ==========================================
 export const EmailDisclaimerGenerator: React.FC = () => {
-  const [companyName, setCompanyName] = useState('Acme Corp');
+  const [companyName, setCompanyName] = useState('');
   const [category, setCategory] = useState<'confidentiality' | 'legal' | 'healthcare' | 'financial'>('confidentiality');
   const [copied, setCopied] = useState(false);
 
@@ -1019,6 +1035,7 @@ export const EmailDisclaimerGenerator: React.FC = () => {
             type="text"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
+            placeholder="Enter company or organization name"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>

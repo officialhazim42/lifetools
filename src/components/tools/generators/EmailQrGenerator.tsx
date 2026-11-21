@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { QrDisplayCard } from './QrDisplayCard';
 
 export const EmailQrGenerator: React.FC = () => {
-  const [email, setEmail] = useState('support@lifetools.app');
-  const [subject, setSubject] = useState('Feedback & Inquiry');
-  const [body, setBody] = useState('Hello LifeTools team,\n\nI love your platform!');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [body, setBody] = useState('');
 
   const mailtoUri = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
@@ -19,6 +19,7 @@ export const EmailQrGenerator: React.FC = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter recipient email address"
             className="input-base text-sm"
           />
         </div>
@@ -30,6 +31,7 @@ export const EmailQrGenerator: React.FC = () => {
             type="text"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
+            placeholder="Enter email subject"
             className="input-base text-sm"
           />
         </div>
@@ -41,6 +43,7 @@ export const EmailQrGenerator: React.FC = () => {
             rows={3}
             value={body}
             onChange={(e) => setBody(e.target.value)}
+            placeholder="Enter pre-filled email message body..."
             className="input-base text-sm"
           />
         </div>

@@ -1497,12 +1497,7 @@ export const TravelBudgetPlanner: React.FC = () => {
 // ==========================================
 export const GroupTripOrganizer: React.FC = () => {
   const { showToast } = useToast();
-  const [members, setMembers] = useState<{ id: string; name: string; role: string; contact: string }[]>([
-    { id: '1', name: 'Alex Johnson', role: 'Trip Coordinator', contact: 'alex@example.com' },
-    { id: '2', name: 'Sam Smith', role: 'Lead Navigator / Driver', contact: '+1 555-0192' },
-    { id: '3', name: 'Taylor Lee', role: 'Treasurer / Splitter', contact: 'taylor@example.com' },
-    { id: '4', name: 'Jordan Rivera', role: 'Activity Coordinator', contact: '+1 555-0814' }
-  ]);
+  const [members, setMembers] = useState<{ id: string; name: string; role: string; contact: string }[]>([]);
 
   const [newName, setNewName] = useState('');
   const [newRole, setNewRole] = useState('Traveler');
@@ -1543,7 +1538,7 @@ export const GroupTripOrganizer: React.FC = () => {
               <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Name</label>
               <input
                 type="text"
-                placeholder="e.g. Morgan Vance"
+                placeholder="Enter member name..."
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 className="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"

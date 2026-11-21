@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { Scissors, Copy, Check, ShieldCheck, RefreshCw } from 'lucide-react';
 
 export const SensitiveTextRedactor: React.FC = () => {
-  const [inputText, setInputText] = useState(
-    'The confidential project code is Project-Titan. Lead engineer Sarah Connor met with Director Vance at the Geneva facility to review the defense budget.'
-  );
-  const [keywords, setKeywords] = useState('Project-Titan, Sarah Connor, Director Vance, Geneva');
+  const [inputText, setInputText] = useState('');
+  const [keywords, setKeywords] = useState('');
   const [redactStyle, setRedactStyle] = useState<'block' | 'tag' | 'stars' | 'confidential'>('block');
   const [caseSensitive, setCaseSensitive] = useState(false);
   const [wholeWord, setWholeWord] = useState(true);
@@ -86,7 +84,7 @@ export const SensitiveTextRedactor: React.FC = () => {
               rows={3}
               value={keywords}
               onChange={e => setKeywords(e.target.value)}
-              placeholder="e.g. John Doe, ACME Corp, SecretPassword"
+              placeholder="Enter terms, names, or sensitive keywords to redact..."
               className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none font-sans"
             />
           </div>
@@ -133,11 +131,10 @@ export const SensitiveTextRedactor: React.FC = () => {
               <button
                 key={s.id}
                 onClick={() => setRedactStyle(s.id as any)}
-                className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-colors border ${
-                  redactStyle === s.id
-                    ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400 font-bold'
-                    : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
-                }`}
+                className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-colors border ${redactStyle === s.id
+                  ? 'bg-emerald-500/10 border-emerald-500 text-emerald-600 dark:text-emerald-400 font-bold'
+                  : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
+                  }`}
               >
                 {s.label}
               </button>

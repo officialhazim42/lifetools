@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { FileSpreadsheet, ArrowRight, Download, Copy, Check, Upload } from 'lucide-react';
 import { exportToJson } from '../../../utils/storage';
 
-const DEFAULT_CSV = `id,name,role,department,active
-101,Hazim Bashir,Android Developer,Engineering,true
-102,Aisha Khan,UI/UX Designer,Product,true
-103,Liam Smith,Data Analyst,Analytics,false`;
+const DEFAULT_CSV = `id,sku,category,stock,active
+101,PRD-001,Electronics,120,true
+102,PRD-002,Hardware,45,true
+103,PRD-003,Accessories,0,false`;
 
 export const CsvToJsonConverter: React.FC = () => {
-  const [csvInput, setCsvInput] = useState(DEFAULT_CSV);
+  const [csvInput, setCsvInput] = useState('');
   const [format, setFormat] = useState<'objects' | '2d' | 'keyed'>('objects');
   const [parseTypes, setParseTypes] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -131,25 +131,22 @@ export const CsvToJsonConverter: React.FC = () => {
           <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg text-xs">
             <button
               onClick={() => setFormat('objects')}
-              className={`px-3 py-1 rounded-md font-medium transition-colors ${
-                format === 'objects' ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-xs' : 'text-slate-500'
-              }`}
+              className={`px-3 py-1 rounded-md font-medium transition-colors ${format === 'objects' ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-xs' : 'text-slate-500'
+                }`}
             >
               Array of Objects
             </button>
             <button
               onClick={() => setFormat('2d')}
-              className={`px-3 py-1 rounded-md font-medium transition-colors ${
-                format === '2d' ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-xs' : 'text-slate-500'
-              }`}
+              className={`px-3 py-1 rounded-md font-medium transition-colors ${format === '2d' ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-xs' : 'text-slate-500'
+                }`}
             >
               2D Array
             </button>
             <button
               onClick={() => setFormat('keyed')}
-              className={`px-3 py-1 rounded-md font-medium transition-colors ${
-                format === 'keyed' ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-xs' : 'text-slate-500'
-              }`}
+              className={`px-3 py-1 rounded-md font-medium transition-colors ${format === 'keyed' ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-xs' : 'text-slate-500'
+                }`}
             >
               Keyed Map
             </button>

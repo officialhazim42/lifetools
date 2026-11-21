@@ -35,7 +35,7 @@ const CURRENCY_KEY = 'lifetools_pref_currency';
 
 const DEFAULT_POTS: SavingsPot[] = [
   { id: 'pot_emergency', name: 'Emergency Fund', targetAmount: 200000, currentAmount: 85000, category: 'Safety' },
-  { id: 'pot_travel', name: 'Kashmir Vacation', targetAmount: 50000, currentAmount: 32000, category: 'Travel' },
+  { id: 'pot_travel', name: 'Vacation & Travel', targetAmount: 50000, currentAmount: 32000, category: 'Travel' },
   { id: 'pot_gadgets', name: 'MacBook & Phone Upgrade', targetAmount: 150000, currentAmount: 60000, category: 'Tech' }
 ];
 

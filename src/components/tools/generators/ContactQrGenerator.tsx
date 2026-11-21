@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { QrDisplayCard } from './QrDisplayCard';
 
 export const ContactQrGenerator: React.FC = () => {
-  const [firstName, setFirstName] = useState('Alex');
-  const [lastName, setLastName] = useState('Morgan');
-  const [phone, setPhone] = useState('+1 555-0199');
-  const [email, setEmail] = useState('alex.morgan@example.com');
-  const [company, setCompany] = useState('LifeTools Inc');
-  const [title, setTitle] = useState('Lead Engineer');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [company, setCompany] = useState('');
+  const [title, setTitle] = useState('');
 
   const vCard = `BEGIN:VCARD
 VERSION:3.0
@@ -30,6 +30,7 @@ END:VCARD`;
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            placeholder="Enter first name"
             className="input-base text-sm"
           />
         </div>
@@ -41,6 +42,7 @@ END:VCARD`;
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            placeholder="Enter last name"
             className="input-base text-sm"
           />
         </div>
@@ -52,6 +54,7 @@ END:VCARD`;
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            placeholder="Enter phone number"
             className="input-base text-sm font-mono"
           />
         </div>
@@ -63,6 +66,7 @@ END:VCARD`;
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email address"
             className="input-base text-sm"
           />
         </div>
@@ -74,6 +78,7 @@ END:VCARD`;
             type="text"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
+            placeholder="Enter company or organization"
             className="input-base text-sm"
           />
         </div>
@@ -85,6 +90,7 @@ END:VCARD`;
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter job title"
             className="input-base text-sm"
           />
         </div>

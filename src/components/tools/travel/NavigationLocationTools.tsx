@@ -766,9 +766,9 @@ export const MapLinkGenerator: React.FC = () => {
 // ==========================================
 export const GoogleMapsRouteBuilder: React.FC = () => {
   const { showToast } = useToast();
-  const [origin, setOrigin] = useState('San Francisco, CA');
-  const [destination, setDestination] = useState('Yosemite National Park, CA');
-  const [waypoints, setWaypoints] = useState<string[]>(['Oakland, CA']);
+  const [origin, setOrigin] = useState('');
+  const [destination, setDestination] = useState('');
+  const [waypoints, setWaypoints] = useState<string[]>([]);
   const [travelMode, setTravelMode] = useState<'driving' | 'walking' | 'bicycling' | 'transit'>('driving');
 
   const routeUrl = generateGoogleMapsRouteUrl(origin, destination, waypoints, travelMode);
@@ -837,6 +837,7 @@ export const GoogleMapsRouteBuilder: React.FC = () => {
               type="text"
               value={origin}
               onChange={(e) => setOrigin(e.target.value)}
+              placeholder="Enter starting location or city..."
               className="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
             />
           </div>
@@ -849,6 +850,7 @@ export const GoogleMapsRouteBuilder: React.FC = () => {
               type="text"
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
+              placeholder="Enter destination location or landmark..."
               className="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
             />
           </div>

@@ -19,9 +19,7 @@ import {
 // 1. Social Media Bio Formatter
 // ==========================================
 export const SocialMediaBioFormatter: React.FC = () => {
-  const [bioText, setBioText] = useState(
-    `🚀 Full-Stack Engineer & Open Source Creator\n📍 Jammu & Kashmir, India\n💡 Building privacy-first tools for everyone\n🔗 lifetools.app`
-  );
+  const [bioText, setBioText] = useState('');
   const [platform, setPlatform] = useState<'instagram' | 'twitter' | 'tiktok' | 'linkedin'>('instagram');
   const [copied, setCopied] = useState(false);
 
@@ -66,6 +64,7 @@ export const SocialMediaBioFormatter: React.FC = () => {
           rows={5}
           value={bioText}
           onChange={(e) => setBioText(e.target.value)}
+          placeholder="Enter your profile bio or headline points..."
           className={`w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border rounded-lg focus:ring-2 ${
             isOver ? 'border-rose-500 focus:ring-rose-500' : 'border-slate-300 dark:border-slate-700 focus:ring-blue-500'
           }`}
@@ -102,9 +101,7 @@ export const SocialMediaBioFormatter: React.FC = () => {
 // 2. Instagram Caption Formatter
 // ==========================================
 export const InstagramCaptionFormatter: React.FC = () => {
-  const [caption, setCaption] = useState(
-    `Big milestones this week! 🎉 We just launched the open-source update for our developer suite.\n\nEverything runs 100% in your browser without cloud tracking.\n\nLink in bio to check it out!\n\n#tech #coding #privacy #webdev #opensource`
-  );
+  const [caption, setCaption] = useState('');
   const [copied, setCopied] = useState(false);
 
   const hashtagCount = (caption.match(/#[a-zA-Z0-9_]+/g) || []).length;
@@ -166,7 +163,7 @@ export const InstagramCaptionFormatter: React.FC = () => {
 // 3. Hashtag Organizer
 // ==========================================
 export const HashtagOrganizer: React.FC = () => {
-  const [rawInput, setRawInput] = useState('tech, webdev, Coding, #Privacy, webdev, javascript, OPENSOURCE, Tech');
+  const [rawInput, setRawInput] = useState('');
   const [copied, setCopied] = useState(false);
 
   const cleanHashtags = () => {
@@ -330,7 +327,7 @@ export const SocialMediaContentCalendar: React.FC = () => {
 // 5. Character Limit Checker
 // ==========================================
 export const CharacterLimitChecker: React.FC = () => {
-  const [content, setContent] = useState('Excited to announce our open source digital utility toolkit!');
+  const [content, setContent] = useState('');
 
   const platforms = [
     { name: 'X / Twitter Post', limit: 280 },
@@ -354,6 +351,7 @@ export const CharacterLimitChecker: React.FC = () => {
           rows={5}
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          placeholder="Type or paste text to check character limits across platforms..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-sans"
         />
       </div>
@@ -400,12 +398,12 @@ export const CharacterLimitChecker: React.FC = () => {
 // 6. YouTube Description Formatter
 // ==========================================
 export const YouTubeDescriptionFormatter: React.FC = () => {
-  const [summary, setSummary] = useState('In this video, we explore how client-side web apps achieve native-level performance.');
-  const [timestamps, setTimestamps] = useState('00:00 - Introduction\n01:30 - Core Architecture\n04:15 - Code Walkthrough\n08:45 - Summary');
-  const [links, setLinks] = useState('GitHub: https://github.com/officialhazim42/lifetools\nLive App: https://lifetools.app');
+  const [summary, setSummary] = useState('');
+  const [timestamps, setTimestamps] = useState('');
+  const [links, setLinks] = useState('');
   const [copied, setCopied] = useState(false);
 
-  const output = `${summary}\n\n⏱️ TIMESTAMPS:\n${timestamps}\n\n🔗 LINKS & RESOURCES:\n${links}\n\n#coding #tech #lifetools`;
+  const output = `${summary}\n\n⏱️ TIMESTAMPS:\n${timestamps}\n\n🔗 LINKS & RESOURCES:\n${links}`;
 
   return (
     <div className="space-y-5">
@@ -415,6 +413,7 @@ export const YouTubeDescriptionFormatter: React.FC = () => {
           rows={3}
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
+          placeholder="Enter video overview or summary..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
         />
       </div>
@@ -426,6 +425,7 @@ export const YouTubeDescriptionFormatter: React.FC = () => {
             rows={4}
             value={timestamps}
             onChange={(e) => setTimestamps(e.target.value)}
+            placeholder={"00:00 - Introduction\n01:30 - Core Architecture\n04:15 - Walkthrough"}
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-mono"
           />
         </div>
@@ -435,6 +435,7 @@ export const YouTubeDescriptionFormatter: React.FC = () => {
             rows={4}
             value={links}
             onChange={(e) => setLinks(e.target.value)}
+            placeholder="Enter relevant links and resources..."
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-mono"
           />
         </div>
@@ -467,7 +468,7 @@ export const YouTubeDescriptionFormatter: React.FC = () => {
 // 7. YouTube Tags Organizer
 // ==========================================
 export const YouTubeTagsOrganizer: React.FC = () => {
-  const [rawTags, setRawTags] = useState('react, typescript, web dev, privacy tools, client-side, vite, offline app, tutorial');
+  const [rawTags, setRawTags] = useState('');
   const [copied, setCopied] = useState(false);
 
   const cleanTags = () => {
@@ -495,6 +496,7 @@ export const YouTubeTagsOrganizer: React.FC = () => {
           rows={3}
           value={rawTags}
           onChange={(e) => setRawTags(e.target.value)}
+          placeholder="Enter comma-separated video tags..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
         />
       </div>
@@ -533,11 +535,9 @@ export const YouTubeTagsOrganizer: React.FC = () => {
 // 8. LinkedIn Post Formatter
 // ==========================================
 export const LinkedInPostFormatter: React.FC = () => {
-  const [hook, setHook] = useState('Most software does too much on the cloud.');
-  const [body, setBody] = useState(
-    'By shifting compute back to the client device, we achieved:\n• 10x faster response latency\n• 0 bytes of sensitive user data transmitted\n• Complete offline reliability'
-  );
-  const [cta, setCta] = useState('What is your stance on client-side software architecture? Let us know below.');
+  const [hook, setHook] = useState('');
+  const [body, setBody] = useState('');
+  const [cta, setCta] = useState('');
   const [copied, setCopied] = useState(false);
 
   const fullPost = `${hook}\n\n${body}\n\n${cta}`;
@@ -556,6 +556,7 @@ export const LinkedInPostFormatter: React.FC = () => {
           type="text"
           value={hook}
           onChange={(e) => setHook(e.target.value)}
+          placeholder="Enter hook headline (first 2 lines before 'See More')..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
         />
       </div>
@@ -566,6 +567,7 @@ export const LinkedInPostFormatter: React.FC = () => {
           rows={5}
           value={body}
           onChange={(e) => setBody(e.target.value)}
+          placeholder="Enter main body text and bullet points..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
         />
       </div>
@@ -576,6 +578,7 @@ export const LinkedInPostFormatter: React.FC = () => {
           type="text"
           value={cta}
           onChange={(e) => setCta(e.target.value)}
+          placeholder="Enter call-to-action or concluding question..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
         />
       </div>
@@ -673,11 +676,9 @@ export const SocialUsernameChecker: React.FC = () => {
 // 10. Social Media Post Preview
 // ==========================================
 export const SocialMediaPostPreview: React.FC = () => {
-  const [authorName, setAuthorName] = useState('Hazim Bashir');
-  const [handle, setHandle] = useState('officialhazim42');
-  const [content, setContent] = useState(
-    'Just pushed a major performance update to LifeTools! All 438 utilities run completely in-browser with zero tracking.'
-  );
+  const [authorName, setAuthorName] = useState('');
+  const [handle, setHandle] = useState('');
+  const [content, setContent] = useState('');
   const [previewPlatform, setPreviewPlatform] = useState<'x' | 'linkedin' | 'instagram'>('x');
 
   return (
@@ -689,6 +690,7 @@ export const SocialMediaPostPreview: React.FC = () => {
             type="text"
             value={authorName}
             onChange={(e) => setAuthorName(e.target.value)}
+            placeholder="Enter author name"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -698,6 +700,7 @@ export const SocialMediaPostPreview: React.FC = () => {
             type="text"
             value={handle}
             onChange={(e) => setHandle(e.target.value)}
+            placeholder="Enter username handle"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -709,6 +712,7 @@ export const SocialMediaPostPreview: React.FC = () => {
           rows={3}
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          placeholder="Write your post preview content here..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
         />
       </div>

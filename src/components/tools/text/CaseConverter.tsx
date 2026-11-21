@@ -5,7 +5,7 @@ import { Copy, Trash2 } from 'lucide-react';
 
 export const CaseConverter: React.FC = () => {
   const { showToast } = useToast();
-  const [text, setText] = useState('Transform your text across all casing formats instantly with LifeTools.');
+  const [text, setText] = useState('');
 
   const toTitleCase = (str: string) => {
     return str.replace(

@@ -3,9 +3,7 @@ import { ShieldCheck, Upload, AlertTriangle, Copy, Check, QrCode, Wifi, CreditCa
 import jsQR from 'jsqr';
 
 export const QrCodeContentInspector: React.FC = () => {
-  const [payload, setPayload] = useState(
-    'WIFI:T:WPA;S:CoffeeShop_Guest;P:SecretPass2026;;'
-  );
+  const [payload, setPayload] = useState('');
   const [copied, setCopied] = useState(false);
   const [isDecoding, setIsDecoding] = useState(false);
 
@@ -157,9 +155,9 @@ export const QrCodeContentInspector: React.FC = () => {
           </label>
           <div className="grid grid-cols-2 gap-2 my-2">
             {[
-              { label: 'Wi-Fi Network', val: 'WIFI:T:WPA;S:CoffeeShop_Guest;P:SecretPass2026;;' },
+              { label: 'Wi-Fi Network', val: 'WIFI:T:WPA;S:Office_Guest;P:Password123;;' },
               { label: 'UPI Pay Request', val: 'upi://pay?pa=store@okaxis&pn=SuperStore&am=499&tn=Order_991' },
-              { label: 'Website Link', val: 'https://github.com/officialhazim42' },
+              { label: 'Website Link', val: 'https://lifetools.app' },
               { label: 'Phone Dial', val: 'tel:+18005550199' }
             ].map(p => (
               <button

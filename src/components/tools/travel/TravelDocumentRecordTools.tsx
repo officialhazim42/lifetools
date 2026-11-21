@@ -926,13 +926,13 @@ export const HotelBookingOrganizer: React.FC = () => {
 export const FlightInformationOrganizer: React.FC = () => {
   const { showToast } = useToast();
   const [flights, setFlights] = useState<FlightRecord[]>([]);
-  const [airline, setAirline] = useState('Delta Air Lines');
-  const [flightNumber, setFlightNumber] = useState('DL 128');
-  const [departureAirport, setDepartureAirport] = useState('JFK');
-  const [arrivalAirport, setArrivalAirport] = useState('LHR');
+  const [airline, setAirline] = useState('');
+  const [flightNumber, setFlightNumber] = useState('');
+  const [departureAirport, setDepartureAirport] = useState('');
+  const [arrivalAirport, setArrivalAirport] = useState('');
   const [departureTime, setDepartureTime] = useState('');
-  const [seatNumber, setSeatNumber] = useState('21A');
-  const [bookingRef, setBookingRef] = useState('KLM892');
+  const [seatNumber, setSeatNumber] = useState('');
+  const [bookingRef, setBookingRef] = useState('');
 
   useEffect(() => {
     loadFlights();
@@ -995,6 +995,7 @@ export const FlightInformationOrganizer: React.FC = () => {
               type="text"
               value={airline}
               onChange={(e) => setAirline(e.target.value)}
+              placeholder="e.g. Delta Air Lines"
               className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1004,6 +1005,7 @@ export const FlightInformationOrganizer: React.FC = () => {
               type="text"
               value={flightNumber}
               onChange={(e) => setFlightNumber(e.target.value)}
+              placeholder="e.g. DL 128"
               className="w-full px-3 py-1.5 text-xs font-mono uppercase rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1013,6 +1015,7 @@ export const FlightInformationOrganizer: React.FC = () => {
               type="text"
               value={departureAirport}
               onChange={(e) => setDepartureAirport(e.target.value)}
+              placeholder="e.g. JFK"
               className="w-full px-3 py-1.5 text-xs font-mono uppercase rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1022,6 +1025,7 @@ export const FlightInformationOrganizer: React.FC = () => {
               type="text"
               value={arrivalAirport}
               onChange={(e) => setArrivalAirport(e.target.value)}
+              placeholder="e.g. LHR"
               className="w-full px-3 py-1.5 text-xs font-mono uppercase rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1034,6 +1038,7 @@ export const FlightInformationOrganizer: React.FC = () => {
               type="text"
               value={seatNumber}
               onChange={(e) => setSeatNumber(e.target.value)}
+              placeholder="e.g. 21A"
               className="w-full px-3 py-1.5 text-xs font-mono rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1043,6 +1048,7 @@ export const FlightInformationOrganizer: React.FC = () => {
               type="text"
               value={bookingRef}
               onChange={(e) => setBookingRef(e.target.value)}
+              placeholder="e.g. KLM892"
               className="w-full px-3 py-1.5 text-xs font-mono uppercase rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1379,16 +1385,12 @@ export const TravelJournal: React.FC = () => {
 // ==========================================
 export const TripSummaryGenerator: React.FC = () => {
   const { showToast } = useToast();
-  const [tripTitle, setTripTitle] = useState('European Summer Adventure');
-  const [destinations, setDestinations] = useState('London, Paris, Rome');
-  const [daysCount, setDaysCount] = useState(12);
-  const [totalSpent, setTotalSpent] = useState(2450);
-  const [topHighlights, setTopHighlights] = useState(
-    'Louvre Museum private tour, Colosseum underground, Sunset cruise on the Seine'
-  );
-  const [lessonsLearned, setLessonsLearned] = useState(
-    'Pack lighter carry-on next time; pre-book museum time slots 3 weeks ahead.'
-  );
+  const [tripTitle, setTripTitle] = useState('');
+  const [destinations, setDestinations] = useState('');
+  const [daysCount, setDaysCount] = useState(0);
+  const [totalSpent, setTotalSpent] = useState(0);
+  const [topHighlights, setTopHighlights] = useState('');
+  const [lessonsLearned, setLessonsLearned] = useState('');
 
   const generateReport = () => {
     return `# TRIP SUMMARY DEBRIEF: ${tripTitle}
@@ -1440,6 +1442,7 @@ Generated privately on client-side LifeTools Platform.
               type="text"
               value={tripTitle}
               onChange={(e) => setTripTitle(e.target.value)}
+              placeholder="e.g. European Summer Adventure"
               className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1449,6 +1452,7 @@ Generated privately on client-side LifeTools Platform.
               type="text"
               value={destinations}
               onChange={(e) => setDestinations(e.target.value)}
+              placeholder="e.g. London, Paris, Rome"
               className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1456,8 +1460,9 @@ Generated privately on client-side LifeTools Platform.
             <label className="text-[11px] text-slate-500 block mb-1">Total Days</label>
             <input
               type="number"
-              value={daysCount}
-              onChange={(e) => setDaysCount(parseInt(e.target.value) || 1)}
+              value={daysCount || ''}
+              onChange={(e) => setDaysCount(parseInt(e.target.value) || 0)}
+              placeholder="0"
               className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1465,8 +1470,9 @@ Generated privately on client-side LifeTools Platform.
             <label className="text-[11px] text-slate-500 block mb-1">Total Expenses ($)</label>
             <input
               type="number"
-              value={totalSpent}
+              value={totalSpent || ''}
               onChange={(e) => setTotalSpent(parseFloat(e.target.value) || 0)}
+              placeholder="0.00"
               className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
             />
           </div>
@@ -1478,6 +1484,7 @@ Generated privately on client-side LifeTools Platform.
             type="text"
             value={topHighlights}
             onChange={(e) => setTopHighlights(e.target.value)}
+            placeholder="e.g. Louvre tour, Colosseum underground, Sunset cruise"
             className="w-full px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-900 text-slate-800 dark:text-slate-100"
           />
         </div>

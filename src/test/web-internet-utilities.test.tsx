@@ -169,12 +169,16 @@ describe('Web & Internet Utilities Suite (65 Tools)', () => {
 
     it('generates timestamped URLs with minutes and seconds', () => {
       render(<YoutubeTimestampGenerator />);
+      const input = screen.getByPlaceholderText('11-character ID');
+      fireEvent.change(input, { target: { value: 'dQw4w9WgXcQ' } });
       // 1 min 30 sec = 90 sec -> ?t=90
       expect(screen.getByText('https://youtu.be/dQw4w9WgXcQ?t=90')).toBeDefined();
     });
 
     it('generates valid WhatsApp click-to-chat links with country codes', () => {
       render(<WhatsappLinkGenerator />);
+      const input = screen.getByPlaceholderText(/Enter phone with country code/i);
+      fireEvent.change(input, { target: { value: '919876543210' } });
       expect(screen.getByText(/https:\/\/wa\.me\/919876543210/i)).toBeDefined();
     });
 

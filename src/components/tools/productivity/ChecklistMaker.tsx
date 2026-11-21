@@ -24,7 +24,7 @@ const STORAGE_KEY = 'lifetools_checklist_maker';
 
 export const ChecklistMaker: React.FC = () => {
   const { showToast } = useToast();
-  const [listTitle, setListTitle] = useState('Deployment & Quality Checklist');
+  const [listTitle, setListTitle] = useState('');
   const [items, setItems] = useState<ChecklistItem[]>(() => {
     return storage.get<ChecklistItem[]>(STORAGE_KEY, [
       { id: 'c1', text: 'Validate responsive layouts across 320px to 1920px', checked: true },
@@ -87,6 +87,7 @@ export const ChecklistMaker: React.FC = () => {
             type="text"
             value={listTitle}
             onChange={(e) => setListTitle(e.target.value)}
+            placeholder="Enter checklist title..."
             className="text-lg font-bold text-slate-900 dark:text-white bg-transparent border-0 focus:outline-none flex-1"
           />
 

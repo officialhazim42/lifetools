@@ -5,7 +5,7 @@ import { Copy, RotateCcw } from 'lucide-react';
 
 export const AverageCalculator: React.FC = () => {
   const { showToast } = useToast();
-  const [inputText, setInputText] = useState('12, 18, 25, 30, 42, 55, 60, 60, 75');
+  const [inputText, setInputText] = useState('');
 
   const calculate = () => {
     const numbers = inputText
@@ -89,7 +89,7 @@ export const AverageCalculator: React.FC = () => {
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           className="input-base font-mono text-sm"
-          placeholder="e.g. 10, 20, 30, 40"
+          placeholder="Enter numbers separated by commas or spaces (e.g. 10, 20, 30)..."
         />
       </div>
 

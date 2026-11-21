@@ -5,7 +5,7 @@ import { Copy, Trash2 } from 'lucide-react';
 
 export const SlugGenerator: React.FC = () => {
   const { showToast } = useToast();
-  const [inputTitle, setInputTitle] = useState('How to Build a Fast Privacy-First Utility Suite in 2026!');
+  const [inputTitle, setInputTitle] = useState('');
   const [separator, setSeparator] = useState<'-' | '_'>('-');
   const [lowercase, setLowercase] = useState(true);
   const [removeStopWords, setRemoveStopWords] = useState(false);

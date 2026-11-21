@@ -5,7 +5,7 @@ import { Copy, Trash2, AlertCircle } from 'lucide-react';
 
 export const Base64Decoder: React.FC = () => {
   const { showToast } = useToast();
-  const [base64Input, setBase64Input] = useState('TGlmZVRvb2xzOiBGcmVlICYgUHJpdmFjeS1GaXJzdCBVdGlsaXRpZXMg8J+agA==');
+  const [base64Input, setBase64Input] = useState('');
 
   const decode = () => {
     if (!base64Input.trim()) return { text: '', error: null };

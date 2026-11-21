@@ -8,7 +8,7 @@ interface HistoryItem {
 }
 
 export const MathExpressionEvaluator: React.FC = () => {
-  const [expression, setExpression] = useState('2 * (3 + 5) ^ 2 - sqrt(144)');
+  const [expression, setExpression] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);

@@ -18,9 +18,7 @@ interface Birthday {
 
 const STORAGE_KEY = 'lifetools_birthdays';
 
-const DEFAULT_BIRTHDAYS: Birthday[] = [
-  { id: 'bday_1', name: 'Hazim Bashir', birthDate: '2001-04-02' }
-];
+const DEFAULT_BIRTHDAYS: Birthday[] = [];
 
 export const BirthdayCountdown: React.FC = () => {
   const { showToast } = useToast();

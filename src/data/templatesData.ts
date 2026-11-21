@@ -31,14 +31,14 @@ export const TEMPLATES_DATA: TemplateDefinition[] = [
       documentNo: 'INV-2026-001',
       date: new Date().toISOString().slice(0, 10),
       dueDate: new Date(Date.now() + 15 * 86400000).toISOString().slice(0, 10),
-      senderName: 'Acme Digital Solutions Ltd.',
-      senderAddress: 'Technology Park, Srinagar, J&K, 190001\ncontact@acmedigital.com | +91 98765 43210',
-      clientName: 'Global Enterprises Inc.',
-      clientAddress: '42 Commercial Boulevard, New Delhi, 110001\nfinance@globalent.com',
+      senderName: '',
+      senderAddress: '',
+      clientName: '',
+      clientAddress: '',
       taxRate: 18,
       discountAmount: 0,
       currency: '₹',
-      bankDetails: 'HDFC Bank | A/C: 50200012345678 | IFSC: HDFC0001234 | UPI: acme@okhdfcbank'
+      bankDetails: ''
     },
     sections: [
       {
@@ -74,10 +74,10 @@ export const TEMPLATES_DATA: TemplateDefinition[] = [
       documentNo: 'QUO-2026-088',
       date: new Date().toISOString().slice(0, 10),
       validUntil: new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10),
-      senderName: 'Apex Creative Studio',
-      senderAddress: 'Residency Road, Srinagar, J&K\nhello@apexcreative.io',
-      clientName: 'Horizon Retailers',
-      clientAddress: 'Mall Road, Chandigarh\nprocurement@horizon.com',
+      senderName: '',
+      senderAddress: '',
+      clientName: '',
+      clientAddress: '',
       taxRate: 18,
       currency: '₹',
       terms: '50% advance upon contract signing. Remaining 50% upon project delivery.'
@@ -115,12 +115,12 @@ export const TEMPLATES_DATA: TemplateDefinition[] = [
     defaultData: {
       documentNo: 'REC-2026-442',
       date: new Date().toISOString().slice(0, 10),
-      senderName: 'Kashmir Hardware Mart',
-      senderAddress: 'Industrial Estate, Ganderbal, 191201',
-      receivedFrom: 'Sheikh Builders & Developers',
+      senderName: '',
+      senderAddress: '',
+      receivedFrom: '',
       amountInWords: 'Thirty-Five Thousand Rupees Only',
       paymentMethod: 'UPI / Online Transfer',
-      referenceNo: 'UPI/329482910482',
+      referenceNo: '',
       paymentFor: 'Building construction materials & electrical fixtures',
       totalAmount: 35000,
       currency: '₹'
@@ -149,10 +149,10 @@ export const TEMPLATES_DATA: TemplateDefinition[] = [
       documentNo: 'PO-2026-104',
       date: new Date().toISOString().slice(0, 10),
       deliveryDate: new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10),
-      buyerName: 'LifeTools Operations Dept.',
-      buyerAddress: 'IT Tower 2, Sheikhbagh, Srinagar',
-      vendorName: 'SuperOffice Supplies Co.',
-      vendorAddress: 'Warehouse 9, Transport Nagar, Jammu',
+      buyerName: '',
+      buyerAddress: '',
+      vendorName: '',
+      vendorAddress: '',
       shippingMethod: 'Express Freight Delivery',
       taxRate: 12,
       currency: '₹'
@@ -187,13 +187,13 @@ export const TEMPLATES_DATA: TemplateDefinition[] = [
       footerNote: 'Confidential corporate communication.'
     },
     defaultData: {
-      senderCompany: 'Alpha Technologies Pvt. Ltd.',
-      senderAddress: '42 Cyber City, Gurgaon, Haryana, 122002',
+      senderCompany: '',
+      senderAddress: '',
       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-      recipientName: 'Mr. Rajesh Sharma',
-      recipientTitle: 'Director of Partnerships',
-      recipientCompany: 'Pinnacle Systems Ltd.',
-      recipientAddress: 'Sector 62, Noida, Uttar Pradesh',
+      recipientName: '',
+      recipientTitle: '',
+      recipientCompany: '',
+      recipientAddress: '',
       subject: 'Proposal for Annual Software Maintenance Agreement (2026–2027)',
       salutation: 'Dear Mr. Sharma,',
       bodyParagraphs: `We are writing to formally submit our proposal for the renewal of our Annual Software Maintenance and Technical Support Agreement for the upcoming fiscal cycle.
@@ -204,8 +204,8 @@ Under the updated terms attached, we will be expanding our SLA to provide round-
 
 We look forward to continuing our productive partnership. Please let us know if you would like to schedule a review discussion this week.`,
       signOff: 'Sincerely,',
-      signatoryName: 'Hazim Bashir',
-      signatoryTitle: 'Chief Technology Officer'
+      signatoryName: '',
+      signatoryTitle: ''
     },
     sections: []
   },
@@ -230,15 +230,15 @@ We look forward to continuing our productive partnership. Please let us know if 
     defaultData: {
       voucherNo: 'PV-2026-902',
       date: new Date().toISOString().slice(0, 10),
-      paidTo: 'Himalayan Fiber Net Pvt Ltd',
+      paidTo: '',
       amount: 14500,
       currency: '₹',
       amountInWords: 'Fourteen Thousand Five Hundred Rupees Only',
       accountHead: 'Office Utilities & High-Speed Internet',
       paymentMode: 'NEFT Bank Transfer',
-      chequeOrUpiRef: 'NEFT/UTIB9301928410',
-      preparedBy: 'Accounts Officer',
-      authorizedBy: 'Managing Director'
+      chequeOrUpiRef: '',
+      preparedBy: '',
+      authorizedBy: ''
     },
     sections: []
   },
@@ -263,12 +263,12 @@ We look forward to continuing our productive partnership. Please let us know if 
     defaultData: {
       challanNo: 'DC-2026-512',
       date: new Date().toISOString().slice(0, 10),
-      dispatchFrom: 'Central Logistics Depot, Narwal, Jammu',
-      consigneeName: 'Parihaspora High School IT Lab',
-      consigneeAddress: 'Pattan, Baramulla, J&K, 193121',
-      vehicleNo: 'JK-01-AB-4021',
-      driverName: 'Mohammad Farooq',
-      driverContact: '+91 94190 12345'
+      dispatchFrom: '',
+      consigneeName: '',
+      consigneeAddress: '',
+      vehicleNo: '',
+      driverName: '',
+      driverContact: ''
     },
     sections: [
       {
@@ -301,15 +301,15 @@ We look forward to continuing our productive partnership. Please let us know if 
       footerNote: 'Cut along standard guidelines. Printable 8-up on heavy cardstock (300 GSM).'
     },
     defaultData: {
-      fullName: 'Hazim Bashir',
-      urduName: 'حازم بشیر',
-      jobTitle: 'Independent Software Developer',
-      company: 'LifeTools Suite',
-      phone: '+91 98765 43210',
-      email: 'hazimbashir.dev@gmail.com',
-      website: 'https://lifetools.app',
-      location: 'Ganderbal, Jammu & Kashmir, India',
-      tagline: 'Private, Client-Side Digital Utilities for Everyday Life'
+      fullName: '',
+      urduName: '',
+      jobTitle: '',
+      company: '',
+      phone: '',
+      email: '',
+      website: '',
+      location: '',
+      tagline: 'Professional Digital Utilities'
     },
     sections: []
   },
@@ -332,20 +332,20 @@ We look forward to continuing our productive partnership. Please let us know if 
       footerNote: 'Prices are subject to revision with 15 days prior notice. All taxes applicable as per law.'
     },
     defaultData: {
-      companyName: 'Kashmir Organic Dry Fruits & Saffron Co.',
+      companyName: '',
       effectiveDate: 'November 2026',
       currency: '₹',
-      contactInfo: 'orders@kashmirorganics.com | WhatsApp: +91 91234 56789'
+      contactInfo: ''
     },
     sections: [
       {
         id: 'items',
         title: 'Available Products & Rates',
         items: [
-          { id: '1', description: 'Grade A1 Mogra Saffron (Per Gram)', rate: 280, note: 'Certified GI Tag' },
-          { id: '2', description: 'Kashmiri Kagzi Thin-Shell Walnuts (Per Kg)', rate: 950, note: 'Vacuum Packed' },
-          { id: '3', description: 'Mamra Kashmiri Almond Kernels (Per Kg)', rate: 1650, note: 'High Oil Content' },
-          { id: '4', description: 'Sundried Wild Dried Apricots (Per Kg)', rate: 750, note: 'Zero Preservatives' }
+          { id: '1', description: 'Product / Service Package A', rate: 250, note: 'Standard unit' },
+          { id: '2', description: 'Product / Service Package B', rate: 750, note: 'Business tier' },
+          { id: '3', description: 'Product / Service Package C', rate: 1500, note: 'Enterprise tier' },
+          { id: '4', description: 'Support & Maintenance Add-on', rate: 500, note: 'Annual coverage' }
         ]
       }
     ]
@@ -369,7 +369,7 @@ We look forward to continuing our productive partnership. Please let us know if 
       footerNote: 'For bulk enterprise orders, contact corporate sales for custom contract rates.'
     },
     defaultData: {
-      brandName: 'Nordic Craft Furniture',
+      brandName: '',
       season: 'Winter 2026 Collection',
       currency: '₹',
       intro: 'Crafted with sustainable plantation timber and hand-finished for minimalist living spaces.'
@@ -409,18 +409,15 @@ We look forward to continuing our productive partnership. Please let us know if 
       footerNote: 'References available upon request.'
     },
     defaultData: {
-      fullName: 'Hazim Bashir',
-      jobTitle: 'Senior Full-Stack Developer & Software Architect',
-      email: 'hazimbashir.dev@gmail.com',
-      phone: '+91 98765 43210',
-      location: 'Ganderbal, Jammu & Kashmir, India',
-      portfolio: 'https://github.com/officialhazim42',
-      summary: 'Passionate and results-driven software engineer specializing in offline-first web architectures, React, TypeScript, and modern client-side security. Experienced in designing resilient single-page applications with zero-dependency tooling.',
-      education: 'Bachelor of Technology (Computer Science Engineering)\nNational Institute of Technology (NIT) | CGPA: 8.9 / 10 | 2020 – 2024',
-      experience: `Lead Web Architect | LifeTools Project (2024 – Present)
-• Engineered 250+ client-side utility applications running entirely in-browser with zero server footprint.
-• Implemented AES-256-GCM encryption, Web Crypto API pipelines, and custom PKWARE ZIP engines.
-• Achieved sub-second initial load speeds and 100% offline PWA reliability.`,
+      fullName: '',
+      jobTitle: '',
+      email: '',
+      phone: '',
+      location: '',
+      portfolio: '',
+      summary: 'Experienced and results-oriented professional specializing in software architecture, modern web development, and client-side systems.',
+      education: 'Bachelor of Technology in Computer Science Engineering\nUniversity / Institute Name | 2020 – 2024',
+      experience: `Software Engineer | Technology Company (2022 – Present)\n• Designed and maintained performant web applications with responsive user interfaces.\n• Implemented secure client-side data storage and optimized asset delivery pipelines.\n• Collaborated with cross-functional teams to deliver scalable features.`,
       skills: 'TypeScript, React 18, Vite, Tailwind CSS, IndexedDB, Web Crypto API, Node.js, Python, Git'
     },
     sections: []
@@ -444,22 +441,16 @@ We look forward to continuing our productive partnership. Please let us know if 
       footerNote: 'Thank you for your time and consideration.'
     },
     defaultData: {
-      applicantName: 'Hazim Bashir',
-      applicantContact: 'hazimbashir.dev@gmail.com | +91 98765 43210 | Ganderbal, J&K',
+      applicantName: '',
+      applicantContact: '',
       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       hiringManager: 'Hiring Team',
-      companyName: 'Innovative Tech Labs',
-      companyAddress: 'Bengaluru, Karnataka',
-      targetRole: 'Senior Frontend Engineer (React / TypeScript)',
-      letterBody: `I am writing to express my strong enthusiasm for the Senior Frontend Engineer position at Innovative Tech Labs. Having followed your company's groundbreaking open-source tools, I am eager to contribute my expertise in client-side web engineering and performant TypeScript architectures.
-
-Throughout my development career, I have designed zero-server, privacy-first web applications handling high-concurrency offline data manipulation. In my recent work on the LifeTools suite, I spearheaded the deployment of 250+ responsive browser tools, architecting client-side AES-256 encryption and native IndexedDB caching layers.
-
-My technical background aligns seamlessly with your requirement for engineers who champion code quality, clean architecture, and responsive user interfaces.
-
-I welcome the opportunity to discuss how my hands-on problem-solving skills and passion for modern frontend technology will drive measurable results for your product roadmap.`,
+      companyName: '',
+      companyAddress: '',
+      targetRole: 'Software Engineer',
+      letterBody: `I am writing to express my strong enthusiasm for the Software Engineer position at [Company Name]. Having followed your company's innovative work, I am eager to contribute my technical background and problem-solving skills to your engineering roadmap.\n\nThroughout my experience, I have developed modern, reliable web applications with a focus on code quality, performance, and user experience. My background aligns well with your team's focus on scalable systems and high-quality software architecture.\n\nI welcome the opportunity to discuss how my experience and dedication will deliver immediate value to your organization.`,
       signOff: 'Sincerely,',
-      signature: 'Hazim Bashir'
+      signature: ''
     },
     sections: []
   },
@@ -482,14 +473,14 @@ I welcome the opportunity to discuss how my hands-on problem-solving skills and 
       footerNote: 'Submitted in partial fulfillment of course requirements.'
     },
     defaultData: {
-      universityName: 'UNIVERSITY OF KASHMIR',
+      universityName: 'UNIVERSITY / COLLEGE NAME',
       department: 'Department of Computer Science & Information Technology',
       courseCode: 'CS-502: Advanced Algorithms & Data Structures',
       assignmentTitle: 'Design and Analysis of Self-Balancing Binary Trees & Asymptotic Bounds',
-      studentName: 'Hazim Bashir',
-      rollNumber: '2024-CS-42',
+      studentName: '',
+      rollNumber: '',
       semester: 'Semester V (Autumn 2026)',
-      submittedTo: 'Prof. Dr. Abdul Rahman, Head of Department',
+      submittedTo: 'Faculty Instructor Name',
       submissionDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
     },
     sections: []
@@ -513,11 +504,11 @@ I welcome the opportunity to discuss how my hands-on problem-solving skills and 
       footerNote: 'National Institute of Technology | Academic Year 2025–2026'
     },
     defaultData: {
-      projectTitle: 'LIFETOOLS: ARCHITECTURE OF A CLIENT-SIDE, ZERO-KNOWLEDGE DIGITAL UTILITY PLATFORM',
+      projectTitle: 'MAJOR CAPSTONE PROJECT REPORT',
       subtitle: 'A Major Project Dissertation submitted in partial fulfillment of the degree of Bachelor of Technology in Computer Science',
-      institutionName: 'NATIONAL INSTITUTE OF TECHNOLOGY',
-      submittedBy: 'Hazim Bashir (Reg. No: 2020BCS042)',
-      projectGuide: 'Under the guidance of Prof. M. K. Sharma',
+      institutionName: 'INSTITUTE / UNIVERSITY NAME',
+      submittedBy: '',
+      projectGuide: 'Under the guidance of [Faculty Guide Name]',
       academicSession: 'Session 2025 – 2026'
     },
     sections: []
@@ -541,7 +532,7 @@ I welcome the opportunity to discuss how my hands-on problem-solving skills and 
       footerNote: 'Consistency beats intensity. Take a 10-minute break after every 50-minute study block.'
     },
     defaultData: {
-      studentName: 'Hazim Bashir',
+      studentName: '',
       examTarget: 'Semester Final Examinations (Dec 2026)',
       weeklyGoal: 'Complete 30 hours of focused revision and solve 5 past year question papers.'
     },
@@ -628,7 +619,7 @@ I welcome the opportunity to discuss how my hands-on problem-solving skills and 
           { id: '1', description: 'Roll 01: Aamir Hussain', note: 'Present: 22 / 24 (91.6%)' },
           { id: '2', description: 'Roll 02: Basit Bilal', note: 'Present: 24 / 24 (100.0%)' },
           { id: '3', description: 'Roll 03: Danish Qadir', note: 'Present: 20 / 24 (83.3%)' },
-          { id: '4', description: 'Roll 04: Hazim Bashir', note: 'Present: 24 / 24 (100.0%)' },
+          { id: '4', description: 'Student 04', note: 'Present: 24 / 24 (100.0%)' },
           { id: '5', description: 'Roll 05: Ishfaq Ahmad', note: 'Present: 21 / 24 (87.5%)' }
         ]
       }
@@ -691,7 +682,7 @@ I welcome the opportunity to discuss how my hands-on problem-solving skills and 
     defaultData: {
       institution: 'LIFETOOLS DIGITAL ACADEMY',
       awardPreamble: 'This is proudly presented to',
-      recipientName: 'Hazim Bashir',
+      recipientName: '',
       citation: 'for successfully completing the comprehensive advanced program in Client-Side Web Architecture, Web Crypto Security, and Offline Progressive Web Application Development with distinction.',
       issueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       instructorSign: 'Director of Academic Affairs',
@@ -761,7 +752,7 @@ I welcome the opportunity to discuss how my hands-on problem-solving skills and 
       date: new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
       topPriority1: 'Complete Templates & Document Creator implementation',
       topPriority2: 'Run full Vitest test suite and resolve edge cases',
-      topPriority3: 'Evening 45-minute fitness walk in Ganderbal',
+      topPriority3: 'Evening 45-minute fitness walk',
       waterTracker: '8 Glasses (● ● ● ● ● ○ ○ ○)',
       notesGratitude: 'Grateful for clean code, fast compiler feedback, and productive morning energy.'
     },
@@ -913,27 +904,27 @@ I welcome the opportunity to discuss how my hands-on problem-solving skills and 
     },
     defaultData: {
       date: new Date().toISOString().slice(0, 10),
-      storeName: 'Local Farmers Market & Superstore'
+      storeName: ''
     },
     sections: [
       {
         id: 'produce',
         title: 'Fresh Produce & Fruit',
         items: [
-          { id: '1', description: 'Kashmiri Apples (Crisp Red)', quantity: 2, note: 'Kg' },
-          { id: '2', description: 'Fresh Spinach & Collard Greens (Haakh)', quantity: 3, note: 'Bunches' },
-          { id: '3', description: 'Organic Tomatoes & Red Onions', quantity: 5, note: 'Kg' },
-          { id: '4', description: 'Lemons, Ginger & Fresh Coriander', quantity: 1, note: 'Pack' }
+          { id: '1', description: 'Fresh Apples & Bananas', quantity: 2, note: 'Kg' },
+          { id: '2', description: 'Spinach & Salad Greens', quantity: 2, note: 'Bunches' },
+          { id: '3', description: 'Tomatoes & Onions', quantity: 3, note: 'Kg' },
+          { id: '4', description: 'Citrus & Fresh Herbs', quantity: 1, note: 'Pack' }
         ]
       },
       {
         id: 'pantry',
         title: 'Dairy & Pantry Essentials',
         items: [
-          { id: '5', description: 'Pure Cow Milk & Natural Yogurt (Dahi)', quantity: 4, note: 'Litres' },
-          { id: '6', description: 'Whole Wheat Atta Flour', quantity: 10, note: 'Kg' },
-          { id: '7', description: 'Mustard Oil (Cold Pressed)', quantity: 2, note: 'Litres' },
-          { id: '8', description: 'Basmati Rice & Red Kidney Beans (Rajma)', quantity: 5, note: 'Kg' }
+          { id: '5', description: 'Fresh Milk & Yogurt', quantity: 2, note: 'Litres' },
+          { id: '6', description: 'Whole Wheat Flour', quantity: 5, note: 'Kg' },
+          { id: '7', description: 'Olive / Cooking Oil', quantity: 1, note: 'Litre' },
+          { id: '8', description: 'Rice & Grains', quantity: 3, note: 'Kg' }
         ]
       }
     ]
@@ -993,24 +984,22 @@ I welcome the opportunity to discuss how my hands-on problem-solving skills and 
       footerNote: 'Keep digital and physical copies of passport, boarding passes, and hotel reservations.'
     },
     defaultData: {
-      destination: 'Gulmarg & Pahalgam, Jammu & Kashmir',
-      travelDates: 'December 12 – December 18, 2026 (7 Days)',
-      transportMode: 'Flight to Srinagar (SXR) + Private 4x4 Cab',
-      hotelBooking: 'Highland Alpine Resort (Confirmation: #HR-8842)',
-      emergencyContact: '+91 94190 99887'
+      destination: '',
+      travelDates: '',
+      transportMode: '',
+      hotelBooking: '',
+      emergencyContact: ''
     },
     sections: [
       {
         id: 'itinerary',
         title: 'Day-by-Day Schedule',
         items: [
-          { id: '1', description: 'Day 1: Arrival in Srinagar', note: 'Check-in, Shikara ride on Dal Lake, explore Mughal Gardens' },
-          { id: '2', description: 'Day 2: Scenic Drive to Gulmarg', note: 'Gondola Phase 1 & 2 tickets booked for 11:00 AM. Snowshoeing' },
-          { id: '3', description: 'Day 3: Skiing & Snow Activities', note: 'Beginner ski lesson, visit St. Mary’s Church & evening hot kahwa' },
-          { id: '4', description: 'Day 4: Transfer to Pahalgam', note: 'Stop at saffron fields in Pampore. Check-in along Lidder River' },
-          { id: '5', description: 'Day 5: Betaab Valley & Aru Valley', note: 'Day hike in Aru, photography, local trout tasting' },
-          { id: '6', description: 'Day 6: Baisaran Pine Meadows', note: 'Pony trek to mini-Switzerland, local handicraft souvenir shopping' },
-          { id: '7', description: 'Day 7: Departure from Srinagar', note: 'Morning visit to Hazratbal, flight departure at 04:30 PM' }
+          { id: '1', description: 'Day 1: Arrival & Hotel Check-in', note: 'Flight arrival, transfer to hotel, evening city walk' },
+          { id: '2', description: 'Day 2: City Landmarks & Guided Tour', note: 'Morning museum tour, historic district exploration' },
+          { id: '3', description: 'Day 3: Outdoor Excursion & Activities', note: 'Scenic day trip and photography' },
+          { id: '4', description: 'Day 4: Free Day & Local Cuisine', note: 'Local market shopping and dining' },
+          { id: '5', description: 'Day 5: Hotel Check-out & Departure', note: 'Morning packing, airport transfer and flight home' }
         ]
       }
     ]
@@ -1179,7 +1168,7 @@ Our engineering team is finalizing comprehensive automated test suites in Vitest
 
 Please feel free to reply with feedback or test observations.`,
       signOff: 'Best regards,',
-      senderName: 'Hazim Bashir',
+      senderName: '',
       senderTitle: 'Software Architect | LifeTools Project'
     },
     sections: []
@@ -1207,7 +1196,7 @@ Please feel free to reply with feedback or test observations.`,
       recipientName: 'Mr. Vikram Malhotra',
       recipientTitle: 'Vice President of Engineering',
       companyName: 'CloudScale Technologies Ltd.',
-      employeeName: 'Hazim Bashir',
+      employeeName: '',
       employeeTitle: 'Senior Software Engineer',
       lastWorkingDay: 'December 15, 2026',
       letterBody: `Please accept this letter as formal notification that I am resigning from my position as Senior Software Engineer at CloudScale Technologies Ltd. In accordance with my employment contract, my last working day will be December 15, 2026.
@@ -1218,7 +1207,7 @@ During my remaining notice period, I am fully committed to ensuring a seamless k
 
 I wish CloudScale Technologies continued success, and I hope we can stay in touch in the future.`,
       signOff: 'Respectfully yours,',
-      signature: 'Hazim Bashir'
+      signature: ''
     },
     sections: []
   },
@@ -1244,13 +1233,13 @@ I wish CloudScale Technologies continued success, and I hope we can stay in touc
       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       managerName: 'Ms. Priya Nambiar, Engineering Manager',
       companyOrCollege: 'TechCorp Digital Solutions',
-      applicantName: 'Hazim Bashir',
+      applicantName: '',
       employeeId: 'EMP-4029',
       leaveType: 'Casual & Personal Leave',
       startDate: 'November 26, 2026',
       endDate: 'November 28, 2026',
       totalDays: '3 Working Days',
-      reason: 'I am writing to formally request 3 days of leave from November 26 to November 28, 2026, due to urgent personal and family commitments requiring my presence in Ganderbal, J&K.',
+      reason: 'I am writing to formally request leave from [Start Date] to [End Date] due to urgent personal and family commitments.',
       workHandover: 'Prior to my departure, I will complete all scheduled sprint deliverables. My colleague Tariq Mir has kindly agreed to provide primary coverage for emergency system triage.',
       emergencyContact: '+91 98765 43210'
     },
@@ -1278,15 +1267,15 @@ I wish CloudScale Technologies continued success, and I hope we can stay in touc
       companyName: 'Apex Innovations Software Private Limited',
       companyAddress: 'Cyber Heights, Electronic City, Bangalore, 560100',
       issueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-      employeeName: 'Mr. Hazim Bashir',
+      employeeName: '',
       designation: 'Senior Frontend Architect',
       tenureStart: 'June 01, 2023',
       tenureEnd: 'November 15, 2026',
       certificateBody: `TO WHOMSOEVER IT MAY CONCERN
 
-This is to certify that Mr. Hazim Bashir was employed with Apex Innovations Software Private Limited from June 01, 2023 to November 15, 2026. At the time of his departure, he was serving as Senior Frontend Architect in the Core Product Engineering division.
+This is to certify that Mr.  was employed with Apex Innovations Software Private Limited from June 01, 2023 to November 15, 2026. At the time of his departure, he was serving as Senior Frontend Architect in the Core Product Engineering division.
 
-During his tenure with our organization, Mr. Hazim demonstrated outstanding technical competence, leadership, and integrity. He played a pivotal role in modernizing our client-side software architecture, championing TypeScript best practices, and ensuring exceptional application responsiveness.
+During his tenure with our organization, Mr.  demonstrated outstanding technical competence, leadership, and integrity. He played a pivotal role in modernizing our client-side software architecture, championing TypeScript best practices, and ensuring exceptional application responsiveness.
 
 His professional conduct was exemplary, and he maintained excellent working relationships with colleagues and clients alike. We thank him for his valuable contributions and wish him all the best in his future professional endeavors.`,
       signatoryName: 'Sanjay Deshmukh',
@@ -1313,20 +1302,16 @@ His professional conduct was exemplary, and he maintained excellent working rela
       footerNote: 'Curriculum Vitae and GitHub repositories attached for reference.'
     },
     defaultData: {
-      studentName: 'Hazim Bashir',
-      studentEmail: 'hazimbashir.dev@gmail.com',
-      studentPhone: '+91 98765 43210',
+      studentName: '',
+      studentEmail: '',
+      studentPhone: '',
       university: 'National Institute of Technology (NIT)',
       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-      companyTarget: 'Google DeepMind Engineering Division',
+      companyTarget: '[Target Organization Name]',
       roleTarget: 'Summer Software Engineering Intern (Web Systems)',
-      letterContent: `I am writing to formally submit my application for the Summer Software Engineering Internship position at Google DeepMind. As a Computer Science undergraduate with a passion for high-performance client-side architectures, I have long admired DeepMind's pioneering work in scalable systems.
-
-My practical engineering experience includes designing the LifeTools open platform, an offline-first suite of 250+ responsive utilities built in React and TypeScript. In this project, I independently implemented zero-dependency PKWARE ZIP engines, Web Crypto API security pipelines, and native IndexedDB caching layers.
-
-I am eager to apply my strong foundation in algorithms, modern JavaScript/TypeScript, and responsive web design to your active development workflows while learning from world-class engineers.`,
+      letterContent: `I am writing to formally submit my application for the Software Engineering Internship position at [Company Name]. As a Computer Science undergraduate with a passion for high-performance client-side architectures, I am eager to contribute to your engineering workflows.\n\nMy practical engineering experience includes designing responsive, client-side web applications using React, TypeScript, and modern browser APIs. I am eager to apply my strong foundation in algorithms, modern JavaScript, and web design to your development team while learning from experienced engineers.`,
       signOff: 'Sincerely,',
-      signature: 'Hazim Bashir'
+      signature: ''
     },
     sections: []
   },
@@ -1352,7 +1337,7 @@ I am eager to apply my strong foundation in algorithms, modern JavaScript/TypeSc
       meetingTitle: 'Quarterly Product Architecture & Security Review (Q4 2026)',
       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       timeLocation: '10:00 AM – 11:30 AM IST | Virtual Conference Room A',
-      meetingLeader: 'Hazim Bashir, Lead Architect',
+      meetingLeader: '',
       objective: 'Review v1.3.0 feature readiness, browser crypto benchmarks, and offline reliability.'
     },
     sections: [
@@ -1389,7 +1374,7 @@ I am eager to apply my strong foundation in algorithms, modern JavaScript/TypeSc
     defaultData: {
       meetingTitle: 'Sprint 24 Planning & Technical Review',
       date: new Date().toISOString().slice(0, 10),
-      attendees: 'Hazim Bashir (Chair), Tariq Mir, Basit Bilal, Dr. A. Rahman',
+      attendees: 'Project Lead (Chair), Technical Lead, Quality Analyst',
       keyDecisions: `1. Approved adoption of pure TypeScript PKWARE ZIP archive engine to maintain zero external dependencies.
 2. Verified that all 40 document templates will be registered individually in toolsRegistry for direct URL deep-linking.
 3. Confirmed full integration with the Universal Backup & Restore System for template draft preservation.`
@@ -1399,7 +1384,7 @@ I am eager to apply my strong foundation in algorithms, modern JavaScript/TypeSc
         id: 'actionItems',
         title: 'Assigned Action Items & Owners',
         items: [
-          { id: '1', description: 'Finalize DocumentEditor CSS @media print styling for A4 export', status: 'Owner: Hazim | Due: Nov 21' },
+          { id: '1', description: 'Finalize DocumentEditor CSS @media print styling for A4 export', status: 'Owner: Engineering Lead | Due: Friday' },
           { id: '2', description: 'Verify responsive viewports down to 320px mobile screens', status: 'Owner: QA Team | Due: Nov 22' },
           { id: '3', description: 'Generate updated XML sitemap with 258 platform routes', status: 'Owner: DevOps | Due: Nov 23' }
         ]
@@ -1426,8 +1411,8 @@ I am eager to apply my strong foundation in algorithms, modern JavaScript/TypeSc
     },
     defaultData: {
       projectTitle: 'Modernization of Enterprise Client Portal & Offline Data Suite',
-      preparedFor: 'Starlight Global Logistics Inc.',
-      preparedBy: 'Hazim Bashir, Principal Consultant',
+      preparedFor: '',
+      preparedBy: '',
       executiveSummary: `This proposal outlines our turnkey strategy to modernize your internal operational tools into a high-performance, offline-capable Progressive Web Application. By transitioning from legacy desktop software to modern React 18, TypeScript, and client-side IndexedDB caching, your field operators will achieve instantaneous data access even in low-bandwidth transit environments.`,
       estimatedBudget: '₹2,45,000 (Inclusive of Architecture, UI Design, QA Testing & 6 Months Maintenance)',
       timeline: '8 Weeks from Contract Execution'
@@ -1465,7 +1450,7 @@ I am eager to apply my strong foundation in algorithms, modern JavaScript/TypeSc
     },
     defaultData: {
       reportPeriod: 'Monthly Engineering Report — November 2026',
-      employeeName: 'Hazim Bashir',
+      employeeName: '',
       roleTeam: 'Lead Full-Stack Engineer | LifeTools Project',
       summary: 'Delivered major platform upgrades including the Universal Backup & Restore System and the brand new Templates & Document Creator category comprising 40 fully operational utilities.'
     },
@@ -1506,14 +1491,8 @@ I am eager to apply my strong foundation in algorithms, modern JavaScript/TypeSc
       recommenderTitle: 'Professor & Dean of Computer Science',
       institution: 'Faculty of Engineering & Technology',
       recipientTitle: 'Admissions Committee / Hiring Committee',
-      candidateName: 'Mr. Hazim Bashir',
-      letterBody: `It is my distinct privilege to write this letter of recommendation for Mr. Hazim Bashir. I have known Hazim for over three years in my capacity as Professor of Computer Science, during which he consistently ranked in the top 2% of his engineering cohort.
-
-Hazim possesses an uncommon combination of deep technical insight, architectural curiosity, and disciplined work ethic. In his senior software capstone, he demonstrated exceptional mastery of client-side web technologies, independently conceptualizing and deploying high-performance applications with intricate security requirements.
-
-Beyond his technical acumen, Hazim is an articulate communicator and natural team collaborator who approaches complex engineering challenges with humility, persistence, and creativity.
-
-I give Hazim Bashir my highest recommendation without reservation for advanced graduate studies or senior engineering roles. I am confident he will make significant contributions wherever he goes.`,
+      candidateName: '',
+      letterBody: `It is my distinct privilege to write this letter of recommendation for [Candidate Name]. Having known the candidate in my capacity as Professor of Computer Science, I have observed exceptional dedication, intellectual curiosity, and disciplined work ethic.\n\nThe candidate demonstrates an uncommon combination of deep technical insight, architectural curiosity, and disciplined work ethic. Beyond technical acumen, the candidate is an articulate communicator and natural team collaborator who approaches complex engineering challenges with humility, persistence, and creativity.\n\nI give [Candidate Name] my highest recommendation without reservation for advanced graduate studies or senior engineering roles. I am confident they will make significant contributions wherever they go.`,
       signOff: 'Warmest regards,',
       signature: 'Dr. Farooq Ahmad Bhat'
     },

@@ -5,7 +5,7 @@ import { Copy, Trash2, AlertCircle } from 'lucide-react';
 
 export const UrlDecoder: React.FC = () => {
   const { showToast } = useToast();
-  const [encodedUrl, setEncodedUrl] = useState('https%3A%2F%2Flifetools.app%2Fsearch%3Fquery%3Dhello%20world%20%26%20mode%3Doffline');
+  const [encodedUrl, setEncodedUrl] = useState('');
 
   const decode = () => {
     if (!encodedUrl.trim()) return { text: '', error: null };

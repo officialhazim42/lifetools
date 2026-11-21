@@ -5,11 +5,9 @@ import { Copy, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export const RegexTester: React.FC = () => {
   const { showToast } = useToast();
-  const [pattern, setPattern] = useState('([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})');
+  const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState('g');
-  const [testString, setTestString] = useState(
-    'Contact our team at support@lifetools.app or reach out to hello@example.com for inquiries.'
-  );
+  const [testString, setTestString] = useState('');
 
   const testRegex = () => {
     if (!pattern) return { matches: [], error: null };

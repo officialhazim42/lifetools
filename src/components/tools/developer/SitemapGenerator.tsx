@@ -5,9 +5,7 @@ import { Copy, Download } from 'lucide-react';
 
 export const SitemapGenerator: React.FC = () => {
   const { showToast } = useToast();
-  const [urls, setUrls] = useState(
-    'https://lifetools.app/\nhttps://lifetools.app/tools\nhttps://lifetools.app/categories\nhttps://lifetools.app/about'
-  );
+  const [urls, setUrls] = useState('');
   const [changefreq, setChangefreq] = useState('weekly');
   const [priority, setPriority] = useState('0.8');
 

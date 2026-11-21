@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { QrDisplayCard } from './QrDisplayCard';
 
 export const PhoneQrGenerator: React.FC = () => {
-  const [phoneNumber, setPhoneNumber] = useState('+1 555-0199');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
-  const telUri = `tel:${phoneNumber.replace(/\s+/g, '')}`;
+  const telUri = phoneNumber ? `tel:${phoneNumber.replace(/\s+/g, '')}` : '';
 
   return (
     <div className="space-y-6">
@@ -17,7 +17,7 @@ export const PhoneQrGenerator: React.FC = () => {
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
           className="input-base text-base font-medium font-mono"
-          placeholder="+1 555-0199"
+          placeholder="Enter phone number with country code (e.g. +1 555-0199)"
         />
       </div>
 

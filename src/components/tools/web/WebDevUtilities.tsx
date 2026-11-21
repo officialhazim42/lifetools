@@ -332,44 +332,46 @@ export const ResponsiveScreenTester: React.FC = () => {
 // 9. URL Builder & 10. UTM Link Generator
 // -------------------------------------------------------------
 export const UrlBuilder: React.FC = () => {
-  const [base, setBase] = useState('https://lifetools.app/search');
-  const [q, setQ] = useState('calculator');
+  const [base, setBase] = useState('');
+  const [q, setQ] = useState('');
   const [lang, setLang] = useState('en');
 
-  const finalUrl = `${base}?q=${encodeURIComponent(q)}&lang=${encodeURIComponent(lang)}`;
+  const finalUrl = base ? `${base}?q=${encodeURIComponent(q)}&lang=${encodeURIComponent(lang)}` : '';
 
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <input type="text" value={base} onChange={(e) => setBase(e.target.value)} placeholder="Base URL" className="px-3 py-2 text-xs rounded-xl border" />
-        <input type="text" value={q} onChange={(e) => setQ(e.target.value)} placeholder="param q" className="px-3 py-2 text-xs rounded-xl border" />
-        <input type="text" value={lang} onChange={(e) => setLang(e.target.value)} placeholder="param lang" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={base} onChange={(e) => setBase(e.target.value)} placeholder="Base URL (e.g. https://example.com/search)" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Query param q" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={lang} onChange={(e) => setLang(e.target.value)} placeholder="Param lang (e.g. en)" className="px-3 py-2 text-xs rounded-xl border" />
       </div>
       <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 font-mono text-xs break-all font-bold text-emerald-500">
-        {finalUrl}
+        {finalUrl || 'Enter a base URL above'}
       </div>
     </div>
   );
 };
 
 export const UtmLinkGenerator: React.FC = () => {
-  const [url, setUrl] = useState('https://lifetools.app');
-  const [source, setSource] = useState('twitter');
-  const [medium, setMedium] = useState('social');
-  const [campaign, setCampaign] = useState('spring_launch');
+  const [url, setUrl] = useState('');
+  const [source, setSource] = useState('');
+  const [medium, setMedium] = useState('');
+  const [campaign, setCampaign] = useState('');
 
-  const utmUrl = `${url}?utm_source=${encodeURIComponent(source)}&utm_medium=${encodeURIComponent(medium)}&utm_campaign=${encodeURIComponent(campaign)}`;
+  const utmUrl = url
+    ? `${url}?utm_source=${encodeURIComponent(source || 'source')}&utm_medium=${encodeURIComponent(medium || 'medium')}&utm_campaign=${encodeURIComponent(campaign || 'campaign')}`
+    : '';
 
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Target URL" className="px-3 py-2 text-xs rounded-xl border" />
-        <input type="text" value={source} onChange={(e) => setSource(e.target.value)} placeholder="utm_source" className="px-3 py-2 text-xs rounded-xl border" />
-        <input type="text" value={medium} onChange={(e) => setMedium(e.target.value)} placeholder="utm_medium" className="px-3 py-2 text-xs rounded-xl border" />
-        <input type="text" value={campaign} onChange={(e) => setCampaign(e.target.value)} placeholder="utm_campaign" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Target URL (e.g. https://example.com)" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={source} onChange={(e) => setSource(e.target.value)} placeholder="utm_source (e.g. twitter)" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={medium} onChange={(e) => setMedium(e.target.value)} placeholder="utm_medium (e.g. social)" className="px-3 py-2 text-xs rounded-xl border" />
+        <input type="text" value={campaign} onChange={(e) => setCampaign(e.target.value)} placeholder="utm_campaign (e.g. launch)" className="px-3 py-2 text-xs rounded-xl border" />
       </div>
       <div className="p-3 bg-slate-50 dark:bg-slate-850 rounded-xl font-mono text-xs break-all font-bold text-emerald-500">
-        {utmUrl}
+        {utmUrl || 'Enter a target URL above'}
       </div>
     </div>
   );
@@ -379,7 +381,7 @@ export const UtmLinkGenerator: React.FC = () => {
 // 11. Robots.txt Generator & Directives Builder
 // -------------------------------------------------------------
 export const RobotsTxtBuilder: React.FC = () => {
-  const [sitemap, setSitemap] = useState('https://lifetools.app/sitemap.xml');
+  const [sitemap, setSitemap] = useState('');
   const [disallowAi, setDisallowAi] = useState(true);
 
   const txt = `User-agent: *
@@ -387,7 +389,7 @@ Disallow: /admin/
 Disallow: /private/
 Allow: /
 
-${disallowAi ? `User-agent: GPTBot\nDisallow: /\n\nUser-agent: ClaudeBot\nDisallow: /\n` : ''}Sitemap: ${sitemap}`;
+${disallowAi ? `User-agent: GPTBot\nDisallow: /\n\nUser-agent: ClaudeBot\nDisallow: /\n` : ''}${sitemap ? `Sitemap: ${sitemap}` : '# Sitemap: https://example.com/sitemap.xml'}`;
 
   return (
     <div className="space-y-4">

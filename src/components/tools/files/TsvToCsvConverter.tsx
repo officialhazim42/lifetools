@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { FileSpreadsheet, ArrowLeftRight, Download, Copy, Check, Upload } from 'lucide-react';
 import { exportToCsv } from '../../../utils/storage';
 
-const SAMPLE_TSV = `Name\tRole\tCity\tExperience
-Hazim Bashir\tAndroid Developer\tGanderbal\t5 Years
-Aisha Khan\tProduct Designer\tBengaluru\t3 Years
-John Doe\tDevOps Engineer\tSan Francisco\t7 Years`;
+const SAMPLE_TSV = `Item\tCategory\tQuantity\tPrice
+Wireless Mouse\tElectronics\t25\t29.99
+Ergonomic Chair\tFurniture\t10\t199.50
+USB-C Cable\tAccessories\t50\t12.99`;
 
 export const TsvToCsvConverter: React.FC = () => {
   const [direction, setDirection] = useState<'tsvToCsv' | 'csvToTsv'>('tsvToCsv');
-  const [inputData, setInputData] = useState(SAMPLE_TSV);
+  const [inputData, setInputData] = useState('');
   const [copied, setCopied] = useState(false);
 
   const convertData = () => {

@@ -499,6 +499,27 @@ export const DocumentEditor: React.FC<DocumentEditorProps> = ({
 
                 const isNumber = typeof val === 'number';
 
+                const getPlaceholder = (k: string, lbl: string): string => {
+                  const lower = k.toLowerCase();
+                  if (lower.includes('fullname') || lower === 'name' || lower.includes('sendername') || lower.includes('author')) return 'Enter your full name';
+                  if (lower.includes('clientname') || lower.includes('recipientname') || lower.includes('recipient')) return 'Enter recipient name';
+                  if (lower.includes('jobtitle') || (lower.includes('title') && !lower.includes('document') && !lower.includes('head'))) return 'Enter your job title';
+                  if (lower.includes('company') || lower.includes('organization') || lower.includes('storename')) return 'Enter company name';
+                  if (lower.includes('address') || lower.includes('location')) return 'Enter your address';
+                  if (lower.includes('email')) return 'Enter email address';
+                  if (lower.includes('phone') || lower.includes('contact')) return 'Enter phone number';
+                  if (lower.includes('website') || lower.includes('url')) return 'Enter website';
+                  if (lower.includes('tax') || lower.includes('tin') || lower.includes('gst')) return 'Enter tax identification number';
+                  if (lower.includes('amount') || lower.includes('rate') || lower.includes('price')) return 'Enter amount';
+                  if (lower.includes('date')) return 'Enter document date';
+                  if (lower.includes('destination')) return 'Enter destination';
+                  if (lower.includes('summary')) return 'Enter summary...';
+                  if (lower.includes('description') || lower.includes('productdescription')) return 'Enter description...';
+                  if (lower.includes('reference') || lower.includes('refnumber')) return 'Enter reference number';
+                  if (lower.includes('body')) return 'Enter message body...';
+                  return `Enter ${lbl.toLowerCase()}`;
+                };
+
                 return (
                   <div key={key}>
                     <label className="text-xs font-semibold text-slate-600 dark:text-slate-400 block mb-1">
@@ -509,21 +530,24 @@ export const DocumentEditor: React.FC<DocumentEditorProps> = ({
                         rows={key.toLowerCase().includes('body') || key.toLowerCase().includes('experience') ? 6 : 3}
                         value={val || ''}
                         onChange={(e) => handleFieldChange(key, e.target.value)}
-                        className="w-full text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                        placeholder={getPlaceholder(key, label)}
+                        className="w-full text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 p-2.5 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
                       />
                     ) : isNumber ? (
                       <input
                         type="number"
                         value={val !== undefined ? val : ''}
                         onChange={(e) => handleFieldChange(key, parseFloat(e.target.value) || 0)}
-                        className="w-full text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 p-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                        placeholder={getPlaceholder(key, label)}
+                        className="w-full text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 p-2 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
                       />
                     ) : (
                       <input
                         type="text"
                         value={val || ''}
                         onChange={(e) => handleFieldChange(key, e.target.value)}
-                        className="w-full text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 p-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                        placeholder={getPlaceholder(key, label)}
+                        className="w-full text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 p-2 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
                       />
                     )}
                   </div>

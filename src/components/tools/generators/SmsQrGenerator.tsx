@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { QrDisplayCard } from './QrDisplayCard';
 
 export const SmsQrGenerator: React.FC = () => {
-  const [phone, setPhone] = useState('+1 555-0199');
-  const [message, setMessage] = useState('Hello! Inquiring about your services.');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
 
-  const smsUri = `smsto:${phone.replace(/\s+/g, '')}:${message}`;
+  const smsUri = phone ? `smsto:${phone.replace(/\s+/g, '')}:${message}` : '';
 
   return (
     <div className="space-y-6">
@@ -18,6 +18,7 @@ export const SmsQrGenerator: React.FC = () => {
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            placeholder="Enter recipient phone number"
             className="input-base text-sm font-mono"
           />
         </div>
@@ -29,6 +30,7 @@ export const SmsQrGenerator: React.FC = () => {
             rows={3}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            placeholder="Enter pre-filled SMS message..."
             className="input-base text-sm"
           />
         </div>

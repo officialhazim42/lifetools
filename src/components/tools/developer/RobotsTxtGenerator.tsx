@@ -7,8 +7,8 @@ export const RobotsTxtGenerator: React.FC = () => {
   const { showToast } = useToast();
   const [userAgent, setUserAgent] = useState('*');
   const [allowPath, setAllowPath] = useState('/');
-  const [disallowPaths, setDisallowPaths] = useState('/admin/\n/api/\n/tmp/');
-  const [sitemapUrl, setSitemapUrl] = useState('https://lifetools.app/sitemap.xml');
+  const [disallowPaths, setDisallowPaths] = useState('/admin/\n/private/');
+  const [sitemapUrl, setSitemapUrl] = useState('');
   const [crawlDelay, setCrawlDelay] = useState<number | ''>('');
 
   const generate = () => {

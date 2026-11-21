@@ -64,8 +64,8 @@ export const UpiQrGenerator: React.FC = () => {
 
   // 1. Core Payment State
   const [mode, setMode] = useState<UpiPaymentMode>('static');
-  const [payeeName, setPayeeName] = useState('John Doe');
-  const [upiId, setUpiId] = useState('johndoe@okaxis');
+  const [payeeName, setPayeeName] = useState('');
+  const [upiId, setUpiId] = useState('');
   const [amount, setAmount] = useState('');
   const [businessName, setBusinessName] = useState('');
   const [paymentNote, setPaymentNote] = useState('');
@@ -469,7 +469,7 @@ export const UpiQrGenerator: React.FC = () => {
                   type="text"
                   value={payeeName}
                   onChange={(e) => setPayeeName(e.target.value)}
-                  placeholder="e.g. John Doe or Retail Stores"
+                  placeholder="Enter payee name"
                   className={`input-base text-sm ${validation.errors.payeeName ? 'border-rose-400 focus:border-rose-500' : ''}`}
                 />
                 {validation.errors.payeeName && (
@@ -485,7 +485,7 @@ export const UpiQrGenerator: React.FC = () => {
                   type="text"
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
-                  placeholder="e.g. Apex Hardware & General Store"
+                  placeholder="Enter business name"
                   className="input-base text-sm"
                 />
               </div>
@@ -503,7 +503,7 @@ export const UpiQrGenerator: React.FC = () => {
                 type="text"
                 value={upiId}
                 onChange={(e) => setUpiId(e.target.value)}
-                placeholder="e.g. merchant@okhdfcbank or 9876543210@paytm"
+                placeholder="Enter recipient UPI ID (e.g. merchant@okhdfcbank)"
                 className={`input-base font-mono text-sm ${validation.errors.upiId ? 'border-rose-400 focus:border-rose-500' : ''}`}
               />
               {validation.errors.upiId && (
@@ -543,7 +543,7 @@ export const UpiQrGenerator: React.FC = () => {
                     max="500000"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    placeholder="e.g. 500.00"
+                    placeholder="Enter amount (e.g. 500.00)"
                     className={`input-base pl-9 text-sm font-mono ${validation.errors.amount ? 'border-rose-400 focus:border-rose-500' : ''}`}
                   />
                 </div>
@@ -580,7 +580,7 @@ export const UpiQrGenerator: React.FC = () => {
                 type="text"
                 value={paymentInstruction}
                 onChange={(e) => setPaymentInstruction(e.target.value)}
-                placeholder="e.g. Scan & Pay with Any UPI App"
+                placeholder="Enter payment instruction (e.g. Scan & Pay with Any UPI App)"
                 className="input-base text-sm"
               />
             </div>
@@ -606,7 +606,7 @@ export const UpiQrGenerator: React.FC = () => {
                       type="text"
                       value={paymentNote}
                       onChange={(e) => setPaymentNote(e.target.value)}
-                      placeholder="e.g. Store Order or Invoice #1024"
+                      placeholder="Enter payment note or description"
                       className="input-base text-xs"
                     />
                   </div>
@@ -620,7 +620,7 @@ export const UpiQrGenerator: React.FC = () => {
                         type="text"
                         value={transactionRef}
                         onChange={(e) => setTransactionRef(e.target.value)}
-                        placeholder="e.g. TXN-99824"
+                        placeholder="Enter transaction reference"
                         className="input-base text-xs font-mono"
                       />
                     </div>
@@ -633,7 +633,7 @@ export const UpiQrGenerator: React.FC = () => {
                         maxLength={4}
                         value={merchantCode}
                         onChange={(e) => setMerchantCode(e.target.value)}
-                        placeholder="e.g. 5411 (4 digits)"
+                        placeholder="Enter 4-digit MCC (e.g. 5411)"
                         className="input-base text-xs font-mono"
                       />
                       {validation.errors.merchantCode && (
@@ -677,7 +677,7 @@ export const UpiQrGenerator: React.FC = () => {
                         type="text"
                         value={bankDetails.accountHolderName || ''}
                         onChange={(e) => setBankDetails({ ...bankDetails, accountHolderName: e.target.value })}
-                        placeholder="e.g. John Doe"
+                        placeholder="Enter account holder name"
                         className="input-base text-xs"
                       />
                     </div>
@@ -689,7 +689,7 @@ export const UpiQrGenerator: React.FC = () => {
                         type="text"
                         value={bankDetails.bankName || ''}
                         onChange={(e) => setBankDetails({ ...bankDetails, bankName: e.target.value })}
-                        placeholder="e.g. HDFC Bank"
+                        placeholder="Enter bank name"
                         className="input-base text-xs"
                       />
                     </div>
@@ -701,7 +701,7 @@ export const UpiQrGenerator: React.FC = () => {
                         type="text"
                         value={bankDetails.accountNumber || ''}
                         onChange={(e) => setBankDetails({ ...bankDetails, accountNumber: e.target.value })}
-                        placeholder="e.g. 50100482930192"
+                        placeholder="Enter account number"
                         className="input-base text-xs font-mono"
                       />
                     </div>
@@ -714,7 +714,7 @@ export const UpiQrGenerator: React.FC = () => {
                         maxLength={11}
                         value={bankDetails.ifscCode || ''}
                         onChange={(e) => setBankDetails({ ...bankDetails, ifscCode: e.target.value.toUpperCase() })}
-                        placeholder="e.g. HDFC0000123"
+                        placeholder="Enter IFSC code (e.g. HDFC0000123)"
                         className="input-base text-xs font-mono uppercase"
                       />
                       {validation.errors.ifscCode && (

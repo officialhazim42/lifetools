@@ -20,7 +20,7 @@ interface Participant {
 }
 
 const COMMON_TZ = [
-  { label: 'India / Srinagar (IST)', tz: 'Asia/Kolkata' },
+  { label: 'India / New Delhi (IST)', tz: 'Asia/Kolkata' },
   { label: 'London (GMT/BST)', tz: 'Europe/London' },
   { label: 'New York (EST/EDT)', tz: 'America/New_York' },
   { label: 'San Francisco (PST/PDT)', tz: 'America/Los_Angeles' },
@@ -32,18 +32,14 @@ const COMMON_TZ = [
 
 export const MeetingPlanner: React.FC = () => {
   const { showToast } = useToast();
-  const [meetingTitle, setMeetingTitle] = useState('Sprint Planning & Product Review');
+  const [meetingTitle, setMeetingTitle] = useState('');
   const [date, setDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [time, setTime] = useState('14:30');
   const [durationMinutes, setDurationMinutes] = useState(45);
   const [baseTimezone, setBaseTimezone] = useState('Asia/Kolkata');
-  const [agenda, setAgenda] = useState('1. Review milestones\n2. Blockers and risks\n3. Next actions and owners');
+  const [agenda, setAgenda] = useState('');
 
-  const [participants, setParticipants] = useState<Participant[]>([
-    { id: 'p1', name: 'Organizer', timeZone: 'Asia/Kolkata' },
-    { id: 'p2', name: 'Design Lead (UK)', timeZone: 'Europe/London' },
-    { id: 'p3', name: 'Engineering (US East)', timeZone: 'America/New_York' }
-  ]);
+  const [participants, setParticipants] = useState<Participant[]>([]);
 
   const [newName, setNewName] = useState('');
   const [newTz, setNewTz] = useState('Europe/London');
@@ -161,6 +157,7 @@ export const MeetingPlanner: React.FC = () => {
               type="text"
               value={meetingTitle}
               onChange={(e) => setMeetingTitle(e.target.value)}
+              placeholder="Enter meeting title..."
               className="input-base text-sm font-medium"
             />
           </div>

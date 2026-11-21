@@ -5,16 +5,16 @@ import { Copy } from 'lucide-react';
 
 export const MetaTagGenerator: React.FC = () => {
   const { showToast } = useToast();
-  const [siteTitle, setSiteTitle] = useState('LifeTools — Complete Digital Utility Platform');
-  const [description, setDescription] = useState('Free, privacy-first everyday digital utilities. Calculators, converters, developer tools, and image manipulation.');
-  const [keywords, setKeywords] = useState('utilities, calculators, converters, developer tools, free tools');
-  const [author, setAuthor] = useState('officialhazim42');
-  const [siteUrl, setSiteUrl] = useState('https://lifetools.app');
-  const [imageUrl, setImageUrl] = useState('https://lifetools.app/og-image.png');
+  const [siteTitle, setSiteTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [keywords, setKeywords] = useState('');
+  const [author, setAuthor] = useState('');
+  const [siteUrl, setSiteUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
   const generateTags = () => {
     return `<!-- Primary Meta Tags -->
-<title>${siteTitle}</title>
+<title>${siteTitle || 'My Website'}</title>
 <meta name="title" content="${siteTitle}">
 <meta name="description" content="${description}">
 <meta name="keywords" content="${keywords}">
@@ -59,6 +59,7 @@ export const MetaTagGenerator: React.FC = () => {
               type="text"
               value={siteTitle}
               onChange={(e) => setSiteTitle(e.target.value)}
+              placeholder="Enter site title"
               className="input-base text-sm"
             />
           </div>
@@ -71,6 +72,7 @@ export const MetaTagGenerator: React.FC = () => {
               type="url"
               value={siteUrl}
               onChange={(e) => setSiteUrl(e.target.value)}
+              placeholder="Enter canonical URL (e.g. https://example.com)"
               className="input-base text-sm"
             />
           </div>
@@ -83,6 +85,7 @@ export const MetaTagGenerator: React.FC = () => {
               rows={2}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter site description (150-160 chars recommended)..."
               className="input-base text-sm"
             />
           </div>
@@ -95,6 +98,7 @@ export const MetaTagGenerator: React.FC = () => {
               type="text"
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
+              placeholder="Enter keywords (e.g. web, development, tools)"
               className="input-base text-sm"
             />
           </div>
@@ -107,6 +111,7 @@ export const MetaTagGenerator: React.FC = () => {
               type="text"
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
+              placeholder="Enter author or company name"
               className="input-base text-sm"
             />
           </div>
@@ -119,6 +124,7 @@ export const MetaTagGenerator: React.FC = () => {
               type="url"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
+              placeholder="Enter social image URL (e.g. https://example.com/banner.jpg)"
               className="input-base text-sm"
             />
           </div>

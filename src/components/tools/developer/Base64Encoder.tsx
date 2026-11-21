@@ -5,7 +5,7 @@ import { Copy, Trash2 } from 'lucide-react';
 
 export const Base64Encoder: React.FC = () => {
   const { showToast } = useToast();
-  const [text, setText] = useState('LifeTools: Free & Privacy-First Utilities 🚀');
+  const [text, setText] = useState('');
   const [urlSafe, setUrlSafe] = useState(false);
 
   const encode = () => {

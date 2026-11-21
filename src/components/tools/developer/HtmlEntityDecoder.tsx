@@ -5,7 +5,7 @@ import { Copy, Trash2 } from 'lucide-react';
 
 export const HtmlEntityDecoder: React.FC = () => {
   const { showToast } = useToast();
-  const [entitiesText, setEntitiesText] = useState('&#60;div class=&#34;header&#34;&#62;LifeTools &#38; &#34;Utilities&#34; 2026 &#169;&#60;/div&#62;');
+  const [entitiesText, setEntitiesText] = useState('');
 
   const decode = () => {
     if (!entitiesText) return '';

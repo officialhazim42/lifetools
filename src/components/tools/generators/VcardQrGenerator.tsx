@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { QrDisplayCard } from './QrDisplayCard';
 
 export const VcardQrGenerator: React.FC = () => {
-  const [fullName, setFullName] = useState('Jordan Lee');
-  const [org, setOrg] = useState('LifeTools Global');
-  const [title, setTitle] = useState('Chief Architect');
-  const [phone, setPhone] = useState('+1 555-0144');
-  const [email, setEmail] = useState('jordan@lifetools.app');
-  const [website, setWebsite] = useState('https://lifetools.app');
-  const [street, setStreet] = useState('100 Market St');
-  const [city, setCity] = useState('San Francisco');
-  const [country, setCountry] = useState('USA');
-  const [note, setNote] = useState('Met at Tech Expo 2026');
+  const [fullName, setFullName] = useState('');
+  const [org, setOrg] = useState('');
+  const [title, setTitle] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+  const [note, setNote] = useState('');
 
   const vCardPayload = `BEGIN:VCARD
 VERSION:3.0
@@ -36,6 +36,7 @@ END:VCARD`;
             type="text"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+            placeholder="Enter full name"
             className="input-base text-sm"
           />
         </div>
@@ -47,6 +48,7 @@ END:VCARD`;
             type="text"
             value={org}
             onChange={(e) => setOrg(e.target.value)}
+            placeholder="Enter organization"
             className="input-base text-sm"
           />
         </div>
@@ -58,6 +60,7 @@ END:VCARD`;
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter job title"
             className="input-base text-sm"
           />
         </div>
@@ -69,6 +72,7 @@ END:VCARD`;
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            placeholder="Enter phone number"
             className="input-base text-sm font-mono"
           />
         </div>
@@ -80,6 +84,7 @@ END:VCARD`;
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email address"
             className="input-base text-sm"
           />
         </div>
@@ -91,6 +96,7 @@ END:VCARD`;
             type="url"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
+            placeholder="Enter website URL"
             className="input-base text-sm"
           />
         </div>
@@ -102,6 +108,7 @@ END:VCARD`;
             type="text"
             value={street}
             onChange={(e) => setStreet(e.target.value)}
+            placeholder="Enter street address"
             className="input-base text-sm"
           />
         </div>
@@ -111,12 +118,13 @@ END:VCARD`;
           </label>
           <input
             type="text"
-            value={`${city}, ${country}`}
+            value={city && country ? `${city}, ${country}` : city || country || ''}
             onChange={(e) => {
               const parts = e.target.value.split(',');
               setCity(parts[0]?.trim() || '');
               setCountry(parts[1]?.trim() || '');
             }}
+            placeholder="Enter city, country"
             className="input-base text-sm"
           />
         </div>
@@ -128,6 +136,7 @@ END:VCARD`;
             type="text"
             value={note}
             onChange={(e) => setNote(e.target.value)}
+            placeholder="Enter notes or memo"
             className="input-base text-sm"
           />
         </div>

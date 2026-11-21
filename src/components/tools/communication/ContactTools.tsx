@@ -41,22 +41,22 @@ import {
 export const ContactCardGenerator: React.FC = () => {
   const [contact, setContact] = useState<VCardContact>({
     id: 'contact_gen',
-    firstName: 'Jordan',
-    lastName: 'Hayes',
-    organization: 'Acme Global',
-    jobTitle: 'VP of Engineering',
-    mobile: '+1 555-0199',
-    phone: '+1 555-0188',
-    workPhone: '+1 555-0177',
-    email: 'jordan.hayes@example.com',
-    workEmail: 'jordan@acme.example.com',
-    website: 'https://jordanhayes.example.com',
-    street: '123 Innovation Way',
-    city: 'San Francisco',
-    state: 'CA',
-    zip: '94105',
-    country: 'United States',
-    notes: 'Key point of contact for enterprise platform partnerships.'
+    firstName: '',
+    lastName: '',
+    organization: '',
+    jobTitle: '',
+    mobile: '',
+    phone: '',
+    workPhone: '',
+    email: '',
+    workEmail: '',
+    website: '',
+    street: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: '',
+    notes: ''
   });
   const [copied, setCopied] = useState(false);
 
@@ -81,6 +81,7 @@ export const ContactCardGenerator: React.FC = () => {
             type="text"
             value={contact.firstName}
             onChange={(e) => setContact({ ...contact, firstName: e.target.value })}
+            placeholder="Enter first name"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -90,6 +91,7 @@ export const ContactCardGenerator: React.FC = () => {
             type="text"
             value={contact.lastName}
             onChange={(e) => setContact({ ...contact, lastName: e.target.value })}
+            placeholder="Enter last name"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -99,6 +101,7 @@ export const ContactCardGenerator: React.FC = () => {
             type="text"
             value={contact.organization || ''}
             onChange={(e) => setContact({ ...contact, organization: e.target.value })}
+            placeholder="Enter company or organization"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -108,6 +111,7 @@ export const ContactCardGenerator: React.FC = () => {
             type="text"
             value={contact.jobTitle || ''}
             onChange={(e) => setContact({ ...contact, jobTitle: e.target.value })}
+            placeholder="Enter job title"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -117,6 +121,7 @@ export const ContactCardGenerator: React.FC = () => {
             type="text"
             value={contact.mobile || ''}
             onChange={(e) => setContact({ ...contact, mobile: e.target.value })}
+            placeholder="Enter mobile phone number"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -126,6 +131,7 @@ export const ContactCardGenerator: React.FC = () => {
             type="email"
             value={contact.email || ''}
             onChange={(e) => setContact({ ...contact, email: e.target.value })}
+            placeholder="Enter email address"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -135,6 +141,7 @@ export const ContactCardGenerator: React.FC = () => {
             type="text"
             value={contact.website || ''}
             onChange={(e) => setContact({ ...contact, website: e.target.value })}
+            placeholder="Enter website URL"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -142,11 +149,12 @@ export const ContactCardGenerator: React.FC = () => {
           <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">City, State</label>
           <input
             type="text"
-            value={`${contact.city || ''}, ${contact.state || ''}`}
+            value={contact.city && contact.state ? `${contact.city}, ${contact.state}` : contact.city || contact.state || ''}
             onChange={(e) => {
               const [c, s] = e.target.value.split(',');
               setContact({ ...contact, city: c?.trim() || '', state: s?.trim() || '' });
             }}
+            placeholder="Enter city, state"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -156,6 +164,7 @@ export const ContactCardGenerator: React.FC = () => {
             type="text"
             value={contact.country || ''}
             onChange={(e) => setContact({ ...contact, country: e.target.value })}
+            placeholder="Enter country"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -744,23 +753,33 @@ export const ContactListFormatter: React.FC = () => {
 // 8. Address Formatter
 // ==========================================
 export const AddressFormatter: React.FC = () => {
-  const [recipient, setRecipient] = useState('Acme Corporation');
-  const [street, setStreet] = useState('100 Market St, Suite 400');
-  const [city, setCity] = useState('San Francisco');
-  const [state, setState] = useState('CA');
-  const [zip, setZip] = useState('94105');
-  const [country, setCountry] = useState('United States');
+  const [recipient, setRecipient] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zip, setZip] = useState('');
+  const [country, setCountry] = useState('');
   const [formatStyle, setFormatStyle] = useState<'standard' | 'singleLine' | 'postalUppercase'>('standard');
   const [copied, setCopied] = useState(false);
 
   const getFormattedAddress = () => {
     if (formatStyle === 'singleLine') {
-      return `${recipient}, ${street}, ${city}, ${state} ${zip}, ${country}`;
+      return [recipient, street, city, `${state} ${zip}`.trim(), country].filter(Boolean).join(', ');
     }
     if (formatStyle === 'postalUppercase') {
-      return `${recipient.toUpperCase()}\n${street.toUpperCase()}\n${city.toUpperCase()} ${state.toUpperCase()} ${zip}\n${country.toUpperCase()}`;
+      return [
+        recipient.toUpperCase(),
+        street.toUpperCase(),
+        `${city.toUpperCase()} ${state.toUpperCase()} ${zip}`.trim(),
+        country.toUpperCase()
+      ].filter(Boolean).join('\n');
     }
-    return `${recipient}\n${street}\n${city}, ${state} ${zip}\n${country}`;
+    return [
+      recipient,
+      street,
+      `${city}${state ? `, ${state}` : ''} ${zip}`.trim(),
+      country
+    ].filter(Boolean).join('\n');
   };
 
   const output = getFormattedAddress();
@@ -774,6 +793,7 @@ export const AddressFormatter: React.FC = () => {
             type="text"
             value={recipient}
             onChange={(e) => setRecipient(e.target.value)}
+            placeholder="Enter recipient or organization"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -783,6 +803,7 @@ export const AddressFormatter: React.FC = () => {
             type="text"
             value={street}
             onChange={(e) => setStreet(e.target.value)}
+            placeholder="Enter street address"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -792,6 +813,7 @@ export const AddressFormatter: React.FC = () => {
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+            placeholder="Enter city"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -801,6 +823,7 @@ export const AddressFormatter: React.FC = () => {
             type="text"
             value={state}
             onChange={(e) => setState(e.target.value)}
+            placeholder="Enter state or province"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -810,6 +833,7 @@ export const AddressFormatter: React.FC = () => {
             type="text"
             value={zip}
             onChange={(e) => setZip(e.target.value)}
+            placeholder="Enter postal / ZIP code"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>

@@ -19,7 +19,7 @@ interface ClockCity {
 }
 
 const DEFAULT_CITIES: ClockCity[] = [
-  { id: 'city_srinagar', name: 'Srinagar / New Delhi', timeZone: 'Asia/Kolkata', country: 'India' },
+  { id: 'city_delhi', name: 'New Delhi / Kolkata', timeZone: 'Asia/Kolkata', country: 'India' },
   { id: 'city_london', name: 'London', timeZone: 'Europe/London', country: 'United Kingdom' },
   { id: 'city_ny', name: 'New York', timeZone: 'America/New_York', country: 'United States' },
   { id: 'city_tokyo', name: 'Tokyo', timeZone: 'Asia/Tokyo', country: 'Japan' },

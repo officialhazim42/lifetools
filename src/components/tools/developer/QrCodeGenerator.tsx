@@ -13,7 +13,7 @@ export const QrCodeGenerator: React.FC = () => {
     }
     return 'standard';
   });
-  const [data, setData] = useState('https://lifetools.app');
+  const [data, setData] = useState('');
   const [darkColor, setDarkColor] = useState('#0B132B');
   const [lightColor, setLightColor] = useState('#FFFFFF');
   const [errorCorrection, setErrorCorrection] = useState<'L' | 'M' | 'Q' | 'H'>('M');
@@ -21,12 +21,12 @@ export const QrCodeGenerator: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (!data.trim()) return;
+    const renderPayload = data.trim() || 'https://lifetools.app';
 
     if (canvasRef.current) {
       QRCode.toCanvas(
         canvasRef.current,
-        data,
+        renderPayload,
         {
           width: 256,
           margin: 2,
@@ -41,7 +41,7 @@ export const QrCodeGenerator: React.FC = () => {
     }
 
     QRCode.toString(
-      data,
+      renderPayload,
       {
         type: 'svg',
         margin: 2,
@@ -127,7 +127,7 @@ export const QrCodeGenerator: React.FC = () => {
               value={data}
               onChange={(e) => setData(e.target.value)}
               className="input-base text-sm leading-relaxed"
-              placeholder="Enter text or URL..."
+              placeholder="Enter text or URL to generate QR code..."
             />
           </div>
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Lock, Key, Copy, Check, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
 
 export const TextEncryptionTool: React.FC = () => {
-  const [plainText, setPlainText] = useState('Confidential message: The server deployment key is X99-Secure.');
+  const [plainText, setPlainText] = useState('');
   const [passphrase, setPassphrase] = useState('');
   const [cipherOutput, setCipherOutput] = useState('');
   const [isEncrypting, setIsEncrypting] = useState(false);

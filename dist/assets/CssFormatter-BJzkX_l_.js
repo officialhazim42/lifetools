@@ -1,8 +1,0 @@
-import{c,j as e,h as d}from"./index-BHqmycII.js";import{a as i,T as x,h as m}from"./lucide-CnYeBL73.js";import"./vendor-aacu-Mpa.js";const b=()=>{const{showToast:n}=c(),[s,a]=i.useState(".btn{display:inline-block;padding:8px 16px;background:#10b981;color:#fff;border-radius:8px}.btn:hover{background:#059669}"),l=t=>t.replace(/\s*{\s*/g,` {
-  `).replace(/;\s*/g,`;
-  `).replace(/\s*}\s*/g,`
-}
-
-`).replace(/\n\s*\n\s*\n/g,`
-
-`).replace(/  }/g,"}").trim(),r=s.trim()?l(s.trim()):"",o=()=>{d(r),n("Formatted CSS copied!")};return e.jsx("div",{className:"space-y-6",children:e.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-2 gap-4",children:[e.jsxs("div",{className:"space-y-2",children:[e.jsxs("div",{className:"flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase",children:[e.jsx("span",{children:"Raw CSS"}),e.jsxs("button",{onClick:()=>a(""),className:"text-rose-500 hover:text-rose-600 flex items-center gap-1",children:[e.jsx(x,{className:"w-3.5 h-3.5"})," Clear"]})]}),e.jsx("textarea",{rows:10,value:s,onChange:t=>a(t.target.value),className:"input-base text-sm font-mono",placeholder:"Paste CSS rules..."})]}),e.jsxs("div",{className:"space-y-2",children:[e.jsxs("div",{className:"flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase",children:[e.jsx("span",{children:"Clean Formatted CSS"}),e.jsxs("button",{onClick:o,className:"text-emerald-500 hover:text-emerald-600 flex items-center gap-1",children:[e.jsx(m,{className:"w-3.5 h-3.5"})," Copy"]})]}),e.jsx("textarea",{rows:10,readOnly:!0,value:r,className:"input-base text-sm font-mono bg-slate-50 dark:bg-slate-850 text-emerald-600 dark:text-emerald-400"})]})]})})};export{b as CssFormatter};

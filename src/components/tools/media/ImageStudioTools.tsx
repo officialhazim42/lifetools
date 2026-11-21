@@ -163,7 +163,7 @@ export const ImageBgColorChanger: React.FC = () => {
 // ==========================================
 export const ImageWatermarkMaker: React.FC = () => {
   const { imageSrc, fileName, handleFile, clear } = useImageLoader();
-  const [text, setText] = useState('© LifeTools Studio');
+  const [text, setText] = useState('');
   const [opacity, setOpacity] = useState(60);
   const [fontSize, setFontSize] = useState(36);
   const [color, setColor] = useState('#ffffff');
@@ -255,7 +255,7 @@ export const ImageWatermarkMaker: React.FC = () => {
           <div className="space-y-4 bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
             <div>
               <label className="text-xs font-semibold block mb-1">Watermark Text</label>
-              <input type="text" value={text} onChange={(e) => setText(e.target.value)} className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
+              <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Enter watermark text..." className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
             </div>
 
             <div>
@@ -1285,8 +1285,8 @@ export const SocialMediaImageResizer: React.FC = () => {
 // ==========================================
 export const YoutubeThumbnailMaker: React.FC = () => {
   const { imageSrc, handleFile } = useImageLoader();
-  const [headline, setHeadline] = useState('CREATE VIRAL THUMBNAILS');
-  const [badgeText, setBadgeText] = useState('MUST WATCH');
+  const [headline, setHeadline] = useState('');
+  const [badgeText, setBadgeText] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const renderCanvas = useCallback(() => {
@@ -1370,12 +1370,12 @@ export const YoutubeThumbnailMaker: React.FC = () => {
 
           <div>
             <label className="text-xs font-semibold block mb-1">Badge Tag</label>
-            <input type="text" value={badgeText} onChange={(e) => setBadgeText(e.target.value)} className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
+            <input type="text" value={badgeText} onChange={(e) => setBadgeText(e.target.value)} placeholder="e.g. MUST WATCH" className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
           </div>
 
           <div>
             <label className="text-xs font-semibold block mb-1">Main Headline</label>
-            <input type="text" value={headline} onChange={(e) => setHeadline(e.target.value)} className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
+            <input type="text" value={headline} onChange={(e) => setHeadline(e.target.value)} placeholder="Enter main headline..." className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
           </div>
         </div>
 
@@ -1392,8 +1392,8 @@ export const YoutubeThumbnailMaker: React.FC = () => {
 // ==========================================
 export const InstagramPostMaker: React.FC = () => {
   const { imageSrc, handleFile } = useImageLoader();
-  const [quote, setQuote] = useState('Design is intelligence made visible.');
-  const [author, setAuthor] = useState('— Alina Wheeler');
+  const [quote, setQuote] = useState('');
+  const [author, setAuthor] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const renderCanvas = useCallback(() => {
@@ -1471,12 +1471,12 @@ export const InstagramPostMaker: React.FC = () => {
 
           <div>
             <label className="text-xs font-semibold block mb-1">Quote or Message</label>
-            <textarea value={quote} onChange={(e) => setQuote(e.target.value)} rows={3} className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
+            <textarea value={quote} onChange={(e) => setQuote(e.target.value)} rows={3} placeholder="Enter quote or caption text..." className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
           </div>
 
           <div>
             <label className="text-xs font-semibold block mb-1">Author / Handle</label>
-            <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
+            <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Enter author or handle..." className="w-full px-3 py-1.5 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" />
           </div>
         </div>
 

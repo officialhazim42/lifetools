@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { EyeOff, Copy, Check, ShieldCheck, Sparkles, RefreshCw } from 'lucide-react';
 
 export const PersonalDataMasker: React.FC = () => {
-  const [inputText, setInputText] = useState(
-    'Contact John Doe at john.doe@example.com or call +91 98765 43210. Billing card 4532-7592-8812-4019, IP 192.168.1.105, Aadhaar 2345 6789 1011.'
-  );
+  const [inputText, setInputText] = useState('');
   const [maskEmails, setMaskEmails] = useState(true);
   const [maskPhones, setMaskPhones] = useState(true);
   const [maskCards, setMaskCards] = useState(true);

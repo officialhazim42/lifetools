@@ -49,15 +49,10 @@ function playBeep(freq = 880, duration = 0.15) {
 // ==========================================
 export const WorkoutPlanner: React.FC = () => {
   const { showToast } = useToast();
-  const [workoutName, setWorkoutName] = useState('Upper Body Hypertrophy');
+  const [workoutName, setWorkoutName] = useState('');
   const [exercises, setExercises] = useState<
     { id: string; name: string; sets: number; reps: number; restSec: number }[]
-  >([
-    { id: '1', name: 'Barbell Bench Press', sets: 4, reps: 8, restSec: 90 },
-    { id: '2', name: 'Overhead Shoulder Press', sets: 3, reps: 10, restSec: 60 },
-    { id: '3', name: 'Incline Dumbbell Flyes', sets: 3, reps: 12, restSec: 60 },
-    { id: '4', name: 'Tricep Rope Pushdowns', sets: 3, reps: 15, restSec: 45 }
-  ]);
+  >([]);
 
   const [newName, setNewName] = useState('');
   const [newSets, setNewSets] = useState(3);
@@ -94,6 +89,7 @@ export const WorkoutPlanner: React.FC = () => {
           type="text"
           value={workoutName}
           onChange={(e) => setWorkoutName(e.target.value)}
+          placeholder="Enter routine title (e.g. Upper Body Strength)..."
           className="w-full px-3 py-2 text-sm font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl outline-none"
         />
       </div>
@@ -186,7 +182,7 @@ export const WorkoutPlanner: React.FC = () => {
 export const DailyExerciseTracker: React.FC = () => {
   const { showToast } = useToast();
   const [date, setDate] = useState(() => new Date().toISOString().split('T')[0]);
-  const [title, setTitle] = useState('Morning Cardio & Core');
+  const [title, setTitle] = useState('');
   const [duration, setDuration] = useState(45);
   const [exertion, setExertion] = useState(7);
   const [logs, setLogs] = useState<any[]>([]);
@@ -237,6 +233,7 @@ export const DailyExerciseTracker: React.FC = () => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter workout activity (e.g. Morning Cardio)..."
             className="w-full px-2.5 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg outline-none"
           />
         </div>

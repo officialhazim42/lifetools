@@ -5,7 +5,7 @@ import { Copy, Trash2 } from 'lucide-react';
 
 export const UrlEncoder: React.FC = () => {
   const { showToast } = useToast();
-  const [text, setText] = useState('https://lifetools.app/search?query=hello world & mode=offline&filter=all');
+  const [text, setText] = useState('');
   const [encodeMode, setEncodeMode] = useState<'component' | 'full'>('component');
 
   const encode = () => {

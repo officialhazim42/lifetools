@@ -40,7 +40,7 @@ export const MetaTagAnalyzer: React.FC = () => {
   const analyze = () => {
     const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
     const descMatch = html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']*)["']/i) ||
-                      html.match(/<meta[^>]*content=["']([^"']*)["'][^>]*name=["']description["']/i);
+      html.match(/<meta[^>]*content=["']([^"']*)["'][^>]*name=["']description["']/i);
     const robotsMatch = html.match(/<meta[^>]*name=["']robots["'][^>]*content=["']([^"']*)["']/i);
     const canonicalMatch = html.match(/<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']*)["']/i);
 
@@ -82,9 +82,8 @@ export const MetaTagAnalyzer: React.FC = () => {
         <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-800 dark:text-slate-200">Page Title</span>
-            <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold ${
-              res.titleValid ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
-            }`}>
+            <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold ${res.titleValid ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
+              }`}>
               {res.titleLength} / 60 Chars
             </span>
           </div>
@@ -95,9 +94,8 @@ export const MetaTagAnalyzer: React.FC = () => {
         <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-800 dark:text-slate-200">Meta Description</span>
-            <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold ${
-              res.descValid ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
-            }`}>
+            <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold ${res.descValid ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300'
+              }`}>
               {res.descLength} / 160 Chars
             </span>
           </div>
@@ -112,9 +110,9 @@ export const MetaTagAnalyzer: React.FC = () => {
 // 2. Meta Tag Preview (Google SERP)
 // -------------------------------------------------------------
 export const MetaTagPreview: React.FC = () => {
-  const [title, setTitle] = useState('LifeTools — Fast, Free & Private Digital Utilities');
-  const [url, setUrl] = useState('https://lifetools.app');
-  const [desc, setDesc] = useState('Everything You Need. All in One Place. Over 250 client-side digital utilities, calculators, converters, and printable templates.');
+  const [title, setTitle] = useState('');
+  const [url, setUrl] = useState('');
+  const [desc, setDesc] = useState('');
   const [mode, setMode] = useState<'desktop' | 'mobile'>('desktop');
 
   return (
@@ -139,21 +137,21 @@ export const MetaTagPreview: React.FC = () => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Page Title"
+          placeholder="Enter page title"
           className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
         />
         <input
           type="text"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder="Canonical URL"
+          placeholder="Enter canonical URL (e.g. https://example.com/page)"
           className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
         />
         <textarea
           rows={2}
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
-          placeholder="Snippet Description"
+          placeholder="Enter snippet / meta description (recommended 150-160 chars)..."
           className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
         />
       </div>
@@ -161,12 +159,12 @@ export const MetaTagPreview: React.FC = () => {
       <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-2">
         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Google Search Result Preview</span>
         <div className={`p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 space-y-1 ${mode === 'mobile' ? 'max-w-sm' : 'max-w-2xl'}`}>
-          <div className="text-[11px] text-slate-700 dark:text-slate-300 truncate">{url}</div>
+          <div className="text-[11px] text-slate-700 dark:text-slate-300 truncate">{url || 'https://example.com/page'}</div>
           <div className="text-base font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer truncate">
-            {title}
+            {title || 'Page Title Example — Site Name'}
           </div>
           <div className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
-            {desc}
+            {desc || 'Page description snippet will appear here in search engine results.'}
           </div>
         </div>
       </div>
@@ -178,9 +176,9 @@ export const MetaTagPreview: React.FC = () => {
 // 3. Open Graph Preview & 4. Twitter Card Preview
 // -------------------------------------------------------------
 export const OpenGraphPreview: React.FC = () => {
-  const [ogTitle, setOgTitle] = useState('LifeTools — Client-Side Digital Utilities');
-  const [ogDesc, setOgDesc] = useState('Everything You Need. Over 250 utilities running entirely in your browser with zero data leakage.');
-  const [ogImage, setOgImage] = useState('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&auto=format&fit=crop&q=80');
+  const [ogTitle, setOgTitle] = useState('');
+  const [ogDesc, setOgDesc] = useState('');
+  const [ogImage, setOgImage] = useState('');
 
   return (
     <div className="space-y-6">
@@ -189,14 +187,14 @@ export const OpenGraphPreview: React.FC = () => {
           type="text"
           value={ogTitle}
           onChange={(e) => setOgTitle(e.target.value)}
-          placeholder="og:title"
+          placeholder="Enter og:title"
           className="px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
         />
         <input
           type="text"
           value={ogImage}
           onChange={(e) => setOgImage(e.target.value)}
-          placeholder="og:image URL"
+          placeholder="Enter og:image URL (e.g. https://example.com/banner.jpg)"
           className="px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
         />
       </div>
@@ -204,11 +202,17 @@ export const OpenGraphPreview: React.FC = () => {
       <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3 max-w-md">
         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Facebook / LinkedIn Card Preview</span>
         <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
-          <img src={ogImage} alt="OG Preview" className="w-full h-44 object-cover" />
+          {ogImage ? (
+            <img src={ogImage} alt="OG Preview" className="w-full h-44 object-cover" />
+          ) : (
+            <div className="w-full h-44 bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs text-slate-400">
+              No Image URL Provided
+            </div>
+          )}
           <div className="p-3.5 space-y-1">
-            <span className="text-[10px] uppercase font-bold text-slate-400">LIFETOOLS.APP</span>
-            <h4 className="font-bold text-xs text-slate-900 dark:text-white line-clamp-1">{ogTitle}</h4>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2">{ogDesc}</p>
+            <span className="text-[10px] uppercase font-bold text-slate-400">EXAMPLE.COM</span>
+            <h4 className="font-bold text-xs text-slate-900 dark:text-white line-clamp-1">{ogTitle || 'Social Card Title Preview'}</h4>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2">{ogDesc || 'Social card description preview will display here.'}</p>
           </div>
         </div>
       </div>
@@ -217,9 +221,9 @@ export const OpenGraphPreview: React.FC = () => {
 };
 
 export const TwitterCardPreview: React.FC = () => {
-  const [title, setTitle] = useState('LifeTools: Everyday Client-Side Utility Platform');
-  const [author, setAuthor] = useState('@officialhazim42');
-  const [desc, setDesc] = useState('Explore over 250 offline-ready calculators, text utilities, and document creators with zero registration.');
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [desc, setDesc] = useState('');
 
   return (
     <div className="space-y-6">
@@ -228,14 +232,14 @@ export const TwitterCardPreview: React.FC = () => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Twitter Card Title"
+          placeholder="Enter Twitter card title"
           className="px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
         />
         <input
           type="text"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
-          placeholder="Creator @handle"
+          placeholder="Enter creator @handle"
           className="px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
         />
       </div>
@@ -244,12 +248,12 @@ export const TwitterCardPreview: React.FC = () => {
         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">X / Twitter Card Preview (Large Image)</span>
         <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
           <div className="w-full h-40 bg-gradient-to-r from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-base">
-            LifeTools Platform
+            Card Banner
           </div>
           <div className="p-3.5 space-y-1">
-            <h4 className="font-bold text-xs text-slate-900 dark:text-white line-clamp-1">{title}</h4>
-            <p className="text-[11px] text-slate-500 line-clamp-2">{desc}</p>
-            <div className="text-[10px] text-slate-400 pt-1">By {author} • lifetools.app</div>
+            <h4 className="font-bold text-xs text-slate-900 dark:text-white line-clamp-1">{title || 'Card Title Preview'}</h4>
+            <span className="text-[11px] text-slate-400 block">{author || '@username'}</span>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2">{desc || 'Card description text preview will appear here.'}</p>
           </div>
         </div>
       </div>
@@ -432,10 +436,10 @@ export const SitemapValidator: React.FC = () => {
 // 7. Canonical URL Checker
 // -------------------------------------------------------------
 export const CanonicalUrlChecker: React.FC = () => {
-  const [currentUrl, setCurrentUrl] = useState('https://lifetools.app/categories/');
-  const [canonicalUrl, setCanonicalUrl] = useState('https://lifetools.app/categories');
+  const [currentUrl, setCurrentUrl] = useState('');
+  const [canonicalUrl, setCanonicalUrl] = useState('');
 
-  const isMatch = currentUrl.replace(/\/$/, '') === canonicalUrl.replace(/\/$/, '');
+  const isMatch = currentUrl && canonicalUrl ? currentUrl.replace(/\/$/, '') === canonicalUrl.replace(/\/$/, '') : null;
 
   return (
     <div className="space-y-6">
@@ -446,6 +450,7 @@ export const CanonicalUrlChecker: React.FC = () => {
             type="text"
             value={currentUrl}
             onChange={(e) => setCurrentUrl(e.target.value)}
+            placeholder="Enter requested URL (e.g. https://example.com/page/)"
             className="w-full px-3.5 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
           />
         </div>
@@ -455,6 +460,7 @@ export const CanonicalUrlChecker: React.FC = () => {
             type="text"
             value={canonicalUrl}
             onChange={(e) => setCanonicalUrl(e.target.value)}
+            placeholder="Enter canonical URL (e.g. https://example.com/page)"
             className="w-full px-3.5 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
           />
         </div>
@@ -655,7 +661,7 @@ export const WebsiteTitleExtractor: React.FC = () => {
 // 13. Favicon Preview Generator
 // -------------------------------------------------------------
 export const FaviconPreviewGenerator: React.FC = () => {
-  const [faviconUrl, setFaviconUrl] = useState('https://lifetools.app/favicon.ico');
+  const [faviconUrl, setFaviconUrl] = useState('');
 
   return (
     <div className="space-y-6">
@@ -663,7 +669,7 @@ export const FaviconPreviewGenerator: React.FC = () => {
         type="text"
         value={faviconUrl}
         onChange={(e) => setFaviconUrl(e.target.value)}
-        placeholder="Favicon URL"
+        placeholder="Enter favicon URL (e.g. https://example.com/favicon.ico)"
         className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 font-mono"
       />
 

@@ -23,10 +23,8 @@ import { generateVCard } from '../../../utils/communication/vcardUtils';
 // 1. WhatsApp Message Formatter
 // ==========================================
 export const WhatsAppMessageFormatter: React.FC = () => {
-  const [text, setText] = useState(
-    `Hello *Alex*! 👋\n\nYour order _#4891_ has shipped.\nTrack here: ~https://old-link.com~ https://lifetools.app\n\nUse coupon code \`\`\`SAVE20\`\`\` at checkout!`
-  );
-  const [phone, setPhone] = useState('15551234567');
+  const [text, setText] = useState('');
+  const [phone, setPhone] = useState('');
   const [copied, setCopied] = useState(false);
 
   const cleanPhone = phone.replace(/\D/g, '');
@@ -56,7 +54,7 @@ export const WhatsAppMessageFormatter: React.FC = () => {
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="e.g. 15551234567"
+            placeholder="Enter phone number (e.g. 15551234567)"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -121,10 +119,10 @@ export const WhatsAppMessageFormatter: React.FC = () => {
 // 2. WhatsApp Broadcast Text Builder
 // ==========================================
 export const WhatsAppBroadcastBuilder: React.FC = () => {
-  const [template, setTemplate] = useState('Hi {name}, thanks for meeting with {company}! Your invoice {order_id} is ready.');
-  const [sampleName, setSampleName] = useState('Jessica');
-  const [sampleCompany, setSampleCompany] = useState('Acme Corp');
-  const [sampleOrderId, setSampleOrderId] = useState('INV-2026-90');
+  const [template, setTemplate] = useState('');
+  const [sampleName, setSampleName] = useState('');
+  const [sampleCompany, setSampleCompany] = useState('');
+  const [sampleOrderId, setSampleOrderId] = useState('');
   const [copied, setCopied] = useState(false);
 
   const preview = template
@@ -142,6 +140,7 @@ export const WhatsAppBroadcastBuilder: React.FC = () => {
           rows={3}
           value={template}
           onChange={(e) => setTemplate(e.target.value)}
+          placeholder="e.g. Hi {name}, thanks for reaching out to {company}! Your reference ID is {order_id}."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-mono"
         />
       </div>
@@ -153,6 +152,7 @@ export const WhatsAppBroadcastBuilder: React.FC = () => {
             type="text"
             value={sampleName}
             onChange={(e) => setSampleName(e.target.value)}
+            placeholder="Enter sample name"
             className="w-full px-3 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -162,6 +162,7 @@ export const WhatsAppBroadcastBuilder: React.FC = () => {
             type="text"
             value={sampleCompany}
             onChange={(e) => setSampleCompany(e.target.value)}
+            placeholder="Enter sample company"
             className="w-full px-3 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -171,6 +172,7 @@ export const WhatsAppBroadcastBuilder: React.FC = () => {
             type="text"
             value={sampleOrderId}
             onChange={(e) => setSampleOrderId(e.target.value)}
+            placeholder="Enter sample order ID"
             className="w-full px-3 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -203,7 +205,7 @@ export const WhatsAppBroadcastBuilder: React.FC = () => {
 // 3. SMS Character Counter
 // ==========================================
 export const SmsCharacterCounter: React.FC = () => {
-  const [text, setText] = useState('Your verification code is 482910. Valid for 10 minutes.');
+  const [text, setText] = useState('');
   const analysis = analyzeSms(text);
 
   return (
@@ -214,6 +216,7 @@ export const SmsCharacterCounter: React.FC = () => {
           rows={4}
           value={text}
           onChange={(e) => setText(e.target.value)}
+          placeholder="Type or paste your SMS message..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-sans"
         />
       </div>
@@ -246,7 +249,7 @@ export const SmsCharacterCounter: React.FC = () => {
 // 4. SMS Segment Calculator
 // ==========================================
 export const SmsSegmentCalculator: React.FC = () => {
-  const [text, setText] = useState('Great news! Your package 📦 has arrived at your door.');
+  const [text, setText] = useState('');
   const analysis = analyzeSms(text);
 
   const cleanText = () => {
@@ -261,6 +264,7 @@ export const SmsSegmentCalculator: React.FC = () => {
           rows={4}
           value={text}
           onChange={(e) => setText(e.target.value)}
+          placeholder="Enter SMS message content to analyze encoding & segments..."
           className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-sans"
         />
       </div>
@@ -430,13 +434,13 @@ export const MessageCaseFormatter: React.FC = () => {
 // 7. Click-to-Call Link Generator
 // ==========================================
 export const ClickToCallGenerator: React.FC = () => {
-  const [phoneNumber, setPhoneNumber] = useState('+1-555-234-5678');
-  const [linkText, setLinkText] = useState('Call Our Support Team');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [linkText, setLinkText] = useState('');
   const [copied, setCopied] = useState(false);
 
   const cleanTel = phoneNumber.replace(/[^0-9+]/g, '');
   const telUri = `tel:${cleanTel}`;
-  const htmlTag = `<a href="${telUri}">${linkText}</a>`;
+  const htmlTag = `<a href="${telUri}">${linkText || 'Call Us'}</a>`;
 
   return (
     <div className="space-y-5">
@@ -447,6 +451,7 @@ export const ClickToCallGenerator: React.FC = () => {
             type="text"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="Enter telephone number (e.g. +1-555-0199)"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg font-mono"
           />
         </div>
@@ -456,6 +461,7 @@ export const ClickToCallGenerator: React.FC = () => {
             type="text"
             value={linkText}
             onChange={(e) => setLinkText(e.target.value)}
+            placeholder="Enter clickable link label (e.g. Call Our Support Team)"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -495,10 +501,10 @@ export const ClickToCallGenerator: React.FC = () => {
 // 8. Contact Sharing QR Generator
 // ==========================================
 export const ContactSharingQrGenerator: React.FC = () => {
-  const [name, setName] = useState('Alex Morgan');
-  const [phone, setPhone] = useState('+1-555-0199');
-  const [email, setEmail] = useState('alex@example.com');
-  const [org, setOrg] = useState('Acme Corporation');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [org, setOrg] = useState('');
   const [qrDataUrl, setQrDataUrl] = useState('');
 
   const vcard = generateVCard({
@@ -525,6 +531,7 @@ export const ContactSharingQrGenerator: React.FC = () => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="Enter full name"
             className="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -534,6 +541,7 @@ export const ContactSharingQrGenerator: React.FC = () => {
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            placeholder="Enter phone number"
             className="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -543,6 +551,7 @@ export const ContactSharingQrGenerator: React.FC = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email address"
             className="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -552,6 +561,7 @@ export const ContactSharingQrGenerator: React.FC = () => {
             type="text"
             value={org}
             onChange={(e) => setOrg(e.target.value)}
+            placeholder="Enter organization"
             className="w-full px-2.5 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -577,13 +587,13 @@ export const ContactSharingQrGenerator: React.FC = () => {
 // 9. Emergency Contact Card Generator
 // ==========================================
 export const EmergencyContactCardGenerator: React.FC = () => {
-  const [fullName, setFullName] = useState('Jane Doe');
+  const [fullName, setFullName] = useState('');
   const [bloodType, setBloodType] = useState('O+');
-  const [emergencyContact, setEmergencyContact] = useState('Mark Doe (Spouse)');
-  const [emergencyPhone, setEmergencyPhone] = useState('+1 555-9111');
-  const [allergies, setAllergies] = useState('Penicillin, Peanuts');
-  const [medications, setMedications] = useState('Asthma Inhaler');
-  const [physician, setPhysician] = useState('Dr. Smith (+1 555-8888)');
+  const [emergencyContact, setEmergencyContact] = useState('');
+  const [emergencyPhone, setEmergencyPhone] = useState('');
+  const [allergies, setAllergies] = useState('');
+  const [medications, setMedications] = useState('');
+  const [physician, setPhysician] = useState('');
 
   const handlePrint = () => {
     window.print();
@@ -598,6 +608,7 @@ export const EmergencyContactCardGenerator: React.FC = () => {
             type="text"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+            placeholder="Enter full legal name"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -624,6 +635,7 @@ export const EmergencyContactCardGenerator: React.FC = () => {
             type="text"
             value={emergencyContact}
             onChange={(e) => setEmergencyContact(e.target.value)}
+            placeholder="Enter contact name & relation (e.g. Spouse)"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -633,6 +645,7 @@ export const EmergencyContactCardGenerator: React.FC = () => {
             type="text"
             value={emergencyPhone}
             onChange={(e) => setEmergencyPhone(e.target.value)}
+            placeholder="Enter emergency phone number"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -642,6 +655,7 @@ export const EmergencyContactCardGenerator: React.FC = () => {
             type="text"
             value={allergies}
             onChange={(e) => setAllergies(e.target.value)}
+            placeholder="Enter allergies or 'None'"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>
@@ -651,6 +665,7 @@ export const EmergencyContactCardGenerator: React.FC = () => {
             type="text"
             value={physician}
             onChange={(e) => setPhysician(e.target.value)}
+            placeholder="Enter doctor / hospital contact"
             className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg"
           />
         </div>

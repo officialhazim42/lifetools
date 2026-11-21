@@ -38,28 +38,9 @@ export const ExpenseSplitter: React.FC = () => {
   const { showToast } = useToast();
   const [currency] = useState(() => storage.get<string>(CURRENCY_KEY, '₹'));
 
-  const [members, setMembers] = useState<GroupMember[]>([
-    { id: 'm1', name: 'Hazim' },
-    { id: 'm2', name: 'Rahul' },
-    { id: 'm3', name: 'Priya' }
-  ]);
+  const [members, setMembers] = useState<GroupMember[]>([]);
 
-  const [expenses, setExpenses] = useState<SharedExpense[]>([
-    {
-      id: 'e1',
-      description: 'Dinner & Drinks',
-      amount: 2400,
-      paidBy: 'm1',
-      splitAmong: ['m1', 'm2', 'm3']
-    },
-    {
-      id: 'e2',
-      description: 'Cab & Transportation',
-      amount: 600,
-      paidBy: 'm2',
-      splitAmong: ['m1', 'm2', 'm3']
-    }
-  ]);
+  const [expenses, setExpenses] = useState<SharedExpense[]>([]);
 
   const [newMemberName, setNewMemberName] = useState('');
   const [newExpenseDesc, setNewExpenseDesc] = useState('');
