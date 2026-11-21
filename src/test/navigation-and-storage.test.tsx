@@ -138,6 +138,64 @@ describe('Favorites — Clean Empty State & Dynamic Updates', () => {
     expect(countDisplay.textContent).toBe('1');
     expect(screen.getAllByText('1').length).toBeGreaterThanOrEqual(1);
   });
+
+  it('renders Recent Views button in right actions and navigates to /recent', () => {
+    const onNavigate = vi.fn();
+    renderHeader('/', onNavigate);
+
+    const recentBtn = screen.getByTitle('Recently Used (Recent Views)');
+    expect(recentBtn).toBeInTheDocument();
+
+    fireEvent.click(recentBtn);
+    expect(onNavigate).toHaveBeenCalledWith('/recent');
+  });
+
+  it('renders More dropdown on desktop and navigates to items', () => {
+    const onNavigate = vi.fn();
+    renderHeader('/', onNavigate);
+
+    const moreBtn = screen.getByTitle('More navigation options');
+    expect(moreBtn).toBeInTheDocument();
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'false');
+
+    // Click More
+    fireEvent.click(moreBtn);
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'true');
+
+    // Check items inside More
+    expect(screen.getByText('About LifeTools')).toBeInTheDocument();
+    const moreFavorites = screen.getAllByText('Favorites');
+    expect(moreFavorites.length).toBeGreaterThanOrEqual(1);
+
+    // Click About LifeTools
+    fireEvent.click(screen.getByText('About LifeTools'));
+    expect(onNavigate).toHaveBeenCalledWith('/about');
+
+    // Should close menu after navigation
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('closes More dropdown when Escape is pressed', () => {
+    renderHeader('/');
+    const moreBtn = screen.getByTitle('More navigation options');
+
+    fireEvent.click(moreBtn);
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('closes More dropdown on outside click', () => {
+    renderHeader('/');
+    const moreBtn = screen.getByTitle('More navigation options');
+
+    fireEvent.click(moreBtn);
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.mouseDown(document.body);
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'false');
+  });
 });
 
 describe('Recently Used — Clean Empty State & History Limits', () => {
@@ -189,5 +247,63 @@ describe('Recently Used — Clean Empty State & History Limits', () => {
 
     expect(countDisplay.textContent).toBe('1');
     expect(screen.getAllByText('1').length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('renders Recent Views button in right actions and navigates to /recent', () => {
+    const onNavigate = vi.fn();
+    renderHeader('/', onNavigate);
+
+    const recentBtn = screen.getByTitle('Recently Used (Recent Views)');
+    expect(recentBtn).toBeInTheDocument();
+
+    fireEvent.click(recentBtn);
+    expect(onNavigate).toHaveBeenCalledWith('/recent');
+  });
+
+  it('renders More dropdown on desktop and navigates to items', () => {
+    const onNavigate = vi.fn();
+    renderHeader('/', onNavigate);
+
+    const moreBtn = screen.getByTitle('More navigation options');
+    expect(moreBtn).toBeInTheDocument();
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'false');
+
+    // Click More
+    fireEvent.click(moreBtn);
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'true');
+
+    // Check items inside More
+    expect(screen.getByText('About LifeTools')).toBeInTheDocument();
+    const moreFavorites = screen.getAllByText('Favorites');
+    expect(moreFavorites.length).toBeGreaterThanOrEqual(1);
+
+    // Click About LifeTools
+    fireEvent.click(screen.getByText('About LifeTools'));
+    expect(onNavigate).toHaveBeenCalledWith('/about');
+
+    // Should close menu after navigation
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('closes More dropdown when Escape is pressed', () => {
+    renderHeader('/');
+    const moreBtn = screen.getByTitle('More navigation options');
+
+    fireEvent.click(moreBtn);
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('closes More dropdown on outside click', () => {
+    renderHeader('/');
+    const moreBtn = screen.getByTitle('More navigation options');
+
+    fireEvent.click(moreBtn);
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.mouseDown(document.body);
+    expect(moreBtn).toHaveAttribute('aria-expanded', 'false');
   });
 });

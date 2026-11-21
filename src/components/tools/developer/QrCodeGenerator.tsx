@@ -107,9 +107,19 @@ export const QrCodeGenerator: React.FC = () => {
             <CreditCard className="w-3.5 h-3.5" /> UPI Payment QR
           </button>
         </div>
-        <span className="text-xs text-slate-400 hidden sm:inline">
-          {activeMode === 'upi' ? 'Interoperable static & fixed-amount UPI payment QR' : 'Universal text & link QR generation'}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-slate-400 hidden sm:inline">
+            {activeMode === 'upi' ? 'Interoperable static & fixed-amount UPI payment QR' : 'Universal text & link QR generation'}
+          </span>
+          {activeMode === 'upi' && (
+            <a
+              href="#/tool/advanced-upi-qr-generator"
+              className="text-xs text-brand-600 dark:text-brand-400 hover:underline font-medium"
+            >
+              Open Standalone Tool &rarr;
+            </a>
+          )}
+        </div>
       </div>
 
       {activeMode === 'upi' ? (

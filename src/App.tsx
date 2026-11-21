@@ -28,6 +28,18 @@ export const AppContent: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  // Global Ctrl+K / Cmd+K listener to toggle search modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const handleNavigate = useCallback((path: string) => {
     const targetHash = path.startsWith('#') ? path : '#' + (path.startsWith('/') ? path : '/' + path);
     window.location.hash = targetHash;

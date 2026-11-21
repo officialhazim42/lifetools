@@ -53,7 +53,7 @@ export const CATEGORIES: CategoryInfo[] = [
     description: 'Custom QR code generators, Wi-Fi connectors, scanners, secure random passwords, and color palettes.',
     iconName: 'QrCode',
     gradient: 'from-cyan-500 to-blue-600',
-    count: 15
+    count: 16
   },
   {
     id: 'productivity',

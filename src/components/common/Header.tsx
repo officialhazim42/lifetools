@@ -38,11 +38,14 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
   const { recentTools } = useRecentTools();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesDropdownOpen, setIsCategoriesDropdownOpen] = useState(false);
+  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const categoriesRef = useRef<HTMLDivElement>(null);
   const categoriesBtnRef = useRef<HTMLButtonElement>(null);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
+  const moreMenuBtnRef = useRef<HTMLButtonElement>(null);
 
   // Compute dynamic tool count per category from centralized TOOLS_REGISTRY
   const categoryCounts = useMemo(() => {
@@ -90,10 +93,40 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
     };
   }, [isCategoriesDropdownOpen]);
 
+  // Handle outside click to close desktop More dropdown
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        moreMenuRef.current &&
+        !moreMenuRef.current.contains(e.target as Node)
+      ) {
+        setIsMoreMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMoreMenuOpen) {
+        setIsMoreMenuOpen(false);
+        moreMenuBtnRef.current?.focus();
+      }
+    };
+
+    if (isMoreMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMoreMenuOpen]);
+
   // Close menus when navigating
   const handleNav = (path: string) => {
     setIsMobileMenuOpen(false);
     setIsCategoriesDropdownOpen(false);
+    setIsMoreMenuOpen(false);
     onNavigate(path);
   };
 
@@ -116,6 +149,11 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
   ];
 
   const isCategoriesActive = currentPath.startsWith('/categories');
+  const isMoreActive =
+    currentPath.startsWith('/templates') ||
+    currentPath.startsWith('/media') ||
+    currentPath.startsWith('/favorites') ||
+    currentPath.startsWith('/about');
 
   return (
     <header
@@ -125,21 +163,23 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
           : 'bg-white dark:bg-slate-950 border-slate-200/50 dark:border-slate-800/50'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 xl:gap-4">
         {/* Left: Logo */}
-        <a
-          href="#/"
-          onClick={(e) => {
-            e.preventDefault();
-            handleNav('/');
-          }}
-          className="focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-lg p-1"
-        >
-          <Logo size="md" />
-        </a>
+        <div className="flex items-center shrink-0">
+          <a
+            href="#/"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNav('/');
+            }}
+            className="focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-lg p-1"
+          >
+            <Logo size="md" />
+          </a>
+        </div>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-1">
+        {/* Center: Desktop Nav Links */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 min-w-0" aria-label="Main Navigation">
           {/* Home */}
           <a
             href="#/"
@@ -147,9 +187,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
               e.preventDefault();
               handleNav('/');
             }}
-            className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
+            className={`px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center shrink-0 ${
               currentPath === '/'
-                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50'
+                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 font-semibold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
             }`}
           >
@@ -163,33 +203,36 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
               e.preventDefault();
               handleNav('/tools');
             }}
-            className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
+            className={`px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 shrink-0 ${
               currentPath.startsWith('/tools')
-                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50'
+                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 font-semibold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
             }`}
           >
-            <Wrench className="w-3.5 h-3.5 opacity-70" />
+            <Wrench className="w-3.5 h-3.5 opacity-70 shrink-0" />
             <span>All Tools</span>
           </a>
 
           {/* Categories Dropdown Trigger & Panel */}
-          <div ref={categoriesRef} className="relative">
+          <div ref={categoriesRef} className="relative shrink-0">
             <button
               ref={categoriesBtnRef}
-              onClick={() => setIsCategoriesDropdownOpen(!isCategoriesDropdownOpen)}
+              onClick={() => {
+                setIsCategoriesDropdownOpen(!isCategoriesDropdownOpen);
+                setIsMoreMenuOpen(false);
+              }}
               aria-haspopup="true"
               aria-expanded={isCategoriesDropdownOpen}
-              className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 cursor-pointer ${
+              className={`px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 cursor-pointer ${
                 isCategoriesActive || isCategoriesDropdownOpen
-                  ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50'
+                  ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 font-semibold'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
               }`}
             >
-              <LayoutGrid className="w-3.5 h-3.5 opacity-70" />
+              <LayoutGrid className="w-3.5 h-3.5 opacity-70 shrink-0" />
               <span>Categories</span>
               <ChevronDown
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                className={`w-3.5 h-3.5 transition-transform duration-200 shrink-0 ${
                   isCategoriesDropdownOpen ? 'rotate-180 text-emerald-500' : 'opacity-70'
                 }`}
               />
@@ -291,70 +334,70 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
               e.preventDefault();
               handleNav('/workspace');
             }}
-            className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
+            className={`px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 shrink-0 ${
               currentPath.startsWith('/workspace')
                 ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 font-semibold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
             }`}
           >
-            <LayoutDashboard className="w-3.5 h-3.5 opacity-70" />
+            <LayoutDashboard className="w-3.5 h-3.5 opacity-70 shrink-0" />
             <span>Workspace</span>
           </a>
 
-          {/* Templates & Documents */}
+          {/* Templates: inline on xl+ (1280px+), collapsed into More on lg (1024px–1279px) */}
           <a
             href="#/templates"
             onClick={(e) => {
               e.preventDefault();
               handleNav('/templates');
             }}
-            className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
+            className={`hidden xl:flex px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors items-center gap-1.5 shrink-0 ${
               currentPath.startsWith('/templates')
                 ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 font-semibold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
             }`}
           >
-            <FileText className="w-3.5 h-3.5 opacity-70" />
+            <FileText className="w-3.5 h-3.5 opacity-70 shrink-0" />
             <span>Templates</span>
             <span className="text-[10px] bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 font-semibold px-1.5 py-0.2 rounded-full">
               40
             </span>
           </a>
 
-          {/* Media Studio */}
+          {/* Media Studio: inline on xl+ (1280px+), collapsed into More on lg (1024px–1279px) */}
           <a
             href="#/media"
             onClick={(e) => {
               e.preventDefault();
               handleNav('/media');
             }}
-            className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
+            className={`hidden xl:flex px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors items-center gap-1.5 shrink-0 ${
               currentPath.startsWith('/media')
                 ? 'text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/50 font-semibold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
             }`}
           >
-            <Film className="w-3.5 h-3.5 opacity-70" />
+            <Film className="w-3.5 h-3.5 opacity-70 shrink-0" />
             <span>Media Studio</span>
             <span className="text-[10px] bg-rose-100 dark:bg-rose-950/80 text-rose-700 dark:text-rose-300 font-semibold px-1.5 py-0.2 rounded-full">
               70
             </span>
           </a>
 
-          {/* Favorites */}
+          {/* Favorites: inline on 2xl+ (1536px+), collapsed into More on lg and xl */}
           <a
             href="#/favorites"
             onClick={(e) => {
               e.preventDefault();
               handleNav('/favorites');
             }}
-            className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
+            className={`hidden 2xl:flex px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors items-center gap-1.5 shrink-0 ${
               currentPath.startsWith('/favorites')
-                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50'
+                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 font-semibold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
             }`}
           >
-            <Star className="w-3.5 h-3.5 opacity-70" />
+            <Star className="w-3.5 h-3.5 opacity-70 shrink-0" />
             <span>Favorites</span>
             {favorites.length > 0 && (
               <span className="ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-semibold bg-emerald-500 text-white">
@@ -363,61 +406,192 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
             )}
           </a>
 
-          {/* Recently Used */}
-          <a
-            href="#/recent"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNav('/recent');
-            }}
-            className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
-              currentPath.startsWith('/recent')
-                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50'
-                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
-            }`}
-          >
-            <Clock className="w-3.5 h-3.5 opacity-70" />
-            <span>Recently Used</span>
-            {recentTools.length > 0 && (
-              <span className="ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-semibold bg-emerald-500 text-white">
-                {recentTools.length}
-              </span>
-            )}
-          </a>
-
-          {/* About */}
+          {/* About: inline on 2xl+ (1536px+), collapsed into More on lg and xl */}
           <a
             href="#/about"
             onClick={(e) => {
               e.preventDefault();
               handleNav('/about');
             }}
-            className={`relative px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
+            className={`hidden 2xl:flex px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors items-center gap-1.5 shrink-0 ${
               currentPath.startsWith('/about')
-                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50'
+                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 font-semibold'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
             }`}
           >
-            <Info className="w-3.5 h-3.5 opacity-70" />
+            <Info className="w-3.5 h-3.5 opacity-70 shrink-0" />
             <span>About</span>
           </a>
+
+          {/* "More" Dropdown: visible on lg and xl, hidden on 2xl */}
+          <div ref={moreMenuRef} className="relative 2xl:hidden shrink-0">
+            <button
+              ref={moreMenuBtnRef}
+              onClick={() => {
+                setIsMoreMenuOpen(!isMoreMenuOpen);
+                setIsCategoriesDropdownOpen(false);
+              }}
+              aria-haspopup="true"
+              aria-expanded={isMoreMenuOpen}
+              className={`px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 cursor-pointer ${
+                isMoreActive || isMoreMenuOpen
+                  ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 font-semibold'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850'
+              }`}
+              title="More navigation options"
+            >
+              <span>More</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-200 shrink-0 ${
+                  isMoreMenuOpen ? 'rotate-180 text-emerald-500' : 'opacity-70'
+                }`}
+              />
+              {favorites.length > 0 && (
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 xl:inline-block hidden" />
+              )}
+            </button>
+
+            {isMoreMenuOpen && (
+              <div
+                className="absolute top-full right-0 lg:left-0 xl:right-0 xl:left-auto mt-2 w-56 rounded-2xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 p-2 z-50 animate-slide-up focus:outline-none"
+                role="menu"
+                aria-label="More Navigation Options"
+              >
+                {/* On lg only: Templates and Media Studio */}
+                <div className="xl:hidden space-y-1 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                  <a
+                    href="#/templates"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNav('/templates');
+                    }}
+                    role="menuitem"
+                    className={`flex items-center justify-between p-2 rounded-xl text-xs font-medium transition-colors ${
+                      currentPath.startsWith('/templates')
+                        ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 font-semibold'
+                        : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-emerald-600 dark:hover:text-emerald-400'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-4 h-4 text-slate-400" />
+                      <span>Templates</span>
+                    </div>
+                    <span className="text-[10px] bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 font-semibold px-1.5 py-0.2 rounded-full">
+                      40
+                    </span>
+                  </a>
+
+                  <a
+                    href="#/media"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNav('/media');
+                    }}
+                    role="menuitem"
+                    className={`flex items-center justify-between p-2 rounded-xl text-xs font-medium transition-colors ${
+                      currentPath.startsWith('/media')
+                        ? 'bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 font-semibold'
+                        : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-rose-600 dark:hover:text-rose-400'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Film className="w-4 h-4 text-slate-400" />
+                      <span>Media Studio</span>
+                    </div>
+                    <span className="text-[10px] bg-rose-100 dark:bg-rose-950/80 text-rose-700 dark:text-rose-300 font-semibold px-1.5 py-0.2 rounded-full">
+                      70
+                    </span>
+                  </a>
+                </div>
+
+                {/* Favorites and About (hidden on 2xl) */}
+                <div className="space-y-1">
+                  <a
+                    href="#/favorites"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNav('/favorites');
+                    }}
+                    role="menuitem"
+                    className={`flex items-center justify-between p-2 rounded-xl text-xs font-medium transition-colors ${
+                      currentPath.startsWith('/favorites')
+                        ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 font-semibold'
+                        : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-emerald-600 dark:hover:text-emerald-400'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Star className="w-4 h-4 text-amber-500" />
+                      <span>Favorites</span>
+                    </div>
+                    {favorites.length > 0 && (
+                      <span className="text-[10px] bg-emerald-500 text-white font-semibold px-1.5 py-0.2 rounded-full">
+                        {favorites.length}
+                      </span>
+                    )}
+                  </a>
+
+                  <a
+                    href="#/about"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNav('/about');
+                    }}
+                    role="menuitem"
+                    className={`flex items-center justify-between p-2 rounded-xl text-xs font-medium transition-colors ${
+                      currentPath.startsWith('/about')
+                        ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 font-semibold'
+                        : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-emerald-600 dark:hover:text-emerald-400'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Info className="w-4 h-4 text-slate-400" />
+                      <span>About LifeTools</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
         </nav>
 
-        {/* Right Action Controls: Search, Theme, Mobile toggle */}
-        <div className="flex items-center gap-2">
+        {/* Right Action Controls: Search, Recent Views, Theme, Backup, Settings, Mobile toggle */}
+        <div className="flex items-center gap-1 sm:gap-1.5 xl:gap-2 shrink-0">
           {/* Global Search Button */}
           <button
             onClick={onOpenSearch}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700 transition-all text-xs font-medium focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700 transition-all text-xs font-medium focus:ring-2 focus:ring-emerald-500 cursor-pointer"
             title="Search tools (Ctrl+K or ⌘+K)"
             aria-label="Open global tool search"
           >
             <Search className="w-4 h-4 text-slate-400 shrink-0" />
             <span className="hidden sm:inline">Search tools...</span>
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] text-slate-500 font-mono">
+            <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-[10px] text-slate-500 font-mono">
               <span>Ctrl</span> K
             </kbd>
           </button>
+
+          {/* Reset Views / Recent Views Button */}
+          <a
+            href="#/recent"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNav('/recent');
+            }}
+            className={`relative p-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors focus:ring-2 focus:ring-emerald-500 cursor-pointer ${
+              currentPath.startsWith('/recent')
+                ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 border-emerald-500'
+                : 'text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400'
+            }`}
+            aria-label="Recently Used Tools (Recent Views)"
+            title="Recently Used (Recent Views)"
+          >
+            <Clock className="w-4 h-4" />
+            {recentTools.length > 0 && (
+              <span className="absolute -top-1 -right-1 px-1.5 py-0.2 rounded-full text-[10px] font-semibold bg-emerald-500 text-white leading-tight shadow-xs">
+                {recentTools.length}
+              </span>
+            )}
+          </a>
 
           {/* Theme Switcher */}
           <button

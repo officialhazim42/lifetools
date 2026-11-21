@@ -336,4 +336,123 @@ describe('UPI Payment QR Generator Test Suite', () => {
       expect(screen.getByText(/Text or URL Content/i)).toBeInTheDocument();
     });
   });
+
+  // 9. Tools Registry & Standalone Resolution Tests
+  describe('9. Standalone Tool Registry Integration', () => {
+    it('registers advanced-upi-qr-generator in toolsRegistry under Category F (generators)', async () => {
+      const { TOOLS_REGISTRY } = await import('../data/toolsRegistry');
+      const tool = TOOLS_REGISTRY.find(t => t.id === 'advanced-upi-qr-generator');
+      expect(tool).toBeDefined();
+      expect(tool?.name).toBe('Advanced UPI Payment QR Generator');
+      expect(tool?.category).toBe('generators');
+      expect(tool?.isPopular).toBe(true);
+      expect(tool?.keywords).toContain('static upi qr');
+      expect(tool?.instructions.length).toBeGreaterThan(3);
+      expect(tool?.faqs?.length).toBeGreaterThan(1);
+    });
+
+    it('resolves both advanced-upi-qr-generator and upi-qr-generator alias via getToolById', async () => {
+      const { getToolById } = await import('../data/toolsRegistry');
+      const standard = getToolById('advanced-upi-qr-generator');
+      const alias = getToolById('upi-qr-generator');
+
+      expect(standard).toBeDefined();
+      expect(alias).toBeDefined();
+      expect(standard?.id).toBe('advanced-upi-qr-generator');
+      expect(alias?.id).toBe('advanced-upi-qr-generator');
+    });
+  });
+
+  // 10. Customer Logo Upload & Customization UI in UpiQrGenerator
+  describe('10. Customer Logo Upload & Customization Controls', () => {
+    const renderWithContext = (ui: React.ReactElement) => {
+      return render(<ToastProvider>{ui}</ToastProvider>);
+    };
+
+    it('renders logo upload dropzone with clear guidelines', () => {
+      renderWithContext(<UpiQrGenerator />);
+
+      expect(screen.getByText(/Center Logo & Branding/i)).toBeInTheDocument();
+      expect(screen.getByText(/Upload Business Logo \(PNG, JPG, WebP\)/i)).toBeInTheDocument();
+      expect(screen.getByText(/Transparent PNG supported/i)).toBeInTheDocument();
+    });
+
+    it('handles simulated image file selection and exposes rich styling controls', async () => {
+      // Mock FileReader to immediately invoke onload
+      const originalFileReader = window.FileReader;
+      class MockFileReader {
+        onload: any = null;
+        readAsDataURL() {
+          setTimeout(() => {
+            if (this.onload) {
+              this.onload({
+                target: {
+                  result: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=='
+                }
+              });
+            }
+          }, 0);
+        }
+      }
+      window.FileReader = MockFileReader as any;
+
+      // Mock Image to immediately trigger onload
+      const originalImage = window.Image;
+      class MockImage {
+        naturalWidth = 120;
+        naturalHeight = 120;
+        onload: any = null;
+        set src(_v: string) {
+          setTimeout(() => {
+            if (this.onload) this.onload();
+          }, 0);
+        }
+      }
+      window.Image = MockImage as any;
+
+      try {
+        const { container } = renderWithContext(<UpiQrGenerator />);
+
+        const fileInput = container.querySelector('input[type="file"]') as HTMLInputElement;
+        expect(fileInput).toBeInTheDocument();
+
+        // Create dummy png file
+        const dummyFile = new File(['dummy png data'], 'business-logo.png', { type: 'image/png' });
+        fireEvent.change(fileInput, { target: { files: [dummyFile] } });
+
+        // FileReader onload triggers and displays thumbnail & controls
+        await waitFor(() => {
+          expect(screen.getByText('business-logo.png')).toBeInTheDocument();
+        });
+
+        // Verify logo controls appear
+        expect(screen.getByText(/Logo Size/i)).toBeInTheDocument();
+        expect(screen.getByText('Small (15%)')).toBeInTheDocument();
+        expect(screen.getByText('Medium (20%)')).toBeInTheDocument();
+        expect(screen.getByText('Large (25%)')).toBeInTheDocument();
+
+        expect(screen.getByText('Rounded Square')).toBeInTheDocument();
+        expect(screen.getByText('Circle')).toBeInTheDocument();
+        expect(screen.getByText('Square')).toBeInTheDocument();
+
+        expect(screen.getByText('White (#FFF)')).toBeInTheDocument();
+        expect(screen.getByText('Transparent')).toBeInTheDocument();
+        expect(screen.getAllByText('Custom').length).toBeGreaterThanOrEqual(2);
+
+        expect(screen.getByText(/Logo Padding/i)).toBeInTheDocument();
+        expect(screen.getByText(/Logo Border Frame/i)).toBeInTheDocument();
+
+        // Click Remove Logo
+        const removeBtns = screen.getAllByTitle('Remove logo');
+        expect(removeBtns.length).toBeGreaterThan(0);
+        fireEvent.click(removeBtns[0]);
+
+        // Should return to empty upload state
+        expect(screen.getByText(/Upload Business Logo/i)).toBeInTheDocument();
+      } finally {
+        window.FileReader = originalFileReader;
+        window.Image = originalImage;
+      }
+    });
+  });
 });

@@ -919,6 +919,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://lifetools.app/#/tool/advanced-upi-qr-generator</loc>
+    <lastmod>2026-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://lifetools.app/#/tool/url-qr-generator</loc>
     <lastmod>2026-11-21</lastmod>
     <changefreq>monthly</changefreq>

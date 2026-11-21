@@ -25,6 +25,8 @@ import {
   Lock,
   ExternalLink,
   Eye,
+  EyeOff,
+  Image as ImageIcon,
   X
 } from 'lucide-react';
 import { copyToClipboard } from '../../../utils/formatters';
@@ -93,6 +95,9 @@ export const UpiQrGenerator: React.FC = () => {
   const [logoImage, setLogoImage] = useState<HTMLImageElement | null>(null);
   const [logoDataUrl, setLogoDataUrl] = useState<string | null>(null);
   const [logoFileName, setLogoFileName] = useState('');
+  const [logoFileSize, setLogoFileSize] = useState('');
+  const [logoDimensions, setLogoDimensions] = useState<{ width: number; height: number } | null>(null);
+  const [logoSizePreset, setLogoSizePreset] = useState<'small' | 'medium' | 'large' | 'custom'>('medium');
   const [logoSizePercent, setLogoSizePercent] = useState<number>(20);
   const [logoShape, setLogoShape] = useState<LogoShape>('rounded');
   const [logoBackgroundType, setLogoBackgroundType] = useState<'transparent' | 'white' | 'custom'>('white');
@@ -234,6 +239,8 @@ export const UpiQrGenerator: React.FC = () => {
         setLogoImage(img);
         setLogoDataUrl(result);
         setLogoFileName(file.name);
+        setLogoFileSize(`${(file.size / 1024).toFixed(1)} KB`);
+        setLogoDimensions({ width: img.naturalWidth, height: img.naturalHeight });
         setHasLogo(true);
         showToast('Logo uploaded and applied to payment QR.');
       };
@@ -254,9 +261,23 @@ export const UpiQrGenerator: React.FC = () => {
     setLogoImage(null);
     setLogoDataUrl(null);
     setLogoFileName('');
+    setLogoFileSize('');
+    setLogoDimensions(null);
     setHasLogo(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
     showToast('Logo removed from payment QR.');
+  };
+
+  const handleSizePresetChange = (preset: 'small' | 'medium' | 'large' | 'custom') => {
+    setLogoSizePreset(preset);
+    if (preset === 'small') setLogoSizePercent(15);
+    else if (preset === 'medium') setLogoSizePercent(20);
+    else if (preset === 'large') setLogoSizePercent(25);
+  };
+
+  const handleCustomSizeChange = (val: number) => {
+    setLogoSizePercent(val);
+    setLogoSizePreset('custom');
   };
 
   // Quick Handle Append
@@ -763,23 +784,42 @@ export const UpiQrGenerator: React.FC = () => {
           </div>
 
           {/* D. Custom Logo & Branding */}
-          <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-subtle space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-brand-500" /> Center Logo & Styling
-              </label>
+          <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-subtle space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-brand-500" />
+                <h3 className="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider">
+                  Center Logo & Branding
+                </h3>
+              </div>
               {hasLogo && (
-                <button
-                  type="button"
-                  onClick={handleRemoveLogo}
-                  className="text-xs text-rose-500 hover:text-rose-600 flex items-center gap-1"
-                >
-                  <Trash2 className="w-3 h-3" /> Remove Logo
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setHasLogo(!hasLogo)}
+                    className={`text-xs px-2.5 py-1 rounded-md flex items-center gap-1 font-medium transition-colors ${
+                      hasLogo
+                        ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                    }`}
+                    title="Toggle logo visibility"
+                  >
+                    {hasLogo ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                    {hasLogo ? 'Visible' : 'Hidden'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleRemoveLogo}
+                    className="text-xs text-rose-500 hover:text-rose-600 flex items-center gap-1 p-1 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded"
+                    title="Remove logo"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               )}
             </div>
 
-            {/* Logo Upload Dropzone */}
+            {/* Hidden native file input */}
             <input
               type="file"
               ref={fileInputRef}
@@ -792,109 +832,300 @@ export const UpiQrGenerator: React.FC = () => {
               className="hidden"
             />
 
-            {!hasLogo ? (
+            {!logoImage ? (
+              /* Dropzone empty state */
               <div
-                onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setIsDragging(true);
+                }}
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={handleDrop}
                 onClick={() => fileInputRef.current?.click()}
-                className={`p-4 border-2 border-dashed rounded-xl flex flex-col items-center justify-center gap-1.5 cursor-pointer transition-colors ${
+                className={`p-6 border-2 border-dashed rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors ${
                   isDragging
                     ? 'border-brand-500 bg-brand-50/40 dark:bg-brand-950/20'
                     : 'border-slate-300 dark:border-slate-700 hover:border-brand-500 hover:bg-slate-50 dark:hover:bg-slate-800/40'
                 }`}
               >
-                <Upload className="w-6 h-6 text-slate-400 mb-0.5" />
-                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  Upload Center Logo (PNG, JPG, WebP)
-                </span>
-                <span className="text-[10px] text-slate-400">
-                  Click or drag and drop. Transparent PNG supported (max 5 MB).
-                </span>
+                <div className="w-10 h-10 rounded-full bg-brand-50 dark:bg-brand-950/50 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+                  <Upload className="w-5 h-5" />
+                </div>
+                <div className="text-center space-y-0.5">
+                  <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 block">
+                    Upload Business Logo (PNG, JPG, WebP)
+                  </span>
+                  <span className="text-[11px] text-slate-400 block">
+                    Click to browse or drag and drop. Transparent PNG supported (max 5 MB).
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  className="btn-secondary text-xs py-1 px-3 pointer-events-none mt-1"
+                >
+                  Browse Files
+                </button>
               </div>
             ) : (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
-                  <div className="flex items-center gap-2">
+              /* Uploaded logo preview card */
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <div className="w-12 h-12 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-1 flex items-center justify-center overflow-hidden shrink-0 shadow-xs">
                     {logoDataUrl && (
-                      <img src={logoDataUrl} alt="Logo preview" className="w-8 h-8 rounded object-contain bg-white p-0.5 border" />
+                      <img
+                        src={logoDataUrl}
+                        alt="Logo thumbnail"
+                        className="max-w-full max-h-full object-contain"
+                      />
                     )}
-                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300 truncate max-w-[200px]">
-                      {logoFileName || 'Logo applied'}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate max-w-[200px]">
+                      {logoFileName || 'Custom Logo'}
+                    </p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                      {logoFileSize}
+                      {logoDimensions ? ` • ${logoDimensions.width}×${logoDimensions.height}px` : ''}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-600 dark:text-emerald-400 mt-0.5">
+                      <CheckCircle2 className="w-3 h-3" /> Ready & Centered (Level H 30%)
                     </span>
                   </div>
+                </div>
+
+                <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="text-xs text-brand-600 hover:underline"
+                    className="btn-secondary text-xs py-1 px-2.5 flex items-center gap-1"
                   >
-                    Replace
+                    <RefreshCw className="w-3 h-3" /> Replace
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleRemoveLogo}
+                    className="p-1 text-slate-400 hover:text-rose-500 rounded hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+                    title="Remove logo"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
+              </div>
+            )}
 
-                {/* Logo Controls */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
-                  <div>
-                    <label className="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1">
-                      Logo Shape
+            {/* Logo Styling Controls (Visible when logo is loaded) */}
+            {hasLogo && logoImage && (
+              <div className="space-y-4 pt-3 border-t border-slate-100 dark:border-slate-800">
+                {/* 1. Logo Size Presets & Slider */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                      Logo Size ({logoSizePercent}% of QR)
                     </label>
-                    <select
-                      value={logoShape}
-                      onChange={(e) => setLogoShape(e.target.value as LogoShape)}
-                      className="input-base text-xs py-1"
-                    >
-                      <option value="rounded">Rounded</option>
-                      <option value="circle">Circle</option>
-                      <option value="square">Square</option>
-                    </select>
+                    <span className="text-[11px] font-mono text-brand-600 dark:text-brand-400 font-semibold">
+                      {logoSizePercent}%
+                    </span>
                   </div>
 
-                  <div>
-                    <label className="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1">
-                      Logo Size
-                    </label>
-                    <select
-                      value={logoSizePercent}
-                      onChange={(e) => setLogoSizePercent(Number(e.target.value))}
-                      className="input-base text-xs py-1"
-                    >
-                      <option value={15}>Small (15%)</option>
-                      <option value={20}>Medium (20%)</option>
-                      <option value={25}>Large (25%)</option>
-                    </select>
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {(
+                      [
+                        { id: 'small', label: 'Small (15%)' },
+                        { id: 'medium', label: 'Medium (20%)' },
+                        { id: 'large', label: 'Large (25%)' },
+                        { id: 'custom', label: 'Custom' }
+                      ] as const
+                    ).map((preset) => (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        onClick={() => handleSizePresetChange(preset.id)}
+                        className={`text-xs py-1 px-1.5 rounded-lg font-medium border text-center transition-all ${
+                          logoSizePreset === preset.id
+                            ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300 shadow-xs'
+                            : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                        }`}
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
                   </div>
 
-                  <div>
-                    <label className="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1">
-                      Background
-                    </label>
-                    <select
-                      value={logoBackgroundType}
-                      onChange={(e) => setLogoBackgroundType(e.target.value as any)}
-                      className="input-base text-xs py-1"
-                    >
-                      <option value="white">White</option>
-                      <option value="transparent">Transparent</option>
-                      <option value="custom">Custom</option>
-                    </select>
+                  <input
+                    type="range"
+                    min={10}
+                    max={28}
+                    step={1}
+                    value={logoSizePercent}
+                    onChange={(e) => handleCustomSizeChange(Number(e.target.value))}
+                    className="w-full accent-brand-500"
+                  />
+                  <div className="flex justify-between text-[10px] text-slate-400">
+                    <span>10% (Minimal)</span>
+                    <span>20% (Optimal)</span>
+                    <span>28% (Max Safe)</span>
+                  </div>
+                </div>
+
+                {/* 2. Logo Shape */}
+                <div className="space-y-1.5">
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                    Logo Shape
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {(
+                      [
+                        { id: 'rounded', label: 'Rounded Square' },
+                        { id: 'circle', label: 'Circle' },
+                        { id: 'square', label: 'Square' }
+                      ] as const
+                    ).map((shape) => (
+                      <button
+                        key={shape.id}
+                        type="button"
+                        onClick={() => setLogoShape(shape.id)}
+                        className={`text-xs py-1.5 px-2 rounded-lg font-medium border text-center transition-all ${
+                          logoShape === shape.id
+                            ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300 shadow-xs'
+                            : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                        }`}
+                      >
+                        {shape.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3. Logo Background */}
+                <div className="space-y-1.5">
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                    Logo Background
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {(
+                      [
+                        { id: 'white', label: 'White (#FFF)' },
+                        { id: 'transparent', label: 'Transparent' },
+                        { id: 'custom', label: 'Custom' }
+                      ] as const
+                    ).map((bg) => (
+                      <button
+                        key={bg.id}
+                        type="button"
+                        onClick={() => setLogoBackgroundType(bg.id)}
+                        className={`text-xs py-1.5 px-2 rounded-lg font-medium border text-center transition-all ${
+                          logoBackgroundType === bg.id
+                            ? 'border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-700 dark:text-brand-300 shadow-xs'
+                            : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                        }`}
+                      >
+                        {bg.label}
+                      </button>
+                    ))}
                   </div>
 
-                  <div>
-                    <label className="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1">
-                      Border
+                  {logoBackgroundType === 'custom' && (
+                    <div className="flex items-center gap-2 pt-1.5">
+                      <input
+                        type="color"
+                        value={logoCustomBg}
+                        onChange={(e) => setLogoCustomBg(e.target.value)}
+                        className="w-8 h-8 rounded cursor-pointer border border-slate-300 dark:border-slate-700 p-0.5 bg-transparent"
+                      />
+                      <input
+                        type="text"
+                        value={logoCustomBg}
+                        onChange={(e) => setLogoCustomBg(e.target.value)}
+                        className="input-base font-mono uppercase text-xs w-28"
+                      />
+                      <span className="text-[11px] text-slate-400">Background fill behind logo</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* 4. Logo Padding */}
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                      Logo Padding ({logoPadding}px)
                     </label>
+                    <span className="text-[11px] font-mono text-slate-500">{logoPadding} px</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={0}
+                    max={16}
+                    step={1}
+                    value={logoPadding}
+                    onChange={(e) => setLogoPadding(Number(e.target.value))}
+                    className="w-full accent-brand-500"
+                  />
+                </div>
+
+                {/* 5. Logo Border */}
+                <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">
+                        Logo Border Frame
+                      </label>
+                      <span className="text-[10px] text-slate-400">Border around the center logo</span>
+                    </div>
                     <button
                       type="button"
                       onClick={() => setHasBorder(!hasBorder)}
-                      className={`w-full py-1 px-2 rounded text-xs font-medium border ${
-                        hasBorder
-                          ? 'border-brand-500 bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300'
-                          : 'border-slate-300 dark:border-slate-700 text-slate-600'
+                      className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                        hasBorder ? 'bg-brand-500' : 'bg-slate-300 dark:bg-slate-700'
                       }`}
                     >
-                      {hasBorder ? 'Enabled' : 'Disabled'}
+                      <span
+                        className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform ${
+                          hasBorder ? 'translate-x-4' : 'translate-x-1'
+                        }`}
+                      />
                     </button>
                   </div>
+
+                  {hasBorder && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                      <div>
+                        <label className="block text-[10px] font-semibold text-slate-500 uppercase mb-1">
+                          Border Color
+                        </label>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="color"
+                            value={borderColor}
+                            onChange={(e) => setBorderColor(e.target.value)}
+                            className="w-8 h-8 rounded cursor-pointer border border-slate-300 dark:border-slate-700 p-0.5 bg-transparent"
+                          />
+                          <input
+                            type="text"
+                            value={borderColor}
+                            onChange={(e) => setBorderColor(e.target.value)}
+                            className="input-base font-mono uppercase text-xs"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="text-[10px] font-semibold text-slate-500 uppercase">
+                            Thickness ({borderThickness}px)
+                          </label>
+                        </div>
+                        <input
+                          type="range"
+                          min={1}
+                          max={8}
+                          step={1}
+                          value={borderThickness}
+                          onChange={(e) => setBorderThickness(Number(e.target.value))}
+                          className="w-full accent-brand-500 mt-1"
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

@@ -3,15 +3,15 @@ import { TOOLS_REGISTRY, getToolById, getToolsByCategory, searchTools } from '..
 import { CATEGORIES } from '../data/categories';
 
 describe('LifeTools Tools Expansion Registry Suite', () => {
-  it('should have exactly 633 registered tools across 20 categories', () => {
-    expect(TOOLS_REGISTRY.length).toBe(633);
+  it('should have exactly 634 registered tools across 20 categories', () => {
+    expect(TOOLS_REGISTRY.length).toBe(634);
     expect(CATEGORIES.length).toBe(20);
   });
 
-  it('should have unique IDs for all 633 tools', () => {
+  it('should have unique IDs for all 634 tools', () => {
     const ids = TOOLS_REGISTRY.map(t => t.id);
     const uniqueIds = new Set(ids);
-    expect(uniqueIds.size).toBe(633);
+    expect(uniqueIds.size).toBe(634);
   });
 
   it('should correctly partition all 20 categories with expected counts', () => {
@@ -20,13 +20,13 @@ describe('LifeTools Tools Expansion Registry Suite', () => {
       categoryCounts[tool.category] = (categoryCounts[tool.category] || 0) + 1;
     }
 
-    // Original 6 Categories (117 tools)
+    // Original 6 Categories (118 tools)
     expect(categoryCounts['calculators']).toBe(24);
     expect(categoryCounts['converters']).toBe(15);
     expect(categoryCounts['text']).toBe(22);
     expect(categoryCounts['developer']).toBe(26);
     expect(categoryCounts['image']).toBe(15);
-    expect(categoryCounts['generators'] || categoryCounts['qr']).toBe(15);
+    expect(categoryCounts['generators'] || categoryCounts['qr']).toBe(16);
 
     // 7 Everyday Digital Utility Categories (99 tools)
     expect(categoryCounts['productivity']).toBe(15);
@@ -59,7 +59,7 @@ describe('LifeTools Tools Expansion Registry Suite', () => {
     expect(categoryCounts['home']).toBe(70);
 
     const totalCalculated = Object.values(categoryCounts).reduce((a, b) => a + b, 0);
-    expect(totalCalculated).toBe(633);
+    expect(totalCalculated).toBe(634);
   });
 
   it('should have valid metadata and defined components for all tools', () => {

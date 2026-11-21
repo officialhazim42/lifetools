@@ -124,6 +124,7 @@ const Base64ToImage = lazy(() => import('../components/tools/image/Base64ToImage
 
 // Category F: QR & Generators
 const UrlQrGenerator = lazy(() => import('../components/tools/generators/UrlQrGenerator').then(m => ({ default: m.UrlQrGenerator })));
+const UpiQrGenerator = lazy(() => import('../components/tools/generators/UpiQrGenerator').then(m => ({ default: m.UpiQrGenerator })));
 const WifiQrGenerator = lazy(() => import('../components/tools/generators/WifiQrGenerator').then(m => ({ default: m.WifiQrGenerator })));
 const ContactQrGenerator = lazy(() => import('../components/tools/generators/ContactQrGenerator').then(m => ({ default: m.ContactQrGenerator })));
 const EmailQrGenerator = lazy(() => import('../components/tools/generators/EmailQrGenerator').then(m => ({ default: m.EmailQrGenerator })));
@@ -1620,8 +1621,55 @@ export const TOOLS_REGISTRY: ToolItem[] = [
   },
 
   // ==========================================
-  // CATEGORY F: QR & GENERATORS (15)
+  // CATEGORY F: QR & GENERATORS (16)
   // ==========================================
+  {
+    id: 'advanced-upi-qr-generator',
+    name: 'Advanced UPI Payment QR Generator',
+    shortDescription: 'Generate reusable static UPI payment QR codes with custom business logo, custom amounts, and multi-format poster exports.',
+    category: 'generators',
+    iconName: 'CreditCard',
+    keywords: [
+      'advanced upi qr',
+      'upi payment qr',
+      'upi qr with logo',
+      'static upi qr',
+      'bhim upi qr',
+      'merchant upi qr',
+      'gpay qr',
+      'phonepe qr',
+      'paytm qr',
+      'custom logo qr',
+      'upi standee',
+      'upi-qr-generator'
+    ],
+    isPopular: true,
+    instructions: [
+      'Enter Payee Name and verified UPI ID (VPA, e.g. merchant@okhdfcbank).',
+      'Choose Static UPI QR (customer enters amount) or Fixed Amount QR.',
+      'Optionally upload your business logo (PNG, JPG, WebP) to embed in the center of the QR code.',
+      'Customize logo size, shape (square, circle, rounded), background, padding, and border.',
+      'Verify live QR scannability with the built-in decoder before downloading.',
+      'Export as standard PNG, 2048px high-resolution PNG, vector SVG, or print-ready PDF standee.'
+    ],
+    faqs: [
+      {
+        question: 'Does this static UPI QR expire?',
+        answer: 'No, static UPI QR codes do not contain an application-defined expiration date. The QR remains valid as long as your linked UPI ID and bank account remain active.'
+      },
+      {
+        question: 'Can customers pay with any UPI app?',
+        answer: 'Yes! The standard upi://pay URI is universally compatible across BHIM, Google Pay, PhonePe, Paytm, Amazon Pay, and all Indian banking UPI applications.'
+      },
+      {
+        question: 'Will the center logo affect scanning?',
+        answer: 'No. The QR is generated with High Error Correction (Level H, 30%), allowing up to 30% of the QR code area to be covered by your logo without losing payment data.'
+      }
+    ],
+    disclaimer: 'Static UPI QR codes do not expire automatically, but payment success depends on your bank and UPI ID remaining active. Always perform a small test transfer (e.g. ₹1) before printing counter standees.',
+    relatedTools: ['url-qr-generator', 'qr-code-scanner', 'qr-code-generator'],
+    component: UpiQrGenerator
+  },
   {
     id: 'url-qr-generator',
     name: 'URL QR Generator',
@@ -3491,7 +3539,7 @@ export const TOOLS_REGISTRY: ToolItem[] = [
 
 // Helper queries
 export const getToolById = (id: string): ToolItem | undefined => {
-  return TOOLS_REGISTRY.find(t => t.id === id);
+  return TOOLS_REGISTRY.find(t => t.id === id || (id === 'upi-qr-generator' && t.id === 'advanced-upi-qr-generator'));
 };
 
 export const getToolsByCategory = (category: ToolCategory): ToolItem[] => {
