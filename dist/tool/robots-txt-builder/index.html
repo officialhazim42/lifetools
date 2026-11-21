@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    
+    
+    <meta name="keywords" content="lifetools, free tools, utility tools, calculators, converters, developer tools, text tools, image tools, qr generator, offline utilities, client side tools, privacy tools, workspace, personal productivity, media studio, travel planning, health tools, home utilities" />
+    <meta name="author" content="Hazim Bashir (@officialhazim42)" />
+    <meta name="creator" content="Hazim Bashir" />
+    <meta name="theme-color" content="#10B981" />
+    
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Open Graph / Facebook -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Twitter / X -->
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- JSON-LD Structured Data for LifeTools & Developer Hazim Bashir -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://lifetools.app/#webapp",
+          "name": "LifeTools",
+          "url": "https://lifetools.app/",
+          "description": "Comprehensive, free, privacy-first digital utility platform featuring 633+ tools across 20 categories for calculations, conversions, developer workflows, image manipulation, media processing, travel planning, health records, home utilities, text tools, and QR generation.",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires JavaScript. Requires HTML5.",
+          "softwareVersion": "1.3.0",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "creator": {
+            "@type": "Person",
+            "@id": "https://lifetools.app/#developer",
+            "name": "Hazim Bashir",
+            "alternateName": "حازم بشیر",
+            "jobTitle": "Android Developer & Software Creator",
+            "email": "hazimbashir.dev@gmail.com",
+            "url": "https://github.com/officialhazim42",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Ganderbal",
+              "addressRegion": "Jammu & Kashmir",
+              "addressCountry": "India"
+            },
+            "sameAs": [
+              "https://github.com/officialhazim42",
+              "https://www.linkedin.com/in/hazim-bashir-faqeer",
+              "https://x.com/officialhazim42",
+              "https://instagram.com/officialhazim42",
+              "https://youtube.com/@officialhazim42",
+              "https://t.me/officialhazim42",
+              "https://www.threads.net/@officialhazim42",
+              "https://www.reddit.com/user/officialhazim42",
+              "https://www.snapchat.com/add/officialhazim42"
+            ]
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Anti-flicker theme script -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('lifetools-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+          } else {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <style>
+      #app-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #0b132b;
+        color: #f8fafc;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      .loader-logo {
+        width: 64px;
+        height: 64px;
+        animation: pulseLogo 1.5s infinite ease-in-out;
+      }
+      .loader-spinner {
+        margin-top: 20px;
+        width: 32px;
+        height: 32px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-top-color: #10b981;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      .loader-text {
+        margin-top: 16px;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        color: #94a3b8;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      @keyframes pulseLogo {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(0.96); opacity: 0.85; }
+      }
+      .light #app-loader {
+        background-color: #f8fafc;
+        color: #0f172a;
+      }
+      .light .loader-text {
+        color: #64748b;
+      }
+      .light .loader-spinner {
+        border-color: rgba(0, 0, 0, 0.08);
+        border-top-color: #10b981;
+      }
+      /* Accessibility: Reduced Motion */
+      html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+      /* Layout Density */
+      html.density-compact .py-6 {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+      }
+      /* Dynamic Accent Color Integration */
+      :root {
+        --color-accent-primary: #10b981;
+      }
+    </style>
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="Qq07av7RQHZyJTnUtPXAR2UHR5bt7VPx_1OOU2AIP6c" />
+    <script type="module" crossorigin src="/assets/index-jGvAJdvw.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/lucide-CnYeBL73.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-aacu-Mpa.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-Ffutk4F4.css">
+      <!-- Route Metadata -->
+    <title>Robots.txt Generator — LifeTools</title>
+    <meta name="description" content="Generate custom robots.txt crawl rules with AI crawler blocking and sitemap references." />
+    <link rel="canonical" href="https://lifetools.surge.sh/tool/robots-txt-builder" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LifeTools" />
+    <meta property="og:url" content="https://lifetools.surge.sh/tool/robots-txt-builder" />
+    <meta property="og:title" content="Robots.txt Generator — LifeTools" />
+    <meta property="og:description" content="Generate custom robots.txt crawl rules with AI crawler blocking and sitemap references." />
+    <meta property="og:image" content="https://lifetools.surge.sh/og-previews/tools/robots-txt-builder.png" />
+    <meta property="og:image:secure_url" content="https://lifetools.surge.sh/og-previews/tools/robots-txt-builder.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Robots.txt Generator — LifeTools" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Robots.txt Generator — LifeTools" />
+    <meta name="twitter:description" content="Generate custom robots.txt crawl rules with AI crawler blocking and sitemap references." />
+    <meta name="twitter:image" content="https://lifetools.surge.sh/og-previews/tools/robots-txt-builder.png" />
+    <meta name="twitter:image:alt" content="Robots.txt Generator — LifeTools" />
+  </head>
+  <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-brand-500/20 selection:text-brand-600 dark:selection:text-brand-400 min-h-screen">
+    <!-- Initial Instant App Loader -->
+    <div id="app-loader">
+      <img src="/logo.svg" alt="LifeTools Logo" class="loader-logo" />
+      <div class="loader-spinner"></div>
+      <div class="loader-text">Loading LifeTools...</div>
+    </div>
+
+    <div id="root"></div>
+
+    <script>
+      if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>
