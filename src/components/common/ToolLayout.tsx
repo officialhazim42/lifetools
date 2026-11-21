@@ -33,8 +33,49 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
   children
 }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { showToast } = useToast();
   const favorited = isFavorite(tool.id);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const canonicalUrl = `https://lifetools.surge.sh/tool/${tool.id}`;
+  const previewImageUrl = `https://lifetools.surge.sh/og-previews/tools/${tool.id}.png`;
+
+  const handleShare = async () => {
+    const shareData = {
+      title: `${tool.name} — LifeTools`,
+      text: tool.shortDescription,
+      url: canonicalUrl
+    };
+
+    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (err: any) {
+        if (err.name === 'AbortError') return;
+      }
+    }
+
+    // Fallback: Copy link to clipboard
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(canonicalUrl);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = canonicalUrl;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+      showToast('Tool link copied to clipboard!', 'success');
+    } catch {
+      showToast('Could not copy link to clipboard.', 'error');
+    }
+  };
 
   const categoryLabels: Record<string, string> = {
     calculators: 'Calculators',
@@ -59,8 +100,11 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
       <SEO
-        title={`${tool.name} — Free Online Tool`}
+        title={`${tool.name} — LifeTools`}
         description={tool.shortDescription}
+        image={previewImageUrl}
+        imageAlt={`${tool.name} — LifeTools`}
+        url={canonicalUrl}
       />
 
       {/* Breadcrumb */}
@@ -110,19 +154,42 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
           </div>
         </div>
 
-        {/* Favorite Button */}
-        <button
-          onClick={() => toggleFavorite(tool.id)}
-          className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-medium transition-colors shrink-0 ${
-            favorited
-              ? 'border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400'
-              : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
-          }`}
-          aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
-        >
-          <Star className={`w-4 h-4 ${favorited ? 'fill-amber-400 text-amber-500' : 'text-slate-400'}`} />
-          <span>{favorited ? 'Favorited' : 'Favorite'}</span>
-        </button>
+        {/* Action Controls: Share & Favorite */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Share Button */}
+          <button
+            onClick={handleShare}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 text-xs font-medium transition-colors"
+            aria-label={`Share ${tool.name}`}
+            title="Share this tool"
+          >
+            {copied ? (
+              <>
+                <Check className="w-4 h-4 text-emerald-500" />
+                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Copied!</span>
+              </>
+            ) : (
+              <>
+                <Share2 className="w-4 h-4 text-slate-400" />
+                <span>Share</span>
+              </>
+            )}
+          </button>
+
+          {/* Favorite Button */}
+          <button
+            onClick={() => toggleFavorite(tool.id)}
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-medium transition-colors shrink-0 ${
+              favorited
+                ? 'border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400'
+                : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+            }`}
+            aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
+          >
+            <Star className={`w-4 h-4 ${favorited ? 'fill-amber-400 text-amber-500' : 'text-slate-400'}`} />
+            <span>{favorited ? 'Favorited' : 'Favorite'}</span>
+          </button>
+        </div>
       </div>
 
       {/* Disclaimers if applicable (Health/Financial/JWT) */}

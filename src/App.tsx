@@ -6,7 +6,7 @@ import { RecentToolsProvider } from './context/RecentToolsContext';
 import { ToastProvider } from './context/ToastContext';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
-import { Router, parseHash } from './router/Router';
+import { Router, parseHash, getCurrentRouteState } from './router/Router';
 import { GlobalSearchModal } from './components/common/GlobalSearchModal';
 import { DeveloperWidget } from './components/common/DeveloperWidget';
 import { BackToTop } from './components/common/BackToTop';
@@ -16,16 +16,20 @@ import { TOOLS_REGISTRY } from './data/toolsRegistry';
 
 export const AppContent: React.FC = () => {
   const [currentPath, setCurrentPath] = useState<string>(() => {
-    return parseHash(window.location.hash).path;
+    return getCurrentRouteState().path;
   });
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleHashChange = () => {
-      setCurrentPath(parseHash(window.location.hash).path);
+    const handleLocationChange = () => {
+      setCurrentPath(getCurrentRouteState().path);
     };
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
   }, []);
 
   // Global Ctrl+K / Cmd+K listener to toggle search modal

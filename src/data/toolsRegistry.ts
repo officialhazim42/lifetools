@@ -3539,7 +3539,12 @@ export const TOOLS_REGISTRY: ToolItem[] = [
 
 // Helper queries
 export const getToolById = (id: string): ToolItem | undefined => {
-  return TOOLS_REGISTRY.find(t => t.id === id || (id === 'upi-qr-generator' && t.id === 'advanced-upi-qr-generator'));
+  return TOOLS_REGISTRY.find(
+    t =>
+      t.id === id ||
+      (id === 'upi-qr-generator' && t.id === 'advanced-upi-qr-generator') ||
+      (id === 'image-converter' && t.id === 'image-format-converter')
+  );
 };
 
 export const getToolsByCategory = (category: ToolCategory): ToolItem[] => {

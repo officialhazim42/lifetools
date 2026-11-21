@@ -537,76 +537,94 @@ async function main() {
 
   console.log('\n--- PHASE 1: Generating Social Preview Images (1200x630 PNG) ---');
 
+  const forceRebuild = process.argv.includes('--force');
+
   // 1. Generate Main Website Preview (public/og-preview.png and public/og-previews/home.png)
   const homeMeta = PUBLIC_PAGES.find(p => p.id === 'home');
-  const homeSvg = createSocialPreviewSvg({
-    title: 'LifeTools — Everything You Need. All in One Place.',
-    description: 'Comprehensive, free, privacy-first digital utility platform featuring 634+ fast client-side tools across 20 categories. 100% client-side, zero tracking.',
-    category: 'everyday',
-    iconName: 'Wrench',
-    badgeText: '634+ CLIENT TOOLS'
-  });
-  const homePng = renderSvgToPng(homeSvg);
-  fs.writeFileSync(path.join(publicDir, 'og-preview.png'), homePng);
-  fs.writeFileSync(path.join(ogPreviewsDir, 'home.png'), homePng);
-  console.log(`✓ Main website preview: public/og-preview.png & public/og-previews/home.png (${homePng.length.toLocaleString()} bytes)`);
+  const homePreviewFile = path.join(publicDir, 'og-preview.png');
+  if (forceRebuild || !fs.existsSync(homePreviewFile)) {
+    const homeSvg = createSocialPreviewSvg({
+      title: 'LifeTools — Everything You Need. All in One Place.',
+      description: 'Comprehensive, free, privacy-first digital utility platform featuring 634+ fast client-side tools across 20 categories. 100% client-side, zero tracking.',
+      category: 'everyday',
+      iconName: 'Wrench',
+      badgeText: '634+ CLIENT TOOLS'
+    });
+    const homePng = renderSvgToPng(homeSvg);
+    fs.writeFileSync(homePreviewFile, homePng);
+    fs.writeFileSync(path.join(ogPreviewsDir, 'home.png'), homePng);
+    console.log(`✓ Main website preview: public/og-preview.png & public/og-previews/home.png (${homePng.length.toLocaleString()} bytes)`);
+  } else {
+    console.log(`✓ Main website preview cached: public/og-preview.png`);
+  }
 
   // 2. Generate Public Page Previews
   let pageImgsCount = 0;
   for (const page of PUBLIC_PAGES) {
     if (page.id === 'home') continue;
-    const svg = createSocialPreviewSvg({
-      title: page.title.split('—')[0].trim(),
-      description: page.description,
-      category: page.category,
-      iconName: page.iconName,
-      badgeText: 'LIFETOOLS PLATFORM'
-    });
-    const png = renderSvgToPng(svg);
     const targetFile = path.join(pagesImgDir, `${page.id}.png`);
-    fs.writeFileSync(targetFile, png);
+    if (forceRebuild || !fs.existsSync(targetFile)) {
+      const svg = createSocialPreviewSvg({
+        title: page.title.split('—')[0].trim(),
+        description: page.description,
+        category: page.category,
+        iconName: page.iconName,
+        badgeText: 'LIFETOOLS PLATFORM'
+      });
+      const png = renderSvgToPng(svg);
+      fs.writeFileSync(targetFile, png);
+    }
     pageImgsCount++;
   }
-  console.log(`✓ Generated ${pageImgsCount} public page preview images in public/og-previews/pages/`);
+  console.log(`✓ Verified ${pageImgsCount} public page preview images in public/og-previews/pages/`);
 
   // 3. Generate Category Previews
   let categoryImgsCount = 0;
   for (const [catKey, catTheme] of Object.entries(CATEGORY_THEMES)) {
-    const svg = createSocialPreviewSvg({
-      title: `${catTheme.label}`,
-      description: `Collection of free, fast client-side ${catTheme.label.toLowerCase()} in LifeTools. 100% private, zero server uploads.`,
-      category: catKey,
-      iconName: catTheme.icon,
-      badgeText: `CATEGORY: ${catKey.toUpperCase()}`
-    });
-    const png = renderSvgToPng(svg);
     const targetFile = path.join(categoriesImgDir, `${catKey}.png`);
-    fs.writeFileSync(targetFile, png);
+    if (forceRebuild || !fs.existsSync(targetFile)) {
+      const svg = createSocialPreviewSvg({
+        title: `${catTheme.label}`,
+        description: `Collection of free, fast client-side ${catTheme.label.toLowerCase()} in LifeTools. 100% private, zero server uploads.`,
+        category: catKey,
+        iconName: catTheme.icon,
+        badgeText: `CATEGORY: ${catKey.toUpperCase()}`
+      });
+      const png = renderSvgToPng(svg);
+      fs.writeFileSync(targetFile, png);
+    }
     categoryImgsCount++;
   }
-  console.log(`✓ Generated ${categoryImgsCount} category preview images in public/og-previews/categories/`);
+  console.log(`✓ Verified ${categoryImgsCount} category preview images in public/og-previews/categories/`);
 
   // 4. Generate All 634 Individual Tool Previews
-  console.log(`Generating 634 tool-specific preview images...`);
   let toolImgsCount = 0;
+  let renderedCount = 0;
   const startTime = Date.now();
 
   for (const tool of tools) {
-    const svg = createSocialPreviewSvg({
-      title: tool.name,
-      description: tool.shortDescription,
-      category: tool.category,
-      iconName: tool.iconName,
-      badgeText: '100% CLIENT-SIDE'
-    });
-    const png = renderSvgToPng(svg);
     const targetFile = path.join(toolsImgDir, `${tool.id}.png`);
-    fs.writeFileSync(targetFile, png);
+    if (forceRebuild || !fs.existsSync(targetFile)) {
+      const svg = createSocialPreviewSvg({
+        title: tool.name,
+        description: tool.shortDescription,
+        category: tool.category,
+        iconName: tool.iconName,
+        badgeText: '100% CLIENT-SIDE'
+      });
+      const png = renderSvgToPng(svg);
+      fs.writeFileSync(targetFile, png);
+      renderedCount++;
+    }
     toolImgsCount++;
   }
 
   const durationMs = Date.now() - startTime;
-  console.log(`✓ Generated ${toolImgsCount} tool preview images in ${(durationMs / 1000).toFixed(2)}s (${(toolImgsCount / (durationMs / 1000)).toFixed(1)} img/sec)`);
+  if (renderedCount > 0) {
+    console.log(`✓ Rendered ${renderedCount} new tool preview images in ${(durationMs / 1000).toFixed(2)}s`);
+  } else {
+    console.log(`✓ Verified all ${toolImgsCount} tool preview images cached and ready`);
+  }
 
   // --- PHASE 2: Static Route Prerendering (Crawler Compatibility) ---
   if (!fs.existsSync(distDir)) {
@@ -694,7 +712,33 @@ async function main() {
     fs.writeFileSync(path.join(targetDir, 'index.html'), toolHtml, 'utf8');
     prerenderedTools++;
   }
-  console.log(`✓ Prerendered ${prerenderedTools} individual tool HTML files`);
+
+  // Prerender known backward-compatibility aliases
+  const aliases = [
+    { alias: 'image-converter', target: 'image-format-converter' },
+    { alias: 'upi-qr-generator', target: 'advanced-upi-qr-generator' }
+  ];
+  for (const { alias, target } of aliases) {
+    const targetFile = path.join(distDir, 'tool', target, 'index.html');
+    if (fs.existsSync(targetFile)) {
+      const aliasDir = path.join(distDir, 'tool', alias);
+      fs.mkdirSync(aliasDir, { recursive: true });
+      fs.copyFileSync(targetFile, path.join(aliasDir, 'index.html'));
+      // Also copy preview image alias if present
+      const targetImg = path.join(toolsImgDir, `${target}.png`);
+      const aliasImg = path.join(toolsImgDir, `${alias}.png`);
+      if (fs.existsSync(targetImg) && !fs.existsSync(aliasImg)) {
+        fs.copyFileSync(targetImg, aliasImg);
+      }
+      const distAliasImg = path.join(distOgPreviews, 'tools', `${alias}.png`);
+      const distTargetImg = path.join(distOgPreviews, 'tools', `${target}.png`);
+      if (fs.existsSync(distTargetImg) && !fs.existsSync(distAliasImg)) {
+        fs.copyFileSync(distTargetImg, distAliasImg);
+      }
+    }
+  }
+
+  console.log(`✓ Prerendered ${prerenderedTools} individual tool HTML files (plus aliases)`);
 
   console.log('\n====================================================');
   console.log(`Total Social Preview Images: ${1 + pageImgsCount + categoryImgsCount + toolImgsCount}`);

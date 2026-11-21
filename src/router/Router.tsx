@@ -39,8 +39,10 @@ export interface RouteState {
   param?: string;
 }
 
-export function parseHash(hash: string): RouteState {
-  const clean = hash.replace(/^#\/?/, '').trim();
+export function parsePath(raw: string): RouteState {
+  // Strip leading hash, leading/trailing slashes, and index.html
+  let clean = (raw || '').replace(/^#\/?/, '').trim();
+  clean = clean.replace(/^\/+/, '').replace(/\/index\.html$/, '');
   const parts = clean.split('/').filter(Boolean);
 
   if (parts.length === 0) {
@@ -95,20 +97,47 @@ export function parseHash(hash: string): RouteState {
     return { path: `/tool/${parts[1]}`, route: 'tool-detail', param: parts[1] };
   }
 
-  return { path: clean, route: '404' };
+  return { path: '/' + clean, route: '404' };
+}
+
+// Backward compatibility alias
+export const parseHash = parsePath;
+
+export function getCurrentRouteState(): RouteState {
+  if (typeof window === 'undefined') {
+    return { path: '/', route: 'home' };
+  }
+
+  // 1. Prioritize hash if present and non-empty
+  const hash = window.location.hash;
+  if (hash && hash !== '#' && hash !== '#/') {
+    return parsePath(hash);
+  }
+
+  // 2. Fall back to pathname (for direct static/prerendered URLs like /tool/xyz or /about)
+  const pathname = window.location.pathname;
+  if (pathname && pathname !== '/' && pathname !== '/index.html' && pathname !== '/200.html') {
+    return parsePath(pathname);
+  }
+
+  return { path: '/', route: 'home' };
 }
 
 export const Router: React.FC<RouterProps> = ({ onOpenSearch }) => {
-  const [routeState, setRouteState] = useState<RouteState>(() => parseHash(window.location.hash));
+  const [routeState, setRouteState] = useState<RouteState>(() => getCurrentRouteState());
 
   useEffect(() => {
-    const handleHashChange = () => {
-      setRouteState(parseHash(window.location.hash));
+    const handleLocationChange = () => {
+      setRouteState(getCurrentRouteState());
       window.scrollTo({ top: 0, behavior: 'instant' });
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
   }, []);
 
   const renderRoute = () => {
