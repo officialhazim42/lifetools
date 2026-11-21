@@ -674,9 +674,10 @@ async function main() {
     const targetDir = path.join(distDir, page.id);
     fs.mkdirSync(targetDir, { recursive: true });
     fs.writeFileSync(path.join(targetDir, 'index.html'), pageHtml, 'utf8');
+    fs.writeFileSync(path.join(distDir, `${page.id}.html`), pageHtml, 'utf8');
     prerenderedPages++;
   }
-  console.log(`✓ Prerendered ${prerenderedPages} public page HTML files`);
+  console.log(`✓ Prerendered ${prerenderedPages} public page HTML files (dual slash/no-slash)`);
 
   // 3. Prerender Category Detail Pages
   let prerenderedCategories = 0;
@@ -692,9 +693,10 @@ async function main() {
     const targetDir = path.join(distDir, 'categories', catKey);
     fs.mkdirSync(targetDir, { recursive: true });
     fs.writeFileSync(path.join(targetDir, 'index.html'), catHtml, 'utf8');
+    fs.writeFileSync(path.join(distDir, 'categories', `${catKey}.html`), catHtml, 'utf8');
     prerenderedCategories++;
   }
-  console.log(`✓ Prerendered ${prerenderedCategories} category detail HTML files`);
+  console.log(`✓ Prerendered ${prerenderedCategories} category detail HTML files (dual slash/no-slash)`);
 
   // 4. Prerender All 634 Individual Tool Pages
   let prerenderedTools = 0;
@@ -710,6 +712,7 @@ async function main() {
     const targetDir = path.join(distDir, 'tool', tool.id);
     fs.mkdirSync(targetDir, { recursive: true });
     fs.writeFileSync(path.join(targetDir, 'index.html'), toolHtml, 'utf8');
+    fs.writeFileSync(path.join(distDir, 'tool', `${tool.id}.html`), toolHtml, 'utf8');
     prerenderedTools++;
   }
 
@@ -724,6 +727,7 @@ async function main() {
       const aliasDir = path.join(distDir, 'tool', alias);
       fs.mkdirSync(aliasDir, { recursive: true });
       fs.copyFileSync(targetFile, path.join(aliasDir, 'index.html'));
+      fs.copyFileSync(targetFile, path.join(distDir, 'tool', `${alias}.html`));
       // Also copy preview image alias if present
       const targetImg = path.join(toolsImgDir, `${target}.png`);
       const aliasImg = path.join(toolsImgDir, `${alias}.png`);
@@ -738,7 +742,7 @@ async function main() {
     }
   }
 
-  console.log(`✓ Prerendered ${prerenderedTools} individual tool HTML files (plus aliases)`);
+  console.log(`✓ Prerendered ${prerenderedTools} individual tool HTML files (dual slash/no-slash plus aliases)`);
 
   console.log('\n====================================================');
   console.log(`Total Social Preview Images: ${1 + pageImgsCount + categoryImgsCount + toolImgsCount}`);
