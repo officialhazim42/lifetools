@@ -23,6 +23,7 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@types/diff": "^7.0.0",
