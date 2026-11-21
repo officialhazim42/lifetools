@@ -99,21 +99,19 @@ export const TsvToCsvConverter: React.FC = () => {
         <div className="inline-flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl">
           <button
             onClick={() => setDirection('tsvToCsv')}
-            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors ${
-              direction === 'tsvToCsv'
-                ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm'
-                : 'text-slate-600 dark:text-slate-400'
-            }`}
+            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors ${direction === 'tsvToCsv'
+              ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm'
+              : 'text-slate-600 dark:text-slate-400'
+              }`}
           >
             TSV ➔ CSV (Tab to Comma)
           </button>
           <button
             onClick={() => setDirection('csvToTsv')}
-            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors ${
-              direction === 'csvToTsv'
-                ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm'
-                : 'text-slate-600 dark:text-slate-400'
-            }`}
+            className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors ${direction === 'csvToTsv'
+              ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm'
+              : 'text-slate-600 dark:text-slate-400'
+              }`}
           >
             CSV ➔ TSV (Comma to Tab)
           </button>
