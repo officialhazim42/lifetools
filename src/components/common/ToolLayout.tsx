@@ -8,9 +8,12 @@ import {
   ChevronDown,
   AlertTriangle,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  Share2,
+  Check
 } from 'lucide-react';
 import { useFavorites } from '../../context/FavoritesContext';
+import { useToast } from '../../context/ToastContext';
 import { SEO } from './SEO';
 import { ToolCard } from './ToolCard';
 
